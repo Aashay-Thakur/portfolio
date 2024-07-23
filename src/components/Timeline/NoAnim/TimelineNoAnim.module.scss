@@ -1,0 +1,51 @@
+.container {
+	position: relative;
+	height: 250px;
+	width: 100%;
+	overflow-y: scroll;
+	scroll-snap-type: y mandatory;
+	scroll-behavior: smooth;
+	background-color: var(--mui-palette-background-default);
+}
+
+.milestone {
+	position: relative;
+	display: grid;
+	place-items: center;
+	grid-template-columns: 4fr 8fr;
+	height: 100%;
+	width: 95%;
+	scroll-snap-align: start;
+
+	&:first-of-type > .timeline::before {
+		top: 50%;
+	}
+
+	&:last-of-type > .timeline::before {
+		bottom: 50%;
+	}
+}
+
+.timeline {
+	position: relative;
+	display: grid;
+	place-items: center;
+	height: 100%;
+	width: 100%;
+	&::after {
+		content: '';
+		position: absolute;
+		width: 10px;
+		height: 10px;
+		border-radius: 50%;
+		box-shadow: 0 0 0 4px var(--mui-palette-background-default), 0 0 0 6px var(--mui-palette-primary-main);
+		background-color: var(--mui-palette-primary-main);
+	}
+	&::before {
+		content: '';
+		position: absolute;
+		width: 2px;
+		height: 100%;
+		background-color: var(--mui-palette-primary-main);
+	}
+}

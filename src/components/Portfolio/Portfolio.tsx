@@ -20,7 +20,7 @@ import {
 } from '@mui/material';
 import { SettingsContext } from '@settings';
 
-import { AboutMe, Academics, Contact, Projects, Skills } from './resumeBarrel';
+import { AboutMe, Academics, Contact, Projects, Skills } from './portfolioBarrel';
 
 const StyledBox = styled(Box, {
 	shouldForwardProp: (prop) => prop !== 'disableMorphism',
@@ -35,12 +35,12 @@ const StyledBox = styled(Box, {
 		position: 'sticky',
 		height: '100%',
 		zIndex: 1000,
-		top: theme.appBarHeight,
+		top: 0,
 		paddingLeft: 5,
 		backgroundColor: disableMorphism ? theme.palette.background.default : 'none',
 	};
 });
-const Resume = () => {
+const Portfolio = () => {
 	const { toc, contact, aboutMe, academics, skills, projects } = me;
 	const [open, setOpen] = useState(false); // drawer
 	const theme = useTheme();
@@ -60,7 +60,7 @@ const Resume = () => {
 	}
 
 	useEffect(() => {
-		document.title = `${aboutMe.name} | Resume`;
+		document.title = `${aboutMe.name} | Portfolio`;
 	}, []);
 
 	return (
@@ -79,7 +79,7 @@ const Resume = () => {
 							alignItems: 'center',
 						}}>
 						<Typography variant="h3" marginTop={5} gutterBottom>
-							Resume
+							Portfolio
 						</Typography>
 					</Box>
 					<Divider />
@@ -100,4 +100,4 @@ const Resume = () => {
 	);
 };
 
-export { Resume };
+export { Portfolio };

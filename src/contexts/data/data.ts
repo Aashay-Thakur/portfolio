@@ -201,6 +201,13 @@ const me = new Person({
 			techStack: ['javascript', 'd3js', 'materializecss'],
 			repo: 'https://github.com/Aashay-Thakur/CPU-Scheduling',
 			website: 'https://unique-hamster-14b851.netlify.app/',
+			features: {
+				'Gantt Charts': [],
+				'Line Charts': [],
+				'Preemptive & Non-Preemptive': [],
+				'Disk Scheduling': [],
+				'Timeline for Preemptive': [],
+			},
 		}),
 	],
 });

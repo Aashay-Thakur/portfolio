@@ -32,17 +32,21 @@ const StyledTypography = styled(Typography, { shouldForwardProp: (prop) => prop 
 	},
 );
 
+const isFeatureList = (features: FeaturesType): features is FeatureList => !isObject(features);
+
 const Features = ({ features }: { features: FeaturesType }) => {
-	if (!isObject(features)) {
+	if (isFeatureList(features)) {
 		return (
-			<Grid container>
-				<Grid item xs={12}>
-					<Typography variant="h5">Features</Typography>
+			<Hidden smDown>
+				<Grid container>
+					<Grid item xs={12}>
+						<Typography variant="h5">Features</Typography>
+					</Grid>
+					<Grid item xs={12}>
+						<Animation key="only_feature" list={features} />
+					</Grid>
 				</Grid>
-				<Grid item xs={12}>
-					<Animation key="only_feature" list={features as FeatureList} />
-				</Grid>
-			</Grid>
+			</Hidden>
 		);
 	}
 
@@ -71,32 +75,31 @@ const Features = ({ features }: { features: FeaturesType }) => {
 					})}
 				</ul>
 			</Grid>
-			<Grid
-				item
-				xs={12}
-				md={8}
-				lg={9}
-				sx={{
-					display: 'grid',
-					placeItems: 'center',
-				}}>
-				<Box
+			{features[activeFeature].length > 0 && (
+				<Grid
+					item
+					xs={12}
+					md={8}
+					lg={9}
 					sx={{
-						display: 'flex',
-						justifyContent: 'center',
-						alignItems: 'center',
-						flexDirection: 'row',
-						width: '100%',
-						height: 100,
+						display: 'grid',
+						placeItems: 'center',
 					}}>
-					<Hidden smDown>
-						<Animation
-							key={activeFeature}
-							list={(features as Record<string, FeatureList>)[activeFeature]}
-						/>
-					</Hidden>
-				</Box>
-			</Grid>
+					<Box
+						sx={{
+							display: 'flex',
+							justifyContent: 'center',
+							alignItems: 'center',
+							flexDirection: 'row',
+							width: '100%',
+							height: 100,
+						}}>
+						<Hidden smDown>
+							<Animation key={activeFeature} list={features[activeFeature]} />
+						</Hidden>
+					</Box>
+				</Grid>
+			)}
 		</Grid>
 	);
 };

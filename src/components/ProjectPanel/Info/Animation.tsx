@@ -25,6 +25,10 @@ const StyledBox = styled(Box)({
 });
 
 const Animation = ({ list }: { list: FeatureList }) => {
+	if (list.length === 0) {
+		return null;
+	}
+
 	const [scope, animate] = useAnimate();
 
 	useEffect(() => {

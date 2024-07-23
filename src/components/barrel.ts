@@ -1,5 +1,5 @@
 /* Resume Components */
-export { Resume } from './Resume/Resume';
+export { Portfolio } from './Portfolio/Portfolio';
 export { ErrorPage } from './ErrorPage/ErrorPage';
 /* Material-UI Components */
 export { Appbar } from './Appbar/Appbar';

@@ -5,11 +5,7 @@ import { ProjectDetails } from '@types';
 const Projects = ({ projects }: { projects: { projects: ProjectDetails[]; id: string } }) => {
 	const list = projects.projects.map((item, index) => {
 		return {
-			content: (
-				<div key={`project_panel_container_${index}`}>
-					<ProjectPanel project={item} />
-				</div>
-			),
+			content: <ProjectPanel key={`project_panel_container_${index}`} project={item} />,
 		};
 	});
 

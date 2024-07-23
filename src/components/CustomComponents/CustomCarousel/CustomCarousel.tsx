@@ -54,9 +54,9 @@ const CustomCarousel = ({
 
 	useEffect(() => {
 		if (childRef.current && height === 'auto') {
-			setAutoHeight(childRef.current.clientHeight);
+			setAutoHeight(childRef.current.scrollHeight); // Use scrollHeight instead of clientHeight
 		}
-	}, [page]);
+	}, [page, childRef.current, height]);
 
 	const paginate = (newPage: number) => {
 		if (newPage >= 0 && newPage < list.length) {
@@ -91,6 +91,7 @@ const CustomCarousel = ({
 			)}
 			<Stack sx={{ width: '100%', justifyContent: 'center', alignItems: 'center' }} useFlexGap>
 				<Box
+					className="carousel-container"
 					sx={{
 						height: height === 'auto' ? autoHeight : height,
 						width,
@@ -99,6 +100,7 @@ const CustomCarousel = ({
 					}}>
 					<AnimatePresence initial={false} custom={direction}>
 						<MotionBox
+							className="carousel-motion-box"
 							key={page}
 							custom={direction}
 							variants={variants}
@@ -118,7 +120,12 @@ const CustomCarousel = ({
 								height: '100%',
 								width: '100%',
 							}}>
-							<div ref={childRef}>{list[page].content}</div>
+							<div
+								className="carousel-div"
+								ref={childRef}
+								style={{ width: '100%', display: 'inline-block' }}>
+								{list[page].content}
+							</div>
 						</MotionBox>
 					</AnimatePresence>
 				</Box>

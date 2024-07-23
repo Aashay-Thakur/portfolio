@@ -2,7 +2,7 @@ import './App.css';
 
 import { createContext, RefObject, useRef, useState } from 'react';
 
-import { BasicSpeedDial, Resume, SettingsModal } from '@barrel';
+import { BasicSpeedDial, Portfolio, SettingsModal } from '@barrel';
 import { Box, CssBaseline } from '@mui/material';
 
 const PortalContext = createContext<RefObject<HTMLDivElement> | null>(null);
@@ -18,7 +18,7 @@ function App(): JSX.Element {
 		<>
 			<CssBaseline />
 			<PortalContext.Provider value={portalRef}>
-				<Resume />
+				<Portfolio />
 			</PortalContext.Provider>
 			<Box
 				sx={{

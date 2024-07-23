@@ -1,12 +1,12 @@
-import { useContext, useEffect, useRef } from 'react';
+import { motion, useScroll } from 'framer-motion';
+import { useContext, useEffect, useRef, useState } from 'react';
 
 import { MenuIcon } from '@assets/MenuToggle/MenuToggle';
 import { CustomIcon } from '@barrel';
-import {
-    AppBar, Box, IconButton, InputAdornment, InputBase, Toolbar, Typography
-} from '@mui/material';
-import { alpha, styled } from '@mui/material/styles';
+import { alpha, AppBar, Box, IconButton, InputAdornment, InputBase, styled, Toolbar } from '@mui/material';
 import { SettingsContext } from '@settings';
+
+const MotionAppBar = motion(AppBar);
 
 const Search = styled('div')(({ theme }) => ({
 	'position': 'relative',
@@ -54,6 +54,21 @@ const Appbar = ({ open, onMenuClick }: { open: boolean; onMenuClick: Function })
 	const { disableDarkMode, themeMode, toggleThemeMode } = useContext(SettingsContext);
 	const searchInput = useRef<HTMLInputElement>(null);
 
+	const { scrollY } = useScroll();
+	const [isScrolled, setIsScrolled] = useState(false);
+
+	useEffect(() => {
+		const unsubscribe = scrollY.on('change', (latest) => {
+			if (latest > 100) {
+				setIsScrolled(true);
+			} else {
+				setIsScrolled(false);
+			}
+		});
+
+		return () => unsubscribe();
+	}, [scrollY]);
+
 	useEffect(() => {
 		const handleKeyDown = (event: KeyboardEvent) => {
 			const input = searchInput?.current?.querySelector('input');
@@ -75,20 +90,22 @@ const Appbar = ({ open, onMenuClick }: { open: boolean; onMenuClick: Function })
 	return (
 		<>
 			<Box className="appbar-container">
-				<AppBar sx={{ flexGrow: 1, position: 'fixed', top: 0, width: '100%', zIndex: 10000 }}>
+				<MotionAppBar
+					initial={{ y: 0 }}
+					animate={{ y: isScrolled ? -64 : 0 }}
+					transition={{ ease: 'easeOut', duration: 0.3 }}
+					sx={{
+						flexGrow: 1,
+						position: 'fixed',
+						top: 0,
+						width: '100%',
+						zIndex: 10000,
+					}}>
 					<Toolbar>
 						<IconButton color="inherit" aria-label="open drawer" edge="start" onClick={() => onMenuClick()}>
-							{/* <CustomIcon icon={['fas', 'bars']} /> */}
 							<MenuIcon open={open} />
 						</IconButton>
-						<Typography
-							variant="h6"
-							noWrap
-							component="div"
-							sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' }, ml: { xs: 5 } }}
-							textTransform="uppercase">
-							Resume
-						</Typography>
+						<div style={{ flexGrow: 1 }}></div>
 						{!disableDarkMode && (
 							<IconButton
 								component="button"
@@ -128,7 +145,7 @@ const Appbar = ({ open, onMenuClick }: { open: boolean; onMenuClick: Function })
 							/>
 						</Search>
 					</Toolbar>
-				</AppBar>
+				</MotionAppBar>
 			</Box>
 		</>
 	);

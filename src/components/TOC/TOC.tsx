@@ -3,7 +3,12 @@ import { motion } from 'framer-motion';
 import { SimpleTreeView, TreeItem2 as TreeItem } from '@mui/x-tree-view/';
 import { TableOfContents } from '@types';
 
-const TOC = ({ toc, onSelect }: { toc: TableOfContents; onSelect: (id: string) => void }) => {
+interface TocProps {
+	toc: TableOfContents;
+	onSelect: (id: string) => void;
+}
+
+const TOC = ({ toc, onSelect }: TocProps) => {
 	const itemVariants = {
 		hidden: { opacity: 0, y: 20 },
 		visible: { opacity: 1, y: 0 },

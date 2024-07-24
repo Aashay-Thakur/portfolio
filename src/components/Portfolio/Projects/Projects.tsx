@@ -1,11 +1,14 @@
-import { SyntheticEvent, useReducer } from 'react';
+import { SyntheticEvent, useContext, useReducer } from 'react';
 
 import { CustomCarousel, ProjectPanel } from '@barrel';
 import { Stack, Typography } from '@mui/material';
 import { ProjectDetails } from '@types';
 
+import { TocTabContext } from '../Portfolio';
+
 const Projects = ({ projects }: { projects: { projects: ProjectDetails[]; id: string } }) => {
 	const [updateHeight, forceUpdate] = useReducer((x) => x + 1, 0);
+	const { activeProjectTab } = useContext(TocTabContext);
 
 	function onTabChange(_: SyntheticEvent) {
 		forceUpdate();
@@ -24,6 +27,7 @@ const Projects = ({ projects }: { projects: { projects: ProjectDetails[]; id: st
 					Projects
 				</Typography>
 				<CustomCarousel
+					activeIndex={activeProjectTab}
 					heightUpdateDependency={updateHeight}
 					width="100%"
 					height="auto"

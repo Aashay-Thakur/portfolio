@@ -56,18 +56,22 @@ const Appbar = ({ open, onMenuClick }: { open: boolean; onMenuClick: Function })
 
 	const { scrollY } = useScroll();
 	const [isScrolled, setIsScrolled] = useState(false);
+	const [lastScrollY, setLastScrollY] = useState(0);
+	const [scrollDirection, setScrollDirection] = useState<'up' | 'down'>('down');
 
 	useEffect(() => {
 		const unsubscribe = scrollY.on('change', (latest) => {
-			if (latest > 100) {
-				setIsScrolled(true);
+			if (latest > lastScrollY) {
+				setScrollDirection('down');
 			} else {
-				setIsScrolled(false);
+				setScrollDirection('up');
 			}
+			setLastScrollY(latest);
+			setIsScrolled(latest > 100);
 		});
 
 		return () => unsubscribe();
-	}, [scrollY]);
+	}, [scrollY, lastScrollY]);
 
 	useEffect(() => {
 		const handleKeyDown = (event: KeyboardEvent) => {
@@ -92,7 +96,7 @@ const Appbar = ({ open, onMenuClick }: { open: boolean; onMenuClick: Function })
 			<Box className="appbar-container">
 				<MotionAppBar
 					initial={{ y: 0 }}
-					animate={{ y: isScrolled ? -64 : 0 }}
+					animate={{ y: isScrolled && scrollDirection === 'down' ? -64 : 0 }}
 					transition={{ ease: 'easeOut', duration: 0.3 }}
 					sx={{
 						flexGrow: 1,

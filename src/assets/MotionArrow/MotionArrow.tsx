@@ -64,7 +64,7 @@ const MotionArrow = ({
 					stroke={theme.palette.background.default}
 					strokeWidth={strokeWidth * 2}
 					strokeDasharray="5,5" // Adjust the dash pattern as needed
-					strokeDashoffset="0"
+					initial={{ strokeDashoffset: 0 }}
 					animate={{ strokeDashoffset: -10 }} // Adjust the offset value as needed
 					transition={{ duration: 2, ease: 'linear', repeat: Infinity }}
 				/>
@@ -85,7 +85,7 @@ const MotionArrow = ({
 				stroke={color || theme.palette.secondary.main}
 				strokeWidth={strokeWidth}
 				initial={{ pathLength: 0, pathOffset: 0 }}
-				animate={{ pathLength: [0, 1], pathOffset: [0, 1] }}
+				animate={{ pathLength: 1, pathOffset: 1 }}
 				transition={{
 					duration,
 					delay,

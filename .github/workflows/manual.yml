@@ -1,40 +1,46 @@
 name: Build and Deploy React App
 
 on:
-  push:
-    branches:
-      - main
+    push:
+        branches:
+            - main
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+    build:
+        runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+        steps:
+            - name: Install Firebase CLI
+              run: npm install -g firebase-tools
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'
+            - name: Check Firebase CLI Version
+              run: firebase --version
 
-      - name: Install dependencies
-        run: npm install
+            - name: Checkout repository
+              uses: actions/checkout@v2
 
-      - name: Build the project
-        run: npm run build
+            - name: Set up Node.js
+              uses: actions/setup-node@v2
+              with:
+                  node-version: '20.9.0'
 
-      - name: Deploy to Preview Channel
-        env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-        run: |
-          npm install -g firebase-tools
-          firebase hosting:channel:deploy preview-channel --expires 7d
+            - name: Install dependencies
+              run: npm install
 
-      - name: Promote to Live
-        if: github.ref == 'refs/heads/main'
-        env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-        run: |
-          npm install -g firebase-tools
-          firebase hosting:channel:deploy live --only hosting
+            - name: Build the project
+              run: npm run build
+
+            - name: Deploy to Preview Channel
+              env:
+                  FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+              run: |
+                  npm install -g firebase-tools
+                  firebase hosting:channel:deploy preview-channel --expires 1d
+
+            - name: Promote to Live
+              if: github.ref == 'refs/heads/main'
+              env:
+                  FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+              run: |
+                  npm install -g firebase-tools
+                  firebase hosting:channel:deploy live

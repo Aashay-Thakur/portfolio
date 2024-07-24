@@ -110,7 +110,13 @@ const me = new Person({
 		new Project({
 			title: 'Lab Link',
 			description: `Lab Link Project is an IT Automation Software, with a specific goal of managing multiple Computers Remotely, ensuring Security and Reliance, while providing features likeIt used ansible to executes tasks on remote systems part of the network. Django was used to create a Rest API for executing these tasks. It makes use of Django Channels to create a remote shell interface for the user. It also supports remote Wake on Lan, and Remote Shutdown. Finally Django was used to create a Web Interface for the user to interact with the software.`,
-			techStack: ['django', 'ansible', 'materializecss'],
+			techStack: {
+				django: 'Django was the main handler of the project, it was used on two fronts, as a REST API and to serve HTML and other static files. Django REST Framework was used to run ansible, and parse and extract information from resulting stdout.',
+				ansible:
+					'Ansible was used to execute tasks on remote systems part of the network. It was used to install/uninstall applications, send wake on lan signals, and shutdown the remote systems and all other tasks.',
+				materializecss:
+					'Materialize CSS was used to style the frontend of the project. It provides a simple and clean interface for the user to interact with and is easy to integrate for the developer.',
+			},
 			repo: 'https://github.com/VJTI-MCA-25/lab_link_ansible',
 			features: {
 				'Remote Shell': [
@@ -170,7 +176,13 @@ const me = new Person({
 			title: 'Indian Heritage',
 			description:
 				'Indian Heritage Website was made with a goal of providing tourists and Indians a simple yet attractive interface to explore all the wonders our country can offer.',
-			techStack: ['react', 'expressjs', 'materializecss'],
+			techStack: {
+				react: 'React frontend was chose to provide a seamless experience to users and easy integration with express server. It offered a good state management framework which is perfect to render asynchronous data.',
+				expressjs:
+					'Express was used to comunicate with the Firbase database. It also handled authorized admins to be able to enter and update the firebase through a frontend interface, Express Makes it easier to build a REST Server fast.',
+				materializecss:
+					'Materialize CSS was used to style the frontend of the project. It helps with Rapid Development and is easy to integrate and build responsive websites.',
+			},
 			repo: 'https://github.com/Aashay-Thakur/Heritage-Project',
 			features: [
 				{ label: 'Client', message: 'Client can view all the places and their details' },
@@ -184,7 +196,17 @@ const me = new Person({
 			title: 'Socket Messenger',
 			description:
 				'A Fullstack Chat Application, that uses Socket IO to provide real-time messaging between users. It was initially made with Discord as a reference, and later evolved into a complex chat application.',
-			techStack: ['react', 'expressjs', 'socketio', 'materializecss'],
+			techStack: {
+				react: 'React was a great choice for a realtime chat messenger app, due to its very useful statemanagement framework. Using memoization of repeating data, the platform allowed for fast and smooth user experience. It integrates with sockets just as easily. React hooks like useContext allow for App wide usage of socket instances. This app also focused especially on User Accessibility, with a focus on Keyboard Navigation and Screen Reader Support.',
+				expressjs:
+					'Express was an obvious choice to make a REST API that is secure and build Rapidly. It was used to handle all the requests and responses to the client, with its middleware and routing capabilities to make the code clean and easy to understand.',
+				socketio:
+					"Socket IO was used to provide real-time messaging between users. It was used to send and receive messages in real-time, and to provide a seamless experience to the user. Socket IO's rooms feature and scalable architecture made it a perfect choice for the project.",
+				firebase:
+					'Firebase was used to handle Authentication, User Data, Messages, and Media. It is a fast integrating, scalable, and secure platform to handle all the user data.',
+				materializecss:
+					'A simple and clean interface was provided to the user using Materialize CSS. Along with the Material UI Icons, it provided a good user experience.',
+			},
 			repo: 'https://github.com/VJTI-MCA-25/Socket-Messenger',
 			features: [
 				{ label: 'Network', message: 'Client can send and receive messages in real-time using Websockets' },
@@ -198,7 +220,13 @@ const me = new Person({
 			title: 'CPU Scheduling',
 			description:
 				'CPU Scheduling Website was made in Vanilla JS, using D3JS to display Gantt Charts and Line Charts. It was a small project aiming to visualize different Scheduling Algorithms that Operating Systems use to schedule their processes.',
-			techStack: ['javascript', 'd3js', 'materializecss'],
+			techStack: {
+				javascript:
+					"Naturally, this being a fontend Project, Javascript was used to handle all the logic, from the scheduling algorithms to the rendering and user input. Javascript's DOM Manipulation made it easy to update Elements to reflect changing data.",
+				d3js: 'D3JS, or Data Driven Documents, is a libreary that helps visualize data using HTML, SVG, and CSS. It was used to create Gantt Charts and Line Charts to visualize the CPU Scheduling Algorithms. This allowed a great level of control over the charts and the data they displayed, which opened up a lot of possibilities for the project, like animation and tooltips.',
+				materializecss:
+					'Materialize CSS was used to style the frontend of the project. It provides a simple and clean interface for the user to interact with and is easy to integrate for the developer.',
+			},
 			repo: 'https://github.com/Aashay-Thakur/CPU-Scheduling',
 			website: 'https://unique-hamster-14b851.netlify.app/',
 			features: {

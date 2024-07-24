@@ -26,10 +26,12 @@ function Theme({ children }: { children: ReactNode }) {
 
 	function getGlobalStyles(): Interpolation<ThemeType> {
 		const cssVars = getCssVarsFromObject({
-			object: themeObject,
-			exclude: ['components', 'appBarHeight'],
+			object: theme,
+			include: ['palette'],
+			exclude: ['grey'],
 			type: 'hex',
 		});
+
 		return {
 			'*': {
 				fontFamily: enableDyslexicFont ? 'OpenDyslexic !important' : 'Lato !important',

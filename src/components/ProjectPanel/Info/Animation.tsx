@@ -1,13 +1,18 @@
 import { stagger, useAnimate } from 'framer-motion';
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 
 import { MotionArrow } from '@assets/MotionArrow/MotionArrow';
 import { ToAndFro } from '@assets/MotionArrow/ToAndFro';
 import { CustomIcon, CustomPopup } from '@barrel';
 import { Box, styled, Typography } from '@mui/material';
+import { SettingsContext } from '@settings';
 import { FeatureArrow, FeatureIcon, FeatureList } from '@types';
 
-const StyledBox = styled(Box)({
+const StyledBox = styled(Box, {
+	shouldForwardProp(propName) {
+		return propName !== 'disableAnimations';
+	},
+})<{ disableAnimations: boolean }>(({ disableAnimations }) => ({
 	'flexGrow': 1,
 	'display': 'flex',
 	'flexDirection': 'column',
@@ -20,9 +25,9 @@ const StyledBox = styled(Box)({
 		transition: 'transform 0.3s',
 	},
 	'&:hover .icon-container': {
-		transform: 'translateY(-10px)',
+		transform: !disableAnimations ? 'translateY(-10px)' : '',
 	},
-});
+}));
 
 const Animation = ({ list }: { list: FeatureList }) => {
 	if (list.length === 0) {
@@ -30,13 +35,15 @@ const Animation = ({ list }: { list: FeatureList }) => {
 	}
 
 	const [scope, animate] = useAnimate();
+	const { disableAnimations } = useContext(SettingsContext);
 
 	useEffect(() => {
-		animate(
-			scope.current.children,
-			{ opacity: [0, 1], y: [20, 0] },
-			{ duration: 0.3, delay: stagger(0.1, { from: 'center' }) },
-		);
+		!disableAnimations &&
+			animate(
+				scope.current.children,
+				{ opacity: [0, 1], y: [20, 0] },
+				{ duration: 0.3, delay: stagger(0.1, { from: 'center' }) },
+			);
 	}, []);
 
 	const getElement = (item: FeatureIcon['label'] | FeatureArrow, index: number) => {
@@ -86,7 +93,7 @@ const Animation = ({ list }: { list: FeatureList }) => {
 
 				return (
 					<CustomPopup key={`anim_${index}_popup`} message={item.message || item.label}>
-						<StyledBox key={`anim_${index}_box`}>
+						<StyledBox disableAnimations={disableAnimations} key={`anim_${index}_box`}>
 							<Box
 								sx={{
 									fontSize: { xs: 32, sm: 38, md: 48 },

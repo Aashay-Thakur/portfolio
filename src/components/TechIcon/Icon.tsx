@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { forwardRef, useContext, useState } from 'react';
 
-import { Box, Stack, styled, SxProps, Typography } from '@mui/material';
+import { Box, Stack, SxProps, Typography } from '@mui/material';
 import { SettingsContext } from '@settings';
 import { SkillDetails } from '@types';
 
@@ -11,18 +11,7 @@ interface IconProps {
 	sx?: SxProps;
 }
 
-const blackIcons = ['ExpressJS', 'Markdown'];
-
 const MotionBox = motion(Box);
-const StyledImage = styled('img')(({ alt, theme }) => {
-	if (theme.palette.mode === 'dark' && alt && blackIcons.includes(alt)) {
-		return {
-			backgroundColor: 'white',
-			padding: 1,
-			borderRadius: 1,
-		};
-	} else return {};
-});
 
 const Icon = forwardRef((props: IconProps, ref) => {
 	const { icon, label, sx } = props;
@@ -39,7 +28,7 @@ const Icon = forwardRef((props: IconProps, ref) => {
 			<MotionBox
 				sx={{ height: 50, width: 50, display: 'grid', placeItems: 'center' }}
 				animate={{ scale: hovering ? 1.1 : 1, y: hovering ? -10 : 0 }}>
-				<StyledImage src={icon.icon} alt={icon.name} width="100%" height="100%" />
+				<img src={icon.src} height="100%" width="100%" />
 			</MotionBox>
 			<Typography
 				sx={{

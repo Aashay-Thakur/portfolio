@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ReactEventHandler, useState } from 'react';
 
 import { Box, Stack, Tab, Tabs } from '@mui/material';
 
@@ -14,10 +14,13 @@ function a11yProps(index: number) {
 	};
 }
 
-const CustomTabs: React.FC<{ list: TabInterface[] }> = ({ list }) => {
+const CustomTabs: React.FC<{ list: TabInterface[]; onChange?: ReactEventHandler }> = ({ list, onChange }) => {
 	const [active, setActive] = useState<number>(0);
 
-	const handleChange = (_: React.SyntheticEvent, newValue: number) => {
+	const handleChange = (e: React.SyntheticEvent, newValue: number) => {
+		if (onChange) {
+			onChange(e);
+		}
 		setActive(newValue);
 	};
 

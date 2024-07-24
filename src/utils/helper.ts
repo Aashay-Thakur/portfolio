@@ -37,6 +37,7 @@ export function isObject(value: any): boolean {
 interface CssVarsFromObjectProps {
 	object: Record<string, any>;
 	prefix?: string;
+	include?: Array<string>;
 	exclude?: Array<string>;
 	type?: 'hsl' | 'hex' | 'rgb';
 }
@@ -44,6 +45,7 @@ interface CssVarsFromObjectProps {
 export function getCssVarsFromObject({
 	object,
 	prefix = 'mui',
+	include = [],
 	exclude = [],
 	type = 'hex',
 }: CssVarsFromObjectProps): Array<Record<string, string | number>> {
@@ -55,13 +57,17 @@ export function getCssVarsFromObject({
 			if (isObject(value)) {
 				recurse(value, newPath);
 			} else if (typeof value === 'string' || typeof value === 'number') {
-				if (!exclude.some((item) => newPath.includes(item))) {
+				const pathString = newPath.join('-');
+				const shouldInclude = include.length === 0 || include.some((item) => pathString.includes(item));
+				const shouldExclude = exclude.some((item) => pathString.includes(item));
+
+				if (shouldInclude && !shouldExclude) {
 					let finalValue: string | number = value;
 					if (typeof value === 'string' && value.startsWith('hsl')) {
 						if (type === 'rgb') finalValue = hslToRgb(value);
 						if (type === 'hex') finalValue = rgbToHex(hslToRgb(value));
 					}
-					keyValueArray.push({ [`--${prefix}-${newPath.join('-')}`]: finalValue });
+					keyValueArray.push({ [`--${prefix}-${pathString}`]: finalValue });
 				}
 			}
 		}
@@ -91,4 +97,11 @@ export function hyphenToCapital(phrase: string): string {
 		.split('-')
 		.map((item: string) => item[0].toUpperCase() + item.slice(1, item.length))
 		.join(' ');
+}
+
+export function isColorDark(color: string): boolean {
+	const rgb = color.match(/\d+/g);
+	if (!rgb) return false;
+	const brightness = (parseInt(rgb[0]) * 299 + parseInt(rgb[1]) * 587 + parseInt(rgb[2]) * 114) / 1000;
+	return brightness < 128;
 }

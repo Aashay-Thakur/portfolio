@@ -1,19 +1,22 @@
 import { AnimatePresence, motion, PanInfo } from 'framer-motion';
-import { ReactNode, useEffect, useRef, useState } from 'react';
+import { ReactNode, useContext, useEffect, useRef, useState } from 'react';
 
 import { CustomIcon } from '@barrel';
 import { Box, IconButton, Pagination, Stack } from '@mui/material';
+import { SettingsContext } from '@settings';
+import { Dimension } from '@types';
 
 interface CustomCarouselProps {
 	list: {
 		content: ReactNode;
 		customPaginationComponent?: HTMLOrSVGImageElement;
 	}[];
-	height: `${number}px` | `${number}%` | number | 'auto' | 'fixed';
-	width: `${number}px` | `${number}%` | number | 'auto';
+	height?: Dimension;
+	width?: Dimension;
 	pagination?: boolean;
 	initialIndex?: number;
 	sideArrows?: boolean;
+	heightUpdateDependency?: any;
 }
 
 const variants = {
@@ -47,16 +50,18 @@ const CustomCarousel = ({
 	sideArrows = false,
 	height = 'auto',
 	width = '100%',
+	heightUpdateDependency = null,
 }: CustomCarouselProps): JSX.Element => {
 	const [[page, direction], setPage] = useState([initialIndex, 0]);
 	const childRef = useRef<HTMLDivElement>(null);
 	const [autoHeight, setAutoHeight] = useState<number>(0);
+	const { disableAnimations } = useContext(SettingsContext);
 
 	useEffect(() => {
 		if (childRef.current && height === 'auto') {
-			setAutoHeight(childRef.current.scrollHeight); // Use scrollHeight instead of clientHeight
+			setAutoHeight(childRef.current.scrollHeight);
 		}
-	}, [page, childRef.current, height]);
+	}, [page, childRef.current, heightUpdateDependency]);
 
 	const paginate = (newPage: number) => {
 		if (newPage >= 0 && newPage < list.length) {
@@ -91,7 +96,7 @@ const CustomCarousel = ({
 			)}
 			<Stack sx={{ width: '100%', justifyContent: 'center', alignItems: 'center' }} useFlexGap>
 				<Box
-					className="carousel-container"
+					ref={childRef}
 					sx={{
 						height: height === 'auto' ? autoHeight : height,
 						width,
@@ -100,10 +105,9 @@ const CustomCarousel = ({
 					}}>
 					<AnimatePresence initial={false} custom={direction}>
 						<MotionBox
-							className="carousel-motion-box"
 							key={page}
 							custom={direction}
-							variants={variants}
+							variants={!disableAnimations ? variants : {}}
 							initial="enter"
 							animate="center"
 							exit="exit"
@@ -120,12 +124,7 @@ const CustomCarousel = ({
 								height: '100%',
 								width: '100%',
 							}}>
-							<div
-								className="carousel-div"
-								ref={childRef}
-								style={{ width: '100%', display: 'inline-block' }}>
-								{list[page].content}
-							</div>
+							<div style={{ width: '100%', display: 'inline-block' }}>{list[page].content}</div>
 						</MotionBox>
 					</AnimatePresence>
 				</Box>

@@ -1,5 +1,6 @@
-// import sprite from '@assets/sprite.svg';
 import { SkillDetails } from '@types';
+
+// import sprite from '@assets/sprite.svg';
 
 const map = {
 	mysql: {
@@ -222,13 +223,21 @@ const map = {
 
 export type SkillName = keyof typeof map;
 
+const blacklist: SkillName[] = ['ansible', 'markdown', 'expressjs'];
+
 export function getIcon(name: SkillName): SkillDetails {
 	name = name.toLowerCase().trim() as SkillName;
+	var src = `/src/assets/icons/${map[name].icon}`;
+	if (blacklist.includes(name)) {
+		const mode = getComputedStyle(document.documentElement).getPropertyValue('--mui-palette-mode');
+		if (mode === 'dark') {
+			src = src.replace('.svg', '_alt.svg');
+		}
+	}
 	return {
 		...map[name],
-		icon: `/src/assets/icons/${map[name].icon}`,
+		src,
 		wikiLink: `https://en.wikipedia.org/wiki/${map[name].wikiTopic}`,
 		key: name,
-		// svgSprite: `${sprite}#${name}`,
 	};
 }

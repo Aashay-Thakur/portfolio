@@ -67,7 +67,7 @@ const InfoCardContent = forwardRef<HTMLDivElement, InfoCardContentProps>(({ skil
 			headerProps={{ title: data.title, subheader: data.pronounciation }}
 			mediaProps={{
 				component: 'img',
-				src: data.thumbnail || skill.icon,
+				src: data.thumbnail || skill.src,
 				alt: skill.name,
 				draggable: false,
 			}}

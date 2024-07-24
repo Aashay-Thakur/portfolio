@@ -5,7 +5,7 @@ interface ProjectParams {
 	title: string;
 	description: string;
 	repo: string;
-	techStack: SkillName[];
+	techStack: Partial<Record<SkillName, string>>;
 	website?: string;
 	features?: FeaturesType;
 }
@@ -14,7 +14,7 @@ class Project {
 	private _title: string;
 	private _description: string;
 	private _repo: string;
-	private _techStack: SkillName[];
+	private _techStack: Partial<Record<SkillName, string>>;
 	private _website?: string;
 	private _features?: FeaturesType;
 
@@ -48,8 +48,11 @@ class Project {
 		};
 	}
 
-	get techStack(): SkillDetails[] {
-		return this._techStack.map((icon) => getIcon(icon));
+	get techStack(): (SkillDetails & { description: string })[] {
+		return Object.entries(this._techStack).map(([icon, description]) => ({
+			...getIcon(icon as SkillName),
+			description,
+		}));
 	}
 
 	get features(): FeaturesType | undefined {

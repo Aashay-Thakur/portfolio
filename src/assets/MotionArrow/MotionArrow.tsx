@@ -1,6 +1,8 @@
 import { easeInOut, motion } from 'framer-motion';
+import { useContext } from 'react';
 
 import { useTheme } from '@mui/material';
+import { SettingsContext } from '@settings';
 
 interface MotionArrowProps {
 	delay?: number;
@@ -27,6 +29,20 @@ const MotionArrow = ({
 }: MotionArrowProps) => {
 	const d = arrowTip ? 'M 0 50 L 100 50 L 95 45' : 'M 0 50 L 100 50';
 	const theme = useTheme();
+	const { disableAnimations } = useContext(SettingsContext);
+
+	if (disableAnimations) {
+		return (
+			<svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
+				<path
+					d={d}
+					fill="transparent"
+					stroke={color || theme.palette.secondary.main}
+					strokeWidth={strokeWidth}
+				/>
+			</svg>
+		);
+	}
 
 	if (still) {
 		return (

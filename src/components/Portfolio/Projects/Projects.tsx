@@ -1,11 +1,19 @@
+import { SyntheticEvent, useReducer } from 'react';
+
 import { CustomCarousel, ProjectPanel } from '@barrel';
 import { Stack, Typography } from '@mui/material';
 import { ProjectDetails } from '@types';
 
 const Projects = ({ projects }: { projects: { projects: ProjectDetails[]; id: string } }) => {
+	const [updateHeight, forceUpdate] = useReducer((x) => x + 1, 0);
+
+	function onTabChange(_: SyntheticEvent) {
+		forceUpdate();
+	}
+
 	const list = projects.projects.map((item, index) => {
 		return {
-			content: <ProjectPanel key={`project_panel_container_${index}`} project={item} />,
+			content: <ProjectPanel onChange={onTabChange} key={`project_panel_container_${index}`} project={item} />,
 		};
 	});
 
@@ -15,7 +23,13 @@ const Projects = ({ projects }: { projects: { projects: ProjectDetails[]; id: st
 				<Typography variant="h4" gutterBottom>
 					Projects
 				</Typography>
-				<CustomCarousel width="100%" height="auto" list={list} sideArrows />
+				<CustomCarousel
+					heightUpdateDependency={updateHeight}
+					width="100%"
+					height="auto"
+					list={list}
+					sideArrows
+				/>
 			</Stack>
 		</section>
 	);

@@ -1,3 +1,5 @@
+import { ReactEventHandler } from 'react';
+
 import { CustomTabs } from '@barrel';
 import { Stack, Typography } from '@mui/material';
 import { ProjectDetails } from '@types';
@@ -6,7 +8,7 @@ import { Architecture } from './Architecture/Architecture';
 import { Info } from './Info/Info';
 import { Technology } from './Technology/Technology';
 
-const ProjectPanel = ({ project }: { project: ProjectDetails }) => {
+const ProjectPanel = ({ project, onChange }: { project: ProjectDetails; onChange?: ReactEventHandler }) => {
 	const { description, features, links, title, techStack } = project;
 
 	const infoData = {
@@ -26,7 +28,7 @@ const ProjectPanel = ({ project }: { project: ProjectDetails }) => {
 			<Typography width="100%" align="center" variant="h4">
 				{title}
 			</Typography>
-			<CustomTabs list={list} />
+			<CustomTabs onChange={onChange} list={list} />
 		</Stack>
 	);
 };

@@ -17,12 +17,11 @@ import { FeatureList } from '@types';
 /* Data Types */
 interface SkillDetails {
 	name: string;
-	icon: `/src/assets/icons/${string}`;
+	src: string;
 	link: string;
 	wikiTopic: string;
 	wikiLink: `https://en.wikipedia.org/wiki/${string}`;
 	key: SkillName;
-	svgSprite?: `${string}#${SkillName}`;
 }
 
 interface SkillCategories {
@@ -79,7 +78,7 @@ interface ProjectDetails {
 		repo: string;
 		website?: string;
 	};
-	techStack: SkillDetails[];
+	techStack: (SkillDetails & { description: string })[];
 	features?: FeaturesType;
 }
 
@@ -117,9 +116,11 @@ interface TableOfContents {
 }
 
 /* Skills Types */
+type Dimension = `${number}px` | `${number}%` | number | 'auto' | 'fixed';
+
 interface SizeDimensions {
-	height: string | number;
-	width: string | number;
+	height: Dimension;
+	width: Dimension;
 }
 
 interface GlassMorphismProps {

@@ -10,6 +10,10 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
+            - name: Set up Node.js
+              uses: actions/setup-node@v2
+              with:
+                  node-version: '20.9.0'
             - name: Install Firebase CLI
               run: npm install -g firebase-tools
 
@@ -19,10 +23,6 @@ jobs:
             - name: Checkout repository
               uses: actions/checkout@v2
 
-            - name: Set up Node.js
-              uses: actions/setup-node@v2
-              with:
-                  node-version: '20.9.0'
 
             - name: Install dependencies
               run: npm install

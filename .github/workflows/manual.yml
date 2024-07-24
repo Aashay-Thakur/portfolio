@@ -35,20 +35,26 @@ jobs:
 
             - name: Deploy to Preview Channel
               env:
-                  FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+                  GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
               run: |
+                  echo ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }} > $HOME/gcloud-service-key.json
+                  export GOOGLE_APPLICATION_CREDENTIALS=$HOME/gcloud-service-key.json
                   firebase hosting:channel:deploy preview-channel --expires 1d
 
             - name: Promote to Live
               if: github.ref == 'refs/heads/main'
               env:
-                  FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+                  GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
               run: |
+                  echo ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }} > $HOME/gcloud-service-key.json
+                  export GOOGLE_APPLICATION_CREDENTIALS=$HOME/gcloud-service-key.json
                   firebase hosting:channel:deploy live
 
             - name: Delete Preview Channel
               if: github.ref == 'refs/heads/main'
               env:
-                  FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+                  GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
               run: |
+                  echo ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }} > $HOME/gcloud-service-key.json
+                  export GOOGLE_APPLICATION_CREDENTIALS=$HOME/gcloud-service-key.json
                   firebase hosting:channel:delete preview-channel

@@ -1,15 +1,9 @@
-import { useContext } from 'react';
-
 import { CustomCarousel, Milestone } from '@barrel';
 import { Paper, useTheme } from '@mui/material';
 import { EducationDetails } from '@types';
 
-import { TocTabContext } from '../Portfolio/Portfolio';
-
 const Timeline = ({ milestones }: { milestones: EducationDetails[] }) => {
 	const theme = useTheme();
-	const { activeAcademicTab } = useContext(TocTabContext);
-
 	const list = milestones.map((milestone, index) => {
 		return {
 			content: (
@@ -28,7 +22,7 @@ const Timeline = ({ milestones }: { milestones: EducationDetails[] }) => {
 		};
 	});
 
-	return <CustomCarousel activeIndex={activeAcademicTab} width="100%" height="auto" list={list} pagination />;
+	return <CustomCarousel width="100%" height={'auto'} list={list} pagination />;
 };
 
 export { Timeline };

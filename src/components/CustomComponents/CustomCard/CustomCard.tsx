@@ -40,11 +40,9 @@ const StyledCardMedia = styled(CardMedia)({
 	maxWidth: '100%',
 	height: 'auto',
 	maxHeight: 200,
-	minHeight: 100,
 	width: 'auto',
 	margin: 'auto',
 	background: 'none',
-	padding: 20,
 });
 
 const StyledCardContent = styled(CardContent)({

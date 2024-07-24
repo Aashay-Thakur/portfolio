@@ -1,5 +1,5 @@
 /* react */
-import { createContext, useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 /* components */
 import { Appbar, TOC } from '@barrel';
@@ -40,15 +40,11 @@ const StyledBox = styled(Box, {
 		backgroundColor: disableMorphism ? theme.palette.background.default : 'none',
 	};
 });
-const TocTabContext = createContext<null | any>(null);
 const Portfolio = () => {
 	const { toc, contact, aboutMe, academics, skills, projects } = me;
 	const [open, setOpen] = useState(false); // drawer
 	const theme = useTheme();
 	const { disableMorphism } = useContext(SettingsContext);
-
-	const [activeProjectTab, setActiveProjectTab] = useState(0);
-	const [activeAcademicTab, setActiveAcademicTab] = useState(0);
 
 	function toggleDrawer(): void {
 		setOpen(!open);
@@ -56,13 +52,7 @@ const Portfolio = () => {
 
 	function onTocSelect(id: string): void {
 		setOpen(false);
-		let [section, elementId] = id.split('_'); // Use a different variable for the element ID
-		if (section === 'projects') {
-			setActiveProjectTab(parseInt(elementId));
-		} else if (section === 'academic-history') {
-			setActiveAcademicTab(parseInt(elementId));
-		}
-		document.getElementById(section)?.scrollIntoView({ behavior: 'smooth', block: 'end' });
+		console.log(id);
 	}
 
 	function TOCWrapper(): JSX.Element {
@@ -84,9 +74,9 @@ const Portfolio = () => {
 						sx={{
 							position: 'relative',
 							width: '100%',
-							height: theme.appBarHeight * 2.2,
+							height: '120px',
 							display: 'flex',
-							alignItems: 'flex-end',
+							alignItems: 'center',
 						}}>
 						<Typography variant="h3" marginTop={5} gutterBottom>
 							Portfolio
@@ -95,12 +85,10 @@ const Portfolio = () => {
 					<Divider />
 				</StyledBox>
 				<Stack spacing={{ xs: 2, md: 5 }}>
-					<TocTabContext.Provider value={{ activeProjectTab, activeAcademicTab }}>
-						<Contact contact={contact} />
-						<Academics academics={academics} />
-						<Skills skills={skills} />
-						<Projects projects={projects} />
-					</TocTabContext.Provider>
+					<Contact contact={contact} />
+					<Academics academics={academics} />
+					<Skills skills={skills} />
+					<Projects projects={projects} />
 				</Stack>
 			</Container>
 			<Drawer open={open} onClose={toggleDrawer}>
@@ -112,4 +100,4 @@ const Portfolio = () => {
 	);
 };
 
-export { Portfolio, TocTabContext };
+export { Portfolio };

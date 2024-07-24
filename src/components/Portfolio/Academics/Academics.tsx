@@ -5,14 +5,7 @@ import { Stack, Typography } from '@mui/material';
 import { SettingsContext } from '@settings';
 import { EducationDetails } from '@types';
 
-interface AcademicsProps {
-	academics: {
-		education: EducationDetails[];
-		id: string;
-	};
-}
-
-const Academics = ({ academics }: AcademicsProps) => {
+const Academics = ({ academics }: { academics: { education: EducationDetails[]; id: string } }) => {
 	const { disableAnimations } = useContext(SettingsContext);
 
 	return (

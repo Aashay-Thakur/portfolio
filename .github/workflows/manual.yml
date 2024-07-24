@@ -11,12 +11,12 @@ jobs:
 
         steps:
             - name: Set up Node.js
-              uses: actions/setup-node@v2
+              uses: actions/setup-node@v3
               with:
                   node-version: '20.9.0'
 
             - name: Checkout repository
-              uses: actions/checkout@v2
+              uses: actions/checkout@v3
 
             - name: Install dependencies
               run: npm install
@@ -33,28 +33,28 @@ jobs:
             - name: Build the project
               run: npm run build
 
-            - name: Deploy to Preview Channel
+            - name: Write Service Account Key
               env:
                   GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
               run: |
-                  echo ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }} > $HOME/gcloud-service-key.json
-                  export GOOGLE_APPLICATION_CREDENTIALS=$HOME/gcloud-service-key.json
+                  echo "${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}" > $HOME/gcloud-service-key.json
+
+            - name: Deploy to Preview Channel
+              env:
+                  GOOGLE_APPLICATION_CREDENTIALS: $HOME/gcloud-service-key.json
+              run: |
                   firebase hosting:channel:deploy preview-channel --expires 1d
 
             - name: Promote to Live
               if: github.ref == 'refs/heads/main'
               env:
-                  GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+                  GOOGLE_APPLICATION_CREDENTIALS: $HOME/gcloud-service-key.json
               run: |
-                  echo ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }} > $HOME/gcloud-service-key.json
-                  export GOOGLE_APPLICATION_CREDENTIALS=$HOME/gcloud-service-key.json
                   firebase hosting:channel:deploy live
 
             - name: Delete Preview Channel
               if: github.ref == 'refs/heads/main'
               env:
-                  GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+                  GOOGLE_APPLICATION_CREDENTIALS: $HOME/gcloud-service-key.json
               run: |
-                  echo ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }} > $HOME/gcloud-service-key.json
-                  export GOOGLE_APPLICATION_CREDENTIALS=$HOME/gcloud-service-key.json
                   firebase hosting:channel:delete preview-channel

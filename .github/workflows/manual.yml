@@ -4,13 +4,8 @@ on:
     push:
         branches:
             - main
-    push:
-        branches:
-            - main
 
 jobs:
-    build:
-        runs-on: ubuntu-latest
     build:
         runs-on: ubuntu-latest
 
@@ -29,8 +24,6 @@ jobs:
               with:
                   node-version: '20.9.0'
 
-            - name: Install dependencies
-              run: npm install
             - name: Install dependencies
               run: npm install
 

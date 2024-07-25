@@ -1,6 +1,6 @@
 import { EducationDetails } from '@types';
 
-interface EducationParams {
+export interface EducationParams {
 	degree: string;
 	degreeShort: string;
 	branch: string;

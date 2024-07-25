@@ -17,6 +17,7 @@ interface CustomCarouselProps {
 	initialIndex?: number;
 	sideArrows?: boolean;
 	heightUpdateDependency?: any;
+	activeIndex?: number;
 }
 
 const variants = {
@@ -51,17 +52,12 @@ const CustomCarousel = ({
 	height = 'auto',
 	width = '100%',
 	heightUpdateDependency = null,
+	activeIndex = initialIndex,
 }: CustomCarouselProps): JSX.Element => {
 	const [[page, direction], setPage] = useState([initialIndex, 0]);
 	const childRef = useRef<HTMLDivElement>(null);
 	const [autoHeight, setAutoHeight] = useState<number>(0);
 	const { disableAnimations } = useContext(SettingsContext);
-
-	useEffect(() => {
-		if (childRef.current && height === 'auto') {
-			setAutoHeight(childRef.current.scrollHeight);
-		}
-	}, [page, childRef.current, heightUpdateDependency]);
 
 	const paginate = (newPage: number) => {
 		if (newPage >= 0 && newPage < list.length) {
@@ -79,6 +75,16 @@ const CustomCarousel = ({
 			paginate(page - 1);
 		}
 	};
+
+	useEffect(() => {
+		paginate(activeIndex);
+	}, [activeIndex]);
+
+	useEffect(() => {
+		if (childRef.current && height === 'auto') {
+			setAutoHeight(childRef.current.scrollHeight);
+		}
+	}, [page, childRef.current, heightUpdateDependency]);
 
 	return (
 		<Box

@@ -1,22 +1,29 @@
 import { getIcon, SkillName } from '@techMap';
-import { AboutMe, ContactInfo, EducationDetails, ProjectDetails, SkillCategories, SocialLink } from '@types';
+import {
+    AboutMe, ContactInfo, EducationDetails, ProjectDetails, SkillCategories, SocialLink
+} from '@types';
 
 import { Education } from './Education';
 import { Project } from './Project';
 
 interface PersonParams {
 	name: string;
-	dob: Date;
+	dob: string | Date;
 	phone: string;
-	socials: SocialLink[];
-	address: string;
+	socials: {
+		email: string;
+		linkedin: string;
+		github: string;
+		resume?: string;
+	};
 	education: Education[];
-	bio: string;
+	bio: {
+		text: string;
+		keyPhrases?: string[];
+	};
 	skills: SkillsParam;
 	projects: Project[];
 	picture?: string;
-	resumeLink?: string;
-	keyPhrases?: string[];
 }
 
 type SkillsParam = {
@@ -29,63 +36,71 @@ class Person {
 	private _name: string;
 	private _dob: Date;
 	private _phone: string;
-	private _socials: SocialLink[];
-	private _address: string;
+	private _socials: {
+		email: string;
+		linkedin: string;
+		github: string;
+		resume?: string;
+	};
 	private _education: Education[];
-	private _bio: string;
+	private _bio: {
+		text: string;
+		keyPhrases?: string[];
+	};
 	private _skills: SkillsParam;
 	private _projects: Project[];
-	private _keyPhrases?: string[];
 	private _picture?: string;
-	private _resumeLink?: string;
 
 	constructor(params: PersonParams) {
-		const {
-			name,
-			dob,
-			phone,
-			socials,
-			address,
-			education,
-			bio,
-			skills,
-			projects,
-			picture,
-			resumeLink,
-			keyPhrases,
-		} = params;
+		const { name, dob, phone, socials, education, bio, skills, projects, picture } = params;
 
-		if (!name || !dob || !phone || !socials || !address || !education || !bio || !skills || !projects) {
+		if (!name || !dob || !phone || !socials || !education || !bio || !skills || !projects) {
 			throw new Error('Invalid data provided to Person constructor');
 		}
 
 		this._name = name;
-		this._dob = dob;
 		this._phone = phone;
 		this._socials = socials;
-		this._address = address;
 		this._education = education;
 		this._bio = bio;
 		this._skills = skills;
 		this._projects = projects;
 		this._picture = picture;
-		this._resumeLink = resumeLink;
-		this._keyPhrases = keyPhrases;
+
+		if (typeof dob === 'string') {
+			this._dob = new Date(dob);
+		} else {
+			this._dob = dob;
+		}
 	}
 
-	static attachMailto(socials: SocialLink[]) {
-		return socials.map((link) => {
-			if (/^e?-?mail(?:\saddress)?$/i.test(link.text) && !link.link.startsWith('mailto')) {
-				return { ...link, link: `mailto:${link.link}` };
-			}
-			return link;
-		});
+	static attachMailto(mail: string) {
+		if (/^e?-?mail(?:\saddress)?$/i.test(mail) && !mail.startsWith('mailto')) {
+			return `mailto:${mail}`;
+		}
+		return mail;
 	}
 
 	static initialsFromName(name: string) {
 		const [first, ...rest] = name.split(' ');
 		const last = rest[rest.length - 1];
 		return `${first[0].toUpperCase()}${last[0].toUpperCase()}`;
+	}
+
+	public static fromJson(data: any): Person {
+		const { name, dob, phone, socials, education, bio, skills, projects, picture } = data;
+
+		return new Person({
+			name,
+			dob,
+			phone,
+			socials,
+			education: education.map((edu: any) => new Education(edu)),
+			bio,
+			skills,
+			projects: projects.map((proj: any) => new Project(proj)),
+			picture,
+		});
 	}
 
 	get name() {
@@ -104,16 +119,25 @@ class Person {
 		return this._phone;
 	}
 
-	get socials() {
-		return Person.attachMailto(this._socials);
+	get socials(): SocialLink[] {
+		return Object.entries(this._socials).map(([key, entry]) => {
+			switch (key) {
+				case 'email':
+					return { text: 'Email', link: Person.attachMailto(entry), icon: ['fas', 'envelope'] };
+				case 'linkedin':
+					return { text: 'LinkedIn', link: entry, icon: ['fab', 'linkedin'] };
+				case 'github':
+					return { text: 'GitHub', link: entry, icon: ['fab', 'github'] };
+				case 'resume':
+					return { text: 'Resume', link: entry, icon: ['fas', 'file-alt'] };
+				default:
+					return { text: key, link: entry, icon: ['fas', 'link'] };
+			}
+		});
 	}
 
 	get picture() {
 		return this._picture;
-	}
-
-	get address() {
-		return this._address;
 	}
 
 	get education() {
@@ -124,21 +148,12 @@ class Person {
 		return this._bio;
 	}
 
-	get resumeLink() {
-		return this._resumeLink;
-	}
-
-	get keyPhrases() {
-		return this._keyPhrases;
-	}
-
 	get contact(): ContactInfo {
 		return {
 			name: this._name,
 			age: this.age,
 			phone: this._phone,
 			socials: this.socials,
-			address: this._address,
 			id: 'contact-information',
 		};
 	}
@@ -147,7 +162,7 @@ class Person {
 		return {
 			name: this._name,
 			age: this.age,
-			bio: { text: this._bio, keyPhrases: this.keyPhrases },
+			bio: this.bio,
 			picture: this._picture,
 			initials: Person.initialsFromName(this._name),
 			id: 'about-me',

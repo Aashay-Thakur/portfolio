@@ -1,5 +1,5 @@
 /* react */
-import { useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 
 /* components */
 import { Appbar, TOC } from '@barrel';
@@ -7,16 +7,7 @@ import { Appbar, TOC } from '@barrel';
 import { me } from '@data';
 /* material-ui */
 import {
-	Box,
-	BoxProps,
-	Container,
-	Divider,
-	Drawer,
-	GlobalStyles,
-	Stack,
-	styled,
-	Typography,
-	useTheme,
+    Box, BoxProps, Container, Divider, Drawer, GlobalStyles, Stack, styled, Typography, useTheme
 } from '@mui/material';
 import { SettingsContext } from '@settings';
 
@@ -36,15 +27,27 @@ const StyledBox = styled(Box, {
 		height: '100%',
 		zIndex: 1000,
 		top: 0,
+		paddingTop: theme.appBarHeight,
 		paddingLeft: 5,
 		backgroundColor: disableMorphism ? theme.palette.background.default : 'none',
 	};
 });
+
+interface ActiveTabProps {
+	activeAcademicTab: number;
+	activeProjectTab: number;
+}
+
+const ActiveTab = createContext<ActiveTabProps>({ activeAcademicTab: 0, activeProjectTab: 0 });
+
 const Portfolio = () => {
 	const { toc, contact, aboutMe, academics, skills, projects } = me;
 	const [open, setOpen] = useState(false); // drawer
 	const theme = useTheme();
 	const { disableMorphism } = useContext(SettingsContext);
+
+	const [activeAcademicTab, setActiveAcademicTab] = useState<number>(0);
+	const [activeProjectTab, setActiveProjectTab] = useState<number>(0);
 
 	function toggleDrawer(): void {
 		setOpen(!open);
@@ -52,7 +55,18 @@ const Portfolio = () => {
 
 	function onTocSelect(id: string): void {
 		setOpen(false);
-		console.log(id);
+		const [section, index] = id.split('_');
+		const element = document.getElementById(section);
+		if (element) {
+			if (section === 'projects') {
+				setActiveProjectTab(Number(index));
+			}
+			if (section === 'academic-history') {
+				setActiveAcademicTab(Number(index));
+			}
+
+			element.scrollIntoView({ behavior: 'smooth', block: 'end' });
+		}
 	}
 
 	function TOCWrapper(): JSX.Element {
@@ -85,10 +99,12 @@ const Portfolio = () => {
 					<Divider />
 				</StyledBox>
 				<Stack spacing={{ xs: 2, md: 5 }}>
-					<Contact contact={contact} />
-					<Academics academics={academics} />
-					<Skills skills={skills} />
-					<Projects projects={projects} />
+					<ActiveTab.Provider value={{ activeAcademicTab, activeProjectTab }}>
+						<Contact contact={contact} />
+						<Academics academics={academics} />
+						<Skills skills={skills} />
+						<Projects projects={projects} />
+					</ActiveTab.Provider>
 				</Stack>
 			</Container>
 			<Drawer open={open} onClose={toggleDrawer}>
@@ -100,4 +116,4 @@ const Portfolio = () => {
 	);
 };
 
-export { Portfolio };
+export { Portfolio, ActiveTab };

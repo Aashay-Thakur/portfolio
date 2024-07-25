@@ -1,7 +1,7 @@
 import { getIcon, SkillName } from '@techMap';
 import { FeaturesType, ProjectDetails, SkillDetails } from '@types';
 
-interface ProjectParams {
+export interface ProjectParams {
 	title: string;
 	description: string;
 	repo: string;

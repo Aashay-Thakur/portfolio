@@ -3,12 +3,7 @@ import { CSSProperties, ReactElement, SVGProps } from 'react';
 import { FunctionInterpolation } from '@emotion/react';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import {
-	CSSInterpolation,
-	CSSObject,
-	Interpolation,
-	PaletteMode,
-	PopoverProps,
-	Theme as ThemeType,
+    CSSInterpolation, CSSObject, Interpolation, PaletteMode, PopoverProps, Theme as ThemeType
 } from '@mui/material';
 import { MixinsOptions } from '@mui/material/styles/createMixins';
 import { Skill, SkillMap, SkillName } from '@techMap';
@@ -65,7 +60,6 @@ interface AboutMe {
 interface ContactInfo {
 	name: string;
 	phone: string;
-	address: string;
 	socials: SocialLink[];
 	id: string;
 	age: number;
@@ -148,20 +142,3 @@ type FeatureIcon = {
 };
 type FeatureList = Array<FeatureArrow | FeatureIcon>;
 type FeaturesType = Record<string, FeatureList> | FeatureList;
-
-/* Theme Types */
-declare module '@mui/material/styles' {
-	interface Theme {
-		appBarHeight: number;
-	}
-	interface ThemeOptions {
-		appBarHeight?: number;
-	}
-	interface Mixins {
-		customScrollbar: {
-			[key: `&::-webkit-scrollbar${string}`]: CSSProperties;
-		};
-		glassMorphism: (theme: ThemeType, props?: GlassMorphismProps) => CSSObject;
-		linearGradient: (theme: ThemeType, props?: LinearGradientProps) => string;
-	}
-}

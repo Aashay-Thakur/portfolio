@@ -1,7 +1,8 @@
-import { useRef } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 
 import { CustomIcon, Milestone } from '@barrel';
 import { Box, IconButton, Paper, Stack, styled } from '@mui/material';
+import { ActiveTab } from '@root/components/Portfolio/Portfolio';
 import { EducationDetails } from '@types';
 
 import styles from './TimelineNoAnim.module.scss';
@@ -10,6 +11,7 @@ const StyledPaper = styled(Paper)(({ theme }) => theme.mixins.customScrollbar);
 
 const TimelineNoAnim = ({ milestones }: { milestones: EducationDetails[] }): JSX.Element => {
 	const ref = useRef<HTMLDivElement>(null);
+	const { activeAcademicTab } = useContext(ActiveTab);
 
 	function scroll(direction: 'up' | 'down') {
 		if (ref.current) {
@@ -22,6 +24,15 @@ const TimelineNoAnim = ({ milestones }: { milestones: EducationDetails[] }): JSX
 			}
 		}
 	}
+
+	useEffect(() => {
+		if (activeAcademicTab !== -1) {
+			const element = document.getElementById(`milestone_${activeAcademicTab}`);
+			if (element) {
+				element.scrollIntoView({ behavior: 'instant', block: 'center' });
+			}
+		}
+	}, [activeAcademicTab]);
 
 	return (
 		<Stack
@@ -38,7 +49,7 @@ const TimelineNoAnim = ({ milestones }: { milestones: EducationDetails[] }): JSX
 			<StyledPaper ref={ref} elevation={12} className={styles.container}>
 				{milestones.map((step, index) => {
 					return (
-						<Box key={index} className={styles.milestone}>
+						<Box id={`milestone_${index}`} key={index} className={styles.milestone}>
 							<Box className={styles.timeline} />
 							<Milestone step={step} />
 						</Box>

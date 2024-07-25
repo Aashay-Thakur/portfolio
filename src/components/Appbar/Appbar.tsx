@@ -3,7 +3,9 @@ import { useContext, useEffect, useRef, useState } from 'react';
 
 import { MenuIcon } from '@assets/MenuToggle/MenuToggle';
 import { CustomIcon } from '@barrel';
-import { alpha, AppBar, Box, IconButton, InputAdornment, InputBase, styled, Toolbar } from '@mui/material';
+import {
+    alpha, AppBar, Box, IconButton, InputAdornment, InputBase, styled, Toolbar
+} from '@mui/material';
 import { SettingsContext } from '@settings';
 
 const MotionAppBar = motion(AppBar);
@@ -38,7 +40,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 	'width': '100%',
 	'& .MuiInputBase-input': {
 		padding: theme.spacing(1, 1, 1, 0),
-		// vertical padding + font size from searchIcon
 		paddingLeft: `calc(1em + ${theme.spacing(4)})`,
 		transition: theme.transitions.create('width'),
 		[theme.breakpoints.up('sm')]: {
@@ -55,19 +56,21 @@ const Appbar = ({ open, onMenuClick }: { open: boolean; onMenuClick: Function })
 	const searchInput = useRef<HTMLInputElement>(null);
 
 	const { scrollY } = useScroll();
-	const [isScrolled, setIsScrolled] = useState(false);
+	const [isVisible, setIsVisible] = useState(true);
+	const [lastScrollY, setLastScrollY] = useState(0);
 
 	useEffect(() => {
 		const unsubscribe = scrollY.on('change', (latest) => {
-			if (latest > 100) {
-				setIsScrolled(true);
+			if (latest > lastScrollY && latest > 100) {
+				setIsVisible(false);
 			} else {
-				setIsScrolled(false);
+				setIsVisible(true);
 			}
+			setLastScrollY(latest);
 		});
 
 		return () => unsubscribe();
-	}, [scrollY]);
+	}, [lastScrollY, scrollY]);
 
 	useEffect(() => {
 		const handleKeyDown = (event: KeyboardEvent) => {
@@ -92,7 +95,7 @@ const Appbar = ({ open, onMenuClick }: { open: boolean; onMenuClick: Function })
 			<Box className="appbar-container">
 				<MotionAppBar
 					initial={{ y: 0 }}
-					animate={{ y: isScrolled ? -64 : 0 }}
+					animate={{ y: isVisible ? 0 : -64 }}
 					transition={{ ease: 'easeOut', duration: 0.3 }}
 					sx={{
 						flexGrow: 1,

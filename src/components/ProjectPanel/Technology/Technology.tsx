@@ -34,7 +34,7 @@ const Technology = ({ stack }: TechnologyProps) => {
 			spacing={{ xs: 5, sm: 3, md: 5 }}
 			container
 			sx={{
-				padding: 5,
+				padding: { xs: 1, md: 5 },
 				height: '100%',
 				width: '100%',
 			}}>
@@ -51,6 +51,8 @@ const Technology = ({ stack }: TechnologyProps) => {
 						justifyContent: 'center',
 						alignItems: 'center',
 						padding: 1,
+						scroll: 'auto',
+						flexGrow: 1,
 					}}
 					useFlexGap>
 					{stack.map((item, index) => {

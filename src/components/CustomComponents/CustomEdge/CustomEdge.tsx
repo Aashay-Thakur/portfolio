@@ -12,6 +12,8 @@ const CustomEdge: React.FC<CustomEdgeProps> = ({ children, content }) => {
 	const [open, setOpen] = useState<boolean>(false);
 	const portalRef = useContext(PortalContext);
 
+	const iOS = typeof navigator !== 'undefined' && /iPad|iPhone|iPod/.test(navigator.userAgent);
+
 	const handleToggleDrawer = (newOpen: boolean) => () => {
 		setOpen(newOpen);
 	};
@@ -22,6 +24,8 @@ const CustomEdge: React.FC<CustomEdgeProps> = ({ children, content }) => {
 			{portalRef && open && (
 				<Portal container={portalRef.current}>
 					<SwipeableDrawer
+						disableBackdropTransition={!iOS}
+						disableDiscovery={iOS}
 						anchor="bottom"
 						open={open}
 						onClose={handleToggleDrawer(false)}

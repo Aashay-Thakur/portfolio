@@ -1,8 +1,6 @@
 import { ReactNode, useContext } from 'react';
 
-import {
-    Box, FormControl, Grid, GridProps, InputLabel, MenuItem, Select, Switch, Typography
-} from '@mui/material';
+import { Box, FormControl, Grid, GridProps, InputLabel, MenuItem, Select, Switch, Typography } from '@mui/material';
 import { SettingsContext } from '@settings';
 import { ColorBlindMode } from '@types';
 
@@ -114,7 +112,7 @@ const ModalContent = () => {
 			/>
 			<Row
 				md={12}
-				title="Disbale Glassmorphism Effect"
+				title="Disanle Glassmorphism Effect"
 				description="Disable all the blur effects on cards. Helps with motion sickness."
 				action={<Switch checked={disableMorphism} onChange={toggleMorphism} />}
 			/>

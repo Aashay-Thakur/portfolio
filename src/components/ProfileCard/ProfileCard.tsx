@@ -13,7 +13,6 @@ const MotionBox = motion(Box);
 const StyledMotionBox = styled(MotionBox)(({ theme }) => {
 	const styles: CSSObject = {
 		...theme.mixins.glassMorphism(theme, { gradientOpacity: 0.65 }),
-		padding: theme.spacing(8),
 		width: '100%',
 	};
 
@@ -128,7 +127,7 @@ const ProfileCard = ({ aboutMe }: { aboutMe: AboutMe }) => {
 					{aboutMe.initials}
 				</Avatar>
 			</MotionBox>
-			<StyledMotionBox style={checkAnimSetting({ y: card2Y })}>
+			<StyledMotionBox style={checkAnimSetting({ y: card2Y })} sx={{ padding: { xs: 2, md: 6 } }}>
 				<Typography variant="h3" align="center" gutterBottom>
 					{aboutMe.name}
 				</Typography>

@@ -1,4 +1,5 @@
-import { Box, Divider, Modal, styled, Typography } from '@mui/material';
+import { Box, Divider, Hidden, Modal, styled, SwipeableDrawer, Typography } from '@mui/material';
+import { grey } from '@mui/material/colors';
 
 import { ModalContent } from './ModalContent';
 
@@ -19,24 +20,62 @@ const StyledBox = styled(Box)(({ theme }) => ({
 	...theme.mixins.customScrollbar,
 }));
 
+const Puller = styled('div')(({ theme }) => ({
+	width: 30,
+	height: 6,
+	backgroundColor: theme.palette.mode === 'light' ? grey[300] : grey[900],
+	borderRadius: 3,
+	position: 'absolute',
+	top: 8,
+	left: 'calc(50% - 15px)',
+}));
+
 const SettingsModal = (props: SettingsModalProps) => {
 	const { open, onClose } = props;
+	const iOS = typeof navigator !== 'undefined' && /iPad|iPhone|iPod/.test(navigator.userAgent);
 
 	return (
-		<Modal
-			open={open}
-			onClose={onClose}
-			aria-labelledby="modal-title"
-			aria-describedby="modal-description"
-			keepMounted>
-			<StyledBox sx={{ width: { xs: '70vw', md: '50vw' } }}>
-				<Typography variant="h5" id="modal-title">
-					Settings
-				</Typography>
-				<Divider />
-				<ModalContent />
-			</StyledBox>
-		</Modal>
+		<>
+			<Hidden smUp>
+				<SwipeableDrawer
+					disableBackdropTransition={!iOS}
+					disableDiscovery={iOS}
+					anchor="bottom"
+					open={open}
+					onClose={onClose}
+					onOpen={() => {}}>
+					<Puller onClick={onClose} />
+					<Box
+						sx={{
+							width: '100vw',
+							padding: 2,
+							backgroundColor: 'background.paper',
+							overflow: 'auto',
+							maxHeight: '80vh',
+						}}>
+						<Typography variant="h5">Settings</Typography>
+						<Divider />
+						<ModalContent />
+					</Box>
+				</SwipeableDrawer>
+			</Hidden>
+			<Hidden smDown>
+				<Modal
+					open={open}
+					onClose={onClose}
+					aria-labelledby="modal-title"
+					aria-describedby="modal-description"
+					keepMounted>
+					<StyledBox sx={{ width: { xs: '70vw', md: '50vw' } }}>
+						<Typography variant="h5" id="modal-title">
+							Settings
+						</Typography>
+						<Divider />
+						<ModalContent />
+					</StyledBox>
+				</Modal>
+			</Hidden>
+		</>
 	);
 };
 

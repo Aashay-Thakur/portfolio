@@ -3,9 +3,7 @@ import { useContext, useEffect, useRef, useState } from 'react';
 
 import { MenuIcon } from '@assets/MenuToggle/MenuToggle';
 import { CustomIcon } from '@barrel';
-import {
-    alpha, AppBar, Box, IconButton, InputAdornment, InputBase, styled, Toolbar
-} from '@mui/material';
+import { alpha, AppBar, Box, Hidden, IconButton, InputAdornment, InputBase, styled, Toolbar } from '@mui/material';
 import { SettingsContext } from '@settings';
 
 const MotionAppBar = motion(AppBar);
@@ -128,22 +126,24 @@ const Appbar = ({ open, onMenuClick }: { open: boolean; onMenuClick: Function })
 								inputProps={{ 'aria-label': 'search' }}
 								ref={searchInput}
 								endAdornment={
-									<InputAdornment position="end">
-										<Box
-											sx={{
-												display: 'flex',
-												alignItems: 'center',
-												justifyContent: 'center',
-												borderRadius: 1,
-												fontSize: 10,
-												border: '1px solid',
-												paddingX: 0.5,
-												marginRight: 0.5,
-												color: 'white',
-											}}>
-											Ctrl+K
-										</Box>
-									</InputAdornment>
+									<Hidden smDown>
+										<InputAdornment position="end">
+											<Box
+												sx={{
+													display: 'flex',
+													alignItems: 'center',
+													justifyContent: 'center',
+													borderRadius: 1,
+													fontSize: 10,
+													border: '1px solid',
+													paddingX: 0.5,
+													marginRight: 0.5,
+													color: 'white',
+												}}>
+												Ctrl+K
+											</Box>
+										</InputAdornment>
+									</Hidden>
 								}
 							/>
 						</Search>

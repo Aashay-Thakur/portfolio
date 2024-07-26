@@ -227,7 +227,7 @@ const blacklist: SkillName[] = ['ansible', 'markdown', 'expressjs'];
 
 export function getIcon(name: SkillName): SkillDetails {
 	name = name.toLowerCase().trim() as SkillName;
-	var src = `/src/assets/icons/${map[name].icon}`;
+	var src = `/assets/icons/${map[name].icon}`;
 	if (blacklist.includes(name)) {
 		const mode = getComputedStyle(document.documentElement).getPropertyValue('--mui-palette-mode');
 		if (mode === 'dark') {

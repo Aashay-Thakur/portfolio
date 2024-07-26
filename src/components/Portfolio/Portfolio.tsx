@@ -6,14 +6,12 @@ import { Appbar, TOC } from '@barrel';
 /* data */
 import { me } from '@data';
 /* material-ui */
-import {
-    Box, BoxProps, Container, Divider, Drawer, GlobalStyles, Stack, styled, Typography, useTheme
-} from '@mui/material';
+import { Box, BoxProps, Container, Drawer, GlobalStyles, Stack, styled, Typography, useTheme } from '@mui/material';
 import { SettingsContext } from '@settings';
 
 import { AboutMe, Academics, Contact, Projects, Skills } from './portfolioBarrel';
 
-const StyledBox = styled(Box, {
+const StyledTypography = styled(Typography, {
 	shouldForwardProp: (prop) => prop !== 'disableMorphism',
 })<BoxProps & { disableMorphism: boolean }>(({ theme, disableMorphism }) => {
 	return {
@@ -27,9 +25,10 @@ const StyledBox = styled(Box, {
 		height: '100%',
 		zIndex: 1000,
 		top: 0,
-		paddingTop: theme.appBarHeight,
-		paddingLeft: 5,
+		paddingTop: theme.spacing(1),
+		paddingBottom: theme.spacing(1),
 		backgroundColor: disableMorphism ? theme.palette.background.default : 'none',
+		borderBottom: `1px solid ${theme.palette.divider}`,
 	};
 });
 
@@ -83,21 +82,9 @@ const Portfolio = () => {
 			<Appbar open={open} onMenuClick={toggleDrawer} />
 			<Container sx={{ paddingTop: `${theme.appBarHeight}px` }}>
 				<AboutMe aboutMe={aboutMe} />
-				<StyledBox disableMorphism={disableMorphism}>
-					<Box
-						sx={{
-							position: 'relative',
-							width: '100%',
-							height: '120px',
-							display: 'flex',
-							alignItems: 'center',
-						}}>
-						<Typography variant="h3" marginTop={5} gutterBottom>
-							Portfolio
-						</Typography>
-					</Box>
-					<Divider />
-				</StyledBox>
+				<StyledTypography disableMorphism={disableMorphism} variant="h3" marginTop={5} gutterBottom>
+					Portfolio
+				</StyledTypography>
 				<Stack spacing={{ xs: 2, md: 5 }}>
 					<ActiveTab.Provider value={{ activeAcademicTab, activeProjectTab }}>
 						<Contact contact={contact} />

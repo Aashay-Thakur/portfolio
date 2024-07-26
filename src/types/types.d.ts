@@ -1,9 +1,14 @@
-import { CSSProperties, ReactElement, SVGProps } from 'react';
+import { CSSProperties, DragEventHandler, ReactElement, SVGProps } from 'react';
 
 import { FunctionInterpolation } from '@emotion/react';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import {
-    CSSInterpolation, CSSObject, Interpolation, PaletteMode, PopoverProps, Theme as ThemeType
+	CSSInterpolation,
+	CSSObject,
+	Interpolation,
+	PaletteMode,
+	PopoverProps,
+	Theme as ThemeType,
 } from '@mui/material';
 import { MixinsOptions } from '@mui/material/styles/createMixins';
 import { Skill, SkillMap, SkillName } from '@techMap';

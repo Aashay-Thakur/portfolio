@@ -25,7 +25,7 @@ const ProjectPanel = ({ project, onChange }: { project: ProjectDetails; onChange
 
 	return (
 		<Stack width="100%" height="100%" spacing={1}>
-			<Typography width="100%" align="center" variant="h4">
+			<Typography width="100%" variant="h4">
 				{title}
 			</Typography>
 			<CustomTabs onChange={onChange} list={list} />

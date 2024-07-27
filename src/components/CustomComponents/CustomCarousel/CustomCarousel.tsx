@@ -18,11 +18,13 @@ interface CustomCarouselProps {
 	sideArrows?: boolean;
 	heightUpdateDependency?: any;
 	activeIndex?: number;
+	stopDrag?: boolean;
+	paginationPosition?: 'top' | 'bottom';
 }
 
 const variants = {
 	enter: (direction: number) => ({
-		x: direction > 0 ? 1000 : -1000,
+		x: direction > 0 ? '100%' : '-100%',
 		opacity: 0,
 	}),
 	center: {
@@ -32,7 +34,7 @@ const variants = {
 	},
 	exit: (direction: number) => ({
 		zIndex: 0,
-		x: direction < 0 ? 1000 : -1000,
+		x: direction < 0 ? '100%' : '-100%',
 		opacity: 0,
 	}),
 };
@@ -53,6 +55,8 @@ const CustomCarousel = ({
 	width = '100%',
 	heightUpdateDependency = null,
 	activeIndex = 0,
+	stopDrag = false,
+	paginationPosition = 'bottom',
 }: CustomCarouselProps): JSX.Element => {
 	const [[page, direction], setPage] = useState([initialIndex, 0]);
 	const childRef = useRef<HTMLDivElement>(null);
@@ -100,7 +104,14 @@ const CustomCarousel = ({
 					<CustomIcon style={{ aspectRatio: 1 }} icon={['fas', 'angle-left']} />
 				</IconButton>
 			)}
-			<Stack sx={{ width: '100%', justifyContent: 'center', alignItems: 'center' }} useFlexGap>
+			<Stack
+				sx={{
+					width: '100%',
+					justifyContent: 'center',
+					alignItems: 'center',
+					flexDirection: paginationPosition === 'top' ? 'column-reverse' : 'column',
+				}}
+				useFlexGap>
 				<Box
 					ref={childRef}
 					sx={{
@@ -121,7 +132,7 @@ const CustomCarousel = ({
 								x: { type: 'spring', stiffness: 260, damping: 20 },
 								opacity: { duration: 0.2 },
 							}}
-							drag="x"
+							drag={stopDrag ? false : 'x'}
 							dragConstraints={{ left: 0, right: 0 }}
 							dragElastic={1}
 							onDragEnd={handleDragEnd}

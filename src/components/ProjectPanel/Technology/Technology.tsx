@@ -1,7 +1,7 @@
 import { AnimatePresence, motion, MotionProps } from 'framer-motion';
-import { ReactNode, useState } from 'react';
+import { ReactNode, SyntheticEvent, useState } from 'react';
 
-import { Box, Grid, IconButton, Stack, Typography } from '@mui/material';
+import { Box, Grid, Tab, Tabs, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { SkillDetails } from '@types';
 
 interface TechnologyProps {
@@ -28,6 +28,12 @@ const AppearAnimationWrapper = ({ children, ...motionProps }: MotionIconButtonPr
 
 const Technology = ({ stack }: TechnologyProps) => {
 	const [active, setActive] = useState<number>(0);
+	const theme = useTheme();
+	const isXs = useMediaQuery(theme.breakpoints.down('sm'));
+
+	const handleOnChange = (_: SyntheticEvent, newValue: number) => {
+		setActive(newValue);
+	};
 
 	return (
 		<Grid
@@ -39,38 +45,26 @@ const Technology = ({ stack }: TechnologyProps) => {
 				width: '100%',
 			}}>
 			<Grid xs={12} sm={2} item>
-				<Stack
-					direction={{ xs: 'row', sm: 'column' }}
-					spacing={1}
+				<Tabs
 					sx={{
-						borderRight: { xs: 0, sm: 1 },
-						borderBottom: { xs: 1, sm: 0 },
-						borderColor: 'divider',
-						height: '100%',
 						width: '100%',
+						height: '100%',
 						justifyContent: 'center',
-						alignItems: 'center',
-						padding: 1,
-						scroll: 'auto',
-						flexGrow: 1,
 					}}
-					useFlexGap>
-					{stack.map((item, index) => {
-						return (
-							<AppearAnimationWrapper key={item.name} transition={{ duration: 0.3, delay: index * 0.1 }}>
-								<IconButton
-									onClick={() => setActive(index)}
-									key={item.name}
-									sx={{
-										height: 50,
-										width: 50,
-									}}>
-									<img alt={item.name} src={item.src} height="100%" width="100%" />
-								</IconButton>
-							</AppearAnimationWrapper>
-						);
-					})}
-				</Stack>
+					orientation={isXs ? 'horizontal' : 'vertical'}
+					variant="scrollable"
+					value={active}
+					onChange={handleOnChange}
+					centered>
+					{stack.map((item, index) => (
+						<Tab
+							key={`tab_${index}`}
+							component="div"
+							onClick={() => setActive(index)}
+							icon={<img src={item.src} height={30} width={30} />}
+						/>
+					))}
+				</Tabs>
 			</Grid>
 			<Grid xs={12} sm={10} item container>
 				<Grid xs={12} item>

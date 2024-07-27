@@ -32,7 +32,9 @@ const Projects = ({ projects }: { projects: { projects: ProjectDetails[]; id: st
 					width="100%"
 					height="auto"
 					list={list}
-					sideArrows
+					stopDrag
+					pagination
+					paginationPosition="top"
 				/>
 			</Stack>
 		</section>

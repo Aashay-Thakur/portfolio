@@ -45,12 +45,9 @@ const InfoCardContent = forwardRef<HTMLDivElement, InfoCardContentProps>(({ skil
 	if (data === 'error') {
 		return (
 			<CustomCard ref={ref} headerProps={{ title: 'Error', subheader: '500' }}>
-				<Stack direction="row" sx={{ justifyContent: 'center' }} useFlexGap>
-					<Typography variant="h3" sx={{ height: 'max-content' }}>
-						error
-					</Typography>
-					<Typography variant="h1">500</Typography>
-				</Stack>
+				<Typography variant="h4" gutterBottom>
+					Something Went Wrong!
+				</Typography>
 				<Typography variant="body1">Sorry! There was a problem while fetching the information.</Typography>
 			</CustomCard>
 		);

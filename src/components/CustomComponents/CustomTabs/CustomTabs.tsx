@@ -2,9 +2,14 @@ import React, { ReactEventHandler, useState } from 'react';
 
 import { Box, Stack, Tab, Tabs } from '@mui/material';
 
-export interface TabInterface {
+interface TabInterface {
 	label: string;
 	content: JSX.Element | string;
+}
+
+interface CustomTabsProps {
+	list: TabInterface[];
+	onChange?: ReactEventHandler;
 }
 
 function a11yProps(index: number) {
@@ -14,7 +19,7 @@ function a11yProps(index: number) {
 	};
 }
 
-const CustomTabs: React.FC<{ list: TabInterface[]; onChange?: ReactEventHandler }> = ({ list, onChange }) => {
+const CustomTabs: React.FC<CustomTabsProps> = ({ list, onChange }) => {
 	const [active, setActive] = useState<number>(0);
 
 	const handleChange = (e: React.SyntheticEvent, newValue: number) => {
@@ -38,6 +43,7 @@ const CustomTabs: React.FC<{ list: TabInterface[]; onChange?: ReactEventHandler 
 					))}
 				</Tabs>
 			</Box>
+
 			{list.map((item, index) => (
 				<Box
 					key={`tabpanel_${index}`}
@@ -45,7 +51,7 @@ const CustomTabs: React.FC<{ list: TabInterface[]; onChange?: ReactEventHandler 
 					hidden={active !== index}
 					id={`simple-tabpanel-${index}`}
 					aria-labelledby={`simple-tab-${index}`}
-					sx={{ p: 3 }}>
+					sx={{ p: { xs: 1, sm: 3 } }}>
 					{active === index && <Box>{item.content}</Box>}
 				</Box>
 			))}

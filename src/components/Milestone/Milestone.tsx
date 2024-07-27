@@ -15,7 +15,9 @@ const Milestone = ({ step }: { step: EducationDetails }) => {
 				sx={{
 					justifyContent: 'space-between',
 					alignItems: 'flex-end',
-				}}>
+					gap: 2,
+				}}
+				useFlexGap>
 				<Stack
 					direction="row"
 					spacing={3}
@@ -28,7 +30,9 @@ const Milestone = ({ step }: { step: EducationDetails }) => {
 						{step.endYear}
 					</Typography>
 				</Stack>
-				<Typography variant="h5">{getGrade(step.grade)}</Typography>
+				<Typography variant="h5" fontSize={{ xs: 24 }}>
+					{getGrade(step.grade)}
+				</Typography>
 			</Stack>
 			<Typography variant="h5">{step.institute.full}</Typography>
 		</Stack>

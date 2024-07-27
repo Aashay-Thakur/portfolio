@@ -1,8 +1,5 @@
 {
-	"projects": {
-		"default": "portfolio-53925"
-	},
-	"targets": {},
-	"etags": {},
-	"dataconnectEmulatorConfig": {}
+  "projects": {
+    "default": "portfolio-d513f"
+  }
 }

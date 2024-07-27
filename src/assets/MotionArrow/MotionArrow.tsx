@@ -84,7 +84,7 @@ const MotionArrow = ({
 				fill="transparent"
 				stroke={color || theme.palette.secondary.main}
 				strokeWidth={strokeWidth}
-				initial={{ pathLength: 0, pathOffset: 0 }}
+				initial={{ pathLength: 1, pathOffset: 1 }}
 				animate={{ pathLength: [0, 1], pathOffset: [0, 1] }}
 				transition={{
 					duration,

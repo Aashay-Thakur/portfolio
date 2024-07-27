@@ -1,6 +1,7 @@
 /* react */
 import { createContext, useContext, useEffect, useState } from 'react';
 
+import Logo from '@assets/Logo/Logo';
 /* components */
 import { Appbar, TOC } from '@barrel';
 /* data */
@@ -96,6 +97,13 @@ const Portfolio = () => {
 			</Container>
 			<Drawer open={open} onClose={toggleDrawer}>
 				<Box paddingTop={`${theme.appBarHeight}px`}>
+					<Box
+						sx={{
+							display: 'grid',
+							placeItems: 'center',
+						}}>
+						<Logo />
+					</Box>
 					<TOCWrapper />
 				</Box>
 			</Drawer>

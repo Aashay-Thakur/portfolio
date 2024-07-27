@@ -49,10 +49,10 @@ const Technology = ({ stack }: TechnologyProps) => {
 					sx={{
 						width: '100%',
 						height: '100%',
-						justifyContent: 'center',
 					}}
 					orientation={isXs ? 'horizontal' : 'vertical'}
 					variant="scrollable"
+					scrollButtons={false}
 					value={active}
 					onChange={handleOnChange}
 					centered>

@@ -107,13 +107,13 @@ const CustomCarousel = ({
 			<Stack
 				sx={{
 					width: '100%',
+					height: '100%',
 					justifyContent: 'center',
 					alignItems: 'center',
 					flexDirection: paginationPosition === 'top' ? 'column-reverse' : 'column',
 				}}
 				useFlexGap>
 				<Box
-					ref={childRef}
 					sx={{
 						height: height === 'auto' ? autoHeight : height,
 						width,
@@ -122,6 +122,7 @@ const CustomCarousel = ({
 					}}>
 					<AnimatePresence initial={false} custom={direction}>
 						<MotionBox
+							ref={childRef}
 							key={page}
 							custom={direction}
 							variants={!disableAnimations ? variants : {}}

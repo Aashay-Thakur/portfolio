@@ -1,5 +1,4 @@
 import React, { ReactNode, useContext, useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
 
 import { Box, Portal, SwipeableDrawer } from '@mui/material';
 import { PortalContext } from '@root/App';
@@ -12,33 +11,26 @@ interface CustomEdgeProps {
 const CustomEdge: React.FC<CustomEdgeProps> = ({ children, content }) => {
 	const [open, setOpen] = useState<boolean>(false);
 	const portalRef = useContext(PortalContext);
-	const navigate = useNavigate();
-	const location = useLocation();
 	const iOS = typeof navigator !== 'undefined' && /iPad|iPhone|iPod/.test(navigator.userAgent);
 
 	const handleToggleDrawer = (newOpen: boolean) => () => {
 		setOpen(newOpen);
 	};
 
-	useEffect(() => {
-		const handlePopState = () => {
-			if (open) {
-				setOpen(false);
-			}
-		};
+	function handleBackButton(e: PopStateEvent) {
+		if (open) {
+			e.preventDefault();
+			handleToggleDrawer(false);
+		}
+	}
 
-		window.addEventListener('popstate', handlePopState);
+	useEffect(() => {
+		window.addEventListener('popstate', handleBackButton);
 
 		return () => {
-			window.removeEventListener('popstate', handlePopState);
+			window.removeEventListener('popstate', handleBackButton);
 		};
 	}, [open]);
-
-	useEffect(() => {
-		if (open) {
-			navigate(location.pathname, { replace: true });
-		}
-	}, [open, navigate, location.pathname]);
 
 	return (
 		<>

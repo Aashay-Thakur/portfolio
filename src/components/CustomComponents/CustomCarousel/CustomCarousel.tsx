@@ -122,7 +122,6 @@ const CustomCarousel = ({
 					}}>
 					<AnimatePresence initial={false} custom={direction}>
 						<MotionBox
-							ref={childRef}
 							key={page}
 							custom={direction}
 							variants={!disableAnimations ? variants : {}}
@@ -142,7 +141,9 @@ const CustomCarousel = ({
 								height: '100%',
 								width: '100%',
 							}}>
-							<div style={{ width: '100%', display: 'inline-block' }}>{list[page].content}</div>
+							<Box ref={childRef} sx={{ width: '100%', display: 'inline-block' }}>
+								{list[page].content}
+							</Box>
 						</MotionBox>
 					</AnimatePresence>
 				</Box>

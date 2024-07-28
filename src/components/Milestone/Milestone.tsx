@@ -1,41 +1,28 @@
-import { Stack, Typography } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 import { EducationDetails } from '@types';
+import { getGrade } from '@utils/helper';
 
 const Milestone = ({ step }: { step: EducationDetails }) => {
-	function getGrade(grade: EducationDetails['grade']): string {
-		if (grade?.grade === undefined) return '';
-		const type = grade.type === 'Percentage' ? '%' : ' CGPA';
-		return `${grade.grade}${type}`;
-	}
-
 	return (
-		<Stack spacing={2} sx={{ width: '100%', height: '100%', justifyContent: 'center' }} useFlexGap>
-			<Stack
-				direction="row"
-				sx={{
-					justifyContent: 'space-between',
-					alignItems: 'flex-end',
-					gap: 2,
-				}}
-				useFlexGap>
-				<Stack
-					direction="row"
-					spacing={3}
-					sx={{
-						alignItems: 'flex-end',
-					}}
-					useFlexGap>
-					<Typography variant="h4">{step.degree.short}</Typography>
-					<Typography sx={{ fontWeight: 'bold' }} variant="h6">
-						{step.endYear}
-					</Typography>
-				</Stack>
-				<Typography variant="h5" fontSize={{ xs: 24 }}>
-					{getGrade(step.grade)}
-				</Typography>
-			</Stack>
-			<Typography variant="h5">{step.institute.full}</Typography>
-		</Stack>
+		<Grid
+			sx={{
+				alignItems: 'flex-end',
+			}}
+			spacing={2}
+			container>
+			<Grid item>
+				<Typography fontSize={{ xs: 24, sm: 34 }}>{step.degree.short}</Typography>
+			</Grid>
+			<Grid item>
+				<Typography>{step.endYear}</Typography>
+			</Grid>
+			<Grid flexGrow={1} textAlign={{ sm: 'right' }} item>
+				<Typography fontSize={{ xs: 22, sm: 28 }}>{getGrade(step.grade)}</Typography>
+			</Grid>
+			<Grid xs={12} item>
+				<Typography fontSize={{ xs: 16, sm: 24 }}>{step.institute.full}</Typography>
+			</Grid>
+		</Grid>
 	);
 };
 

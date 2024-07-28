@@ -3,7 +3,7 @@ import { Box, Divider, Grid, Stack, Typography } from '@mui/material';
 import { getIcon, SkillName } from '@techMap';
 
 const Footer = () => {
-	const iconList: SkillName[] = ['react', 'typescript', 'materialui'];
+	const iconList: SkillName[] = ['react', 'typescript', 'materialui', 'framermotion'];
 	const icons = iconList.map((icon) => getIcon(icon));
 
 	return (
@@ -27,8 +27,8 @@ const Footer = () => {
 							alignItems: 'center',
 						}}
 						useFlexGap>
-						{icons.map((icon) => (
-							<CustomLink to={icon.link} disableCustomStyles>
+						{icons.map((icon, index) => (
+							<CustomLink key={`${icon.name}_icon_${index}`} to={icon.link} disableCustomStyles>
 								<Box
 									sx={{
 										'transition': 'transform 0.2s ease-out',

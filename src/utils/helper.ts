@@ -1,4 +1,5 @@
 import { hslToRgb, rgbToHex } from '@mui/material';
+import { EducationDetails } from '@types';
 
 export async function* fillGenerator(
 	text: string,
@@ -104,4 +105,10 @@ export function isColorDark(color: string): boolean {
 	if (!rgb) return false;
 	const brightness = (parseInt(rgb[0]) * 299 + parseInt(rgb[1]) * 587 + parseInt(rgb[2]) * 114) / 1000;
 	return brightness < 128;
+}
+
+export function getGrade(grade: EducationDetails['grade']): string {
+	if (grade?.grade === undefined) return '';
+	const type = grade.type === 'Percentage' ? '%' : ' CGPA';
+	return `${grade.grade}${type}`;
 }

@@ -2,7 +2,9 @@
 import { useContext } from 'react';
 
 /* FontAwesome */
-import { ArrowDownwardSharp, ArrowUpwardSharp, ContrastSharp, SettingsSharp } from '@mui/icons-material';
+import {
+    ArrowDownwardSharp, ArrowUpwardSharp, ContrastSharp, SettingsSharp
+} from '@mui/icons-material';
 /* MUI */
 import { SpeedDial, SpeedDialAction, SpeedDialIcon } from '@mui/material';
 /* Types */
@@ -25,25 +27,25 @@ function BasicSpeedDial({ settingsModalOnOpen }: { settingsModalOnOpen: () => vo
 
 	var actions = [
 		{
-			icon: <SettingsSharp color="primary" />,
+			icon: <SettingsSharp color="action" />,
 			name: 'Open Accessibility Settings',
 			event: openAccessibilitySettings,
 			key: 'settings',
 		},
 		{
-			icon: <ContrastSharp color="primary" />,
+			icon: <ContrastSharp color="action" />,
 			name: `Switch to ${themeMode === 'dark' ? 'Light' : 'Dark'} Mode`,
 			event: toggleThemeMode,
 			key: 'colorMode',
 		},
 		{
-			icon: <ArrowDownwardSharp color="primary" />,
+			icon: <ArrowDownwardSharp color="action" />,
 			name: 'Scroll Down',
 			event: scrollDown,
 			key: 'scrollDown',
 		},
 		{
-			icon: <ArrowUpwardSharp color="primary" />,
+			icon: <ArrowUpwardSharp color="action" />,
 			name: 'Scroll Up',
 			event: scrollUp,
 			key: 'scrollUp',

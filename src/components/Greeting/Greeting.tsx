@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router';
 
 import Logo from '@assets/Logo/Logo';
+import { CustomPopup } from '@barrel';
 import { Box, Button, Divider, Grid, Typography } from '@mui/material';
 
 const Greeting = () => {
@@ -56,7 +57,20 @@ const Greeting = () => {
 							<li>Storing your saved Accessibility Settings</li>
 						</ul>
 					</Box>
-					<p /> <abbr title="Too Long Didn't Read">tldr;</abbr>
+					<p />
+				</Typography>
+				<Grid item xs={1}>
+					<Typography component="div" textAlign="justify" color="text.primary" variant="body1">
+						<CustomPopup
+							sx={{
+								color: 'white',
+							}}
+							message="Too Long, Didn't Read">
+							tldr;
+						</CustomPopup>
+					</Typography>
+				</Grid>
+				<Typography component="div" textAlign="justify" color="text.primary" variant="body1">
 					<p /> Website uses Cookies and/or Local Storage to save site settings, and nothing more. Website is
 					not monetized.
 				</Typography>

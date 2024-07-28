@@ -27,7 +27,7 @@ const Timeline = ({ milestones }: { milestones: EducationDetails[] }) => {
 		};
 	});
 
-	return <CustomCarousel activeIndex={activeAcademicTab} width="100%" height={'auto'} list={list} pagination />;
+	return <CustomCarousel activeIndex={activeAcademicTab} width="100%" height={200} list={list} pagination />;
 };
 
 export { Timeline };

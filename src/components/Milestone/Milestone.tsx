@@ -20,7 +20,9 @@ const Milestone = ({ step }: { step: EducationDetails }) => {
 				<Typography fontSize={{ xs: 22, sm: 28 }}>{getGrade(step.grade)}</Typography>
 			</Grid>
 			<Grid xs={12} item>
-				<Typography fontSize={{ xs: 16, sm: 24 }}>{step.institute.full}</Typography>
+				<Typography fontSize={{ xs: 16, sm: 24 }}>
+					{step.institute.full} ({step.institute.short})
+				</Typography>
 			</Grid>
 		</Grid>
 	);

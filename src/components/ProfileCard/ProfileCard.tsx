@@ -1,5 +1,5 @@
 import { motion, MotionValue, useScroll, useTransform } from 'framer-motion';
-import { useContext, useEffect, useMemo, useState } from 'react';
+import { useContext, useEffect, useMemo, useRef, useState } from 'react';
 
 import { Avatar, Box, Container, CSSObject, styled, Typography, useTheme } from '@mui/material';
 import { SettingsContext } from '@settings';
@@ -22,6 +22,8 @@ const StyledMotionBox = styled(MotionBox)(({ theme }) => {
 const ProfileCard = ({ aboutMe }: { aboutMe: AboutMe }) => {
 	const [text, setText] = useState<string>('');
 	const [done, setDone] = useState<boolean>(false);
+	const [waveState, setWaveState] = useState<'fluid' | 'line'>('fluid');
+	const [textBoxHeight, setTextBoxHeight] = useState<number | 'auto'>('auto');
 
 	const { scrollYProgress }: { scrollYProgress: MotionValue<number> } = useScroll();
 
@@ -31,7 +33,29 @@ const ProfileCard = ({ aboutMe }: { aboutMe: AboutMe }) => {
 	const theme = useTheme();
 	const { disableAnimations } = useContext(SettingsContext);
 
+	const textBoxRef = useRef<HTMLDivElement | null>(null);
+
 	const checkAnimSetting = useMemo(() => (props: any) => disableAnimations ? {} : props, [disableAnimations]);
+
+	useEffect(() => {
+		const calculateHeight = () => {
+			const tempDiv = document.createElement('div');
+			tempDiv.style.position = 'absolute';
+			tempDiv.style.visibility = 'hidden';
+			tempDiv.style.height = 'auto';
+			tempDiv.style.width = textBoxRef.current?.offsetWidth + 'px';
+			tempDiv.style.whiteSpace = 'pre-wrap';
+			tempDiv.innerText = aboutMe.bio.text;
+
+			document.body.appendChild(tempDiv);
+			const height = tempDiv.clientHeight;
+			document.body.removeChild(tempDiv);
+
+			setTextBoxHeight(height);
+		};
+
+		calculateHeight();
+	}, [aboutMe.bio.text]);
 
 	useEffect(() => {
 		const fillText = async () => {
@@ -52,7 +76,7 @@ const ProfileCard = ({ aboutMe }: { aboutMe: AboutMe }) => {
 		};
 
 		fillText();
-	}, []);
+	}, [aboutMe.bio.text, disableAnimations]);
 
 	const highlightText = (text: string) => {
 		const keyPhrases = [
@@ -108,12 +132,13 @@ const ProfileCard = ({ aboutMe }: { aboutMe: AboutMe }) => {
 			<MotionBox
 				initial={{ y: 0 }}
 				style={checkAnimSetting({ y: card1Y })}
+				onClick={() => setWaveState((prev) => (prev === 'fluid' ? 'line' : 'fluid'))}
 				sx={{
 					position: 'relative',
 					display: 'grid',
 					placeItems: 'center',
 				}}>
-				<Waves type="fluid" disableAnimations={disableAnimations} />
+				<Waves type={waveState} disableAnimations={disableAnimations} />
 				<Avatar
 					sx={{
 						backgroundColor: 'primary.main',
@@ -131,7 +156,7 @@ const ProfileCard = ({ aboutMe }: { aboutMe: AboutMe }) => {
 				<Typography variant="h3" align="center" gutterBottom>
 					{aboutMe.name}
 				</Typography>
-				<Typography variant="body1" align="center">
+				<Typography ref={textBoxRef} className="text-box" variant="body1" align="center" height={textBoxHeight}>
 					{highlightText(text)}
 				</Typography>
 			</StyledMotionBox>

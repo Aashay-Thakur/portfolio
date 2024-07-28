@@ -105,7 +105,7 @@ const CustomCarousel = ({
 				</IconButton>
 			)}
 			<Stack
-				sx={{
+				style={{
 					width: '100%',
 					height: '100%',
 					justifyContent: 'center',

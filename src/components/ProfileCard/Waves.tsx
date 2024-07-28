@@ -1,11 +1,13 @@
 import { WaveBox } from '@assets/Wave/WaveBox';
 import { WaveLines } from '@assets/Wave/WaveLines';
-import { useTheme } from '@mui/material';
+import { useMediaQuery, useTheme } from '@mui/material';
 
 const Waves = ({ type, disableAnimations }: { type: 'fluid' | 'line'; disableAnimations: boolean }) => {
 	const theme = useTheme();
+	const isXs = useMediaQuery(theme.breakpoints.down('sm'));
 
 	const defaultWaveProps = {
+		points: isXs ? 2 : 5,
 		fillOpacity: 0.5,
 		paused: disableAnimations,
 		sx: {

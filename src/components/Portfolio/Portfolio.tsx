@@ -3,7 +3,7 @@ import { createContext, useContext, useEffect, useState } from 'react';
 
 import Logo from '@assets/Logo/Logo';
 /* components */
-import { Appbar, TOC } from '@barrel';
+import { Appbar, Footer, TOC } from '@barrel';
 /* data */
 import { me } from '@data';
 /* material-ui */
@@ -109,6 +109,7 @@ const Portfolio = () => {
 					<TOCWrapper />
 				</Box>
 			</Drawer>
+			<Footer />
 		</>
 	);
 };

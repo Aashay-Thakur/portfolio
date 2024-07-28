@@ -6,9 +6,9 @@ import './index.css';
 
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, redirect, RouterProvider } from 'react-router-dom';
 
-import { ErrorPage } from '@barrel';
+import { ErrorPage, Greeting } from '@barrel';
 import { Settings } from '@settings';
 import { Theme } from '@theme';
 
@@ -19,6 +19,19 @@ const router = createBrowserRouter([
 		path: '/',
 		element: <App />,
 		errorElement: <ErrorPage />,
+		loader: async () => {
+			const data = localStorage.getItem('greeting');
+			return data == 'viewed' ? null : redirect('/greeting');
+		},
+	},
+	{
+		path: '/greeting',
+		element: <Greeting />,
+		errorElement: <ErrorPage />,
+		loader: async () => {
+			const data = localStorage.getItem('greeting');
+			return data == 'viewed' ? redirect('/') : null;
+		},
 	},
 ]);
 

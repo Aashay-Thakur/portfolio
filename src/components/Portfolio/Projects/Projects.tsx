@@ -22,7 +22,7 @@ const Projects = ({ projects }: { projects: { projects: ProjectDetails[]; id: st
 
 	return (
 		<section id={projects.id} className="projects" aria-label="Projects section">
-			<Stack sx={{ display: 'flex', justifyContent: 'center' }}>
+			<Stack sx={{ display: 'flex', justifyContent: 'center', marginBottom: 10 }}>
 				<Typography variant="h4" gutterBottom>
 					Projects
 				</Typography>
@@ -34,7 +34,7 @@ const Projects = ({ projects }: { projects: { projects: ProjectDetails[]; id: st
 					list={list}
 					stopDrag
 					pagination
-					paginationPosition="top"
+					paginationPosition="bottom"
 				/>
 			</Stack>
 		</section>

@@ -37,7 +37,6 @@ const StyledMuiLink = styled(MuiLink, {
 			background: linearGradient,
 		},
 		'&:hover': {
-			'color': theme.palette.primary.main,
 			'& > div': {
 				transform: 'translateY(-5px)',
 				background: linearGradient,
@@ -59,25 +58,25 @@ const CustomLink = (props: MyLinkProps & RouterLinkProps) => {
 	const [hovering, setHovering] = useState<boolean>(false);
 
 	return (
-		<div onMouseEnter={() => setHovering(true)} onMouseLeave={() => setHovering(false)}>
-			<StyledMuiLink
-				component={RouterLink}
-				color="inherit"
-				underline="none"
-				disableCustomStyles={disableCustomStyles}
-				disableAnimation={disableAnimations}
-				{...rest}>
-				<Stack
-					component="div"
-					direction="row"
-					spacing={1}
-					sx={{ justifyContent: 'center', alignItems: 'center' }}
-					useFlexGap>
-					{children}
-					{shouldUseIcon && <ExternalLink size={0.8} active={!disableAnimations && hovering} />}
-				</Stack>
-			</StyledMuiLink>
-		</div>
+		<StyledMuiLink
+			onMouseEnter={() => setHovering(true)}
+			onMouseLeave={() => setHovering(false)}
+			component={RouterLink}
+			color="inherit"
+			underline="none"
+			disableCustomStyles={disableCustomStyles}
+			disableAnimation={disableAnimations}
+			{...rest}>
+			<Stack
+				component="div"
+				direction="row"
+				spacing={1}
+				sx={{ justifyContent: 'center', alignItems: 'center' }}
+				useFlexGap>
+				{children}
+				{shouldUseIcon && <ExternalLink size={0.8} active={!disableAnimations && hovering} />}
+			</Stack>
+		</StyledMuiLink>
 	);
 };
 

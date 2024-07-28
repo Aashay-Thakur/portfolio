@@ -13,6 +13,7 @@ export { TechIcon } from './TechIcon/TechIcon';
 export { InfoCard } from './InfoCard/InfoCard';
 export { ProfileCard } from './ProfileCard/ProfileCard';
 export { ProjectPanel } from './ProjectPanel/ProjectPanel';
+export { Footer } from './Footer/Footer';
 /* Custom Components */ // Uses MUI components
 export { CustomLink } from './CustomComponents/CustomLink/CustomLink';
 export { CustomSnackbar } from './CustomComponents/CustomSnackbar/CustomSnackbar';
@@ -24,3 +25,5 @@ export { CustomEdge } from './CustomComponents/CustomEdge/CustomEdge';
 export { CustomCard } from './CustomComponents/CustomCard/CustomCard';
 /* Settings Components */
 export { SettingsModal } from './SettingsModal/SettingsModal';
+/* Greeting Component */
+export { Greeting } from './Greeting/Greeting';

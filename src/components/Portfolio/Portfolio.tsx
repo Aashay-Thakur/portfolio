@@ -101,6 +101,8 @@ const Portfolio = () => {
 						sx={{
 							display: 'grid',
 							placeItems: 'center',
+							padding: 5,
+							height: 150,
 						}}>
 						<Logo />
 					</Box>

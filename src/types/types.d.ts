@@ -11,6 +11,7 @@ import {
 	Theme as ThemeType,
 } from '@mui/material';
 import { MixinsOptions } from '@mui/material/styles/createMixins';
+import { SvgIcon } from '@mui/material/SvgIcon';
 import { Skill, SkillMap, SkillName } from '@techMap';
 import { FeatureList } from '@types';
 
@@ -99,7 +100,7 @@ interface GradeDetails {
 
 /* Contact Types */
 interface SocialLink {
-	icon: IconProp;
+	icon: SvgIcon;
 	link: string;
 	text: string;
 }
@@ -142,7 +143,7 @@ interface LinearGradientProps {
 
 type FeatureArrow = '>' | '<' | '<>' | '->' | '<-' | '<->';
 type FeatureIcon = {
-	label: 'Admin' | 'Client' | 'Server' | 'Network' | 'Database';
+	label: 'Admin' | 'Client' | 'Server' | 'Network' | 'Database' | 'Terminal' | 'Internet';
 	message?: string;
 };
 type FeatureList = Array<FeatureArrow | FeatureIcon>;

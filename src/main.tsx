@@ -2,7 +2,6 @@ import '@fontsource/lato/400.css';
 import '@fontsource/lato/700.css';
 import '@fontsource/opendyslexic/400.css';
 import '@fontsource/opendyslexic/700.css';
-import './assets/fontawesome.ts';
 import './index.css';
 
 import React from 'react';

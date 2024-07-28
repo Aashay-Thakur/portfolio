@@ -6,6 +6,7 @@ const Logo = (props: SvgIconProps) => (
 		stroke="currentColor"
 		viewBox="0 0 346 346"
 		{...props}
+		style={{ width: '100%', height: '100%' }}
 		xmlns="http://www.w3.org/2000/svg">
 		<path d="M240 76L240 71L230 71L230 76L240 76ZM230 285C230 287.761 232.239 290 235 290C237.761 290 240 287.761 240 285L230 285ZM230 76L230 285L240 285L240 76L230 76Z" />
 		<path d="M40 290L159 74" strokeWidth="5" strokeLinecap="round" />

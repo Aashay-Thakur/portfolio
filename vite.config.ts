@@ -5,7 +5,10 @@ import react from '@vitejs/plugin-react';
 // https://vitejs.dev/config/
 export default defineConfig({
 	plugins: [react()],
-
+	build: {
+		target: 'ESNext',
+		sourcemap: true,
+	},
 	resolve: {
 		alias: {
 			'@barrel': '/src/components/barrel.ts',
@@ -19,4 +22,5 @@ export default defineConfig({
 			'@root': '/src/',
 		},
 	},
+	mode: 'production',
 });

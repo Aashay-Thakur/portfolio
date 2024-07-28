@@ -15,8 +15,6 @@ export { ProfileCard } from './ProfileCard/ProfileCard';
 export { ProjectPanel } from './ProjectPanel/ProjectPanel';
 /* Custom Components */ // Uses MUI components
 export { CustomLink } from './CustomComponents/CustomLink/CustomLink';
-export { CustomIcon } from './CustomComponents/CustomIcon/CustomIcon';
-export { CustomCollapsible } from './CustomComponents/CustomCollapsible/CustomCollapsible';
 export { CustomSnackbar } from './CustomComponents/CustomSnackbar/CustomSnackbar';
 export { CustomCarousel } from './CustomComponents/CustomCarousel/CustomCarousel';
 export { CustomTabs } from './CustomComponents/CustomTabs/CustomTabs';

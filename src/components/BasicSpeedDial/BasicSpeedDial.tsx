@@ -2,18 +2,11 @@
 import { useContext } from 'react';
 
 /* FontAwesome */
-import { CustomIcon } from '@barrel';
-import { FontAwesomeIconProps } from '@fortawesome/react-fontawesome';
+import { ArrowDownwardSharp, ArrowUpwardSharp, ContrastSharp, SettingsSharp } from '@mui/icons-material';
 /* MUI */
-import { SpeedDial, SpeedDialAction, SpeedDialIcon, styled } from '@mui/material';
+import { SpeedDial, SpeedDialAction, SpeedDialIcon } from '@mui/material';
 /* Types */
 import { SettingsContext } from '@settings';
-
-const StyledIcon = styled((props: FontAwesomeIconProps) => {
-	return <CustomIcon {...props} />;
-})(({ theme }) => ({
-	color: theme.palette.text.primary,
-}));
 
 function BasicSpeedDial({ settingsModalOnOpen }: { settingsModalOnOpen: () => void }) {
 	const { disableAnimations, disableDarkMode, themeMode, toggleThemeMode } = useContext(SettingsContext);
@@ -32,25 +25,25 @@ function BasicSpeedDial({ settingsModalOnOpen }: { settingsModalOnOpen: () => vo
 
 	var actions = [
 		{
-			icon: <StyledIcon icon={['fas', 'gear']} />,
+			icon: <SettingsSharp color="primary" />,
 			name: 'Open Accessibility Settings',
 			event: openAccessibilitySettings,
 			key: 'settings',
 		},
 		{
-			icon: <StyledIcon icon={['fas', 'adjust']} />,
+			icon: <ContrastSharp color="primary" />,
 			name: `Switch to ${themeMode === 'dark' ? 'Light' : 'Dark'} Mode`,
 			event: toggleThemeMode,
 			key: 'colorMode',
 		},
 		{
-			icon: <StyledIcon icon={['fas', 'arrow-down']} />,
+			icon: <ArrowDownwardSharp color="primary" />,
 			name: 'Scroll Down',
 			event: scrollDown,
 			key: 'scrollDown',
 		},
 		{
-			icon: <StyledIcon icon={['fas', 'arrow-up']} />,
+			icon: <ArrowUpwardSharp color="primary" />,
 			name: 'Scroll Up',
 			event: scrollUp,
 			key: 'scrollUp',

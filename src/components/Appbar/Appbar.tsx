@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from 'react';
 
 import Logo from '@assets/Logo/Logo';
 import { MenuIcon } from '@assets/MenuToggle/MenuToggle';
-import { CustomIcon } from '@barrel';
+import { ThemeToggleIcon } from '@assets/ThemeToggleIcon/ThemeToggleIcon';
 import { AppBar, Box, IconButton, Toolbar } from '@mui/material';
 import { SettingsContext } from '@settings';
 
@@ -54,6 +54,7 @@ const Appbar = ({ open, onMenuClick }: { open: boolean; onMenuClick: Function })
 								alignItems: 'center',
 								flexGrow: 1,
 								color: 'white',
+								height: '100%',
 							}}>
 							<Logo />
 						</Box>
@@ -63,7 +64,7 @@ const Appbar = ({ open, onMenuClick }: { open: boolean; onMenuClick: Function })
 								aria-label="toggle color mode"
 								onClick={() => toggleThemeMode()}
 								color="inherit">
-								<CustomIcon icon={themeMode === 'dark' ? ['fas', 'sun'] : ['fas', 'moon']} />
+								<ThemeToggleIcon mode={themeMode} />
 							</IconButton>
 						)}
 					</Toolbar>

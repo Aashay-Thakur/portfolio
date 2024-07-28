@@ -1,4 +1,6 @@
-import { CustomIcon, CustomLink } from '@barrel';
+import { CustomLink } from '@barrel';
+import { Web } from '@mui/icons-material';
+import GitHubIcon from '@mui/icons-material/GitHub';
 import { Box, Stack, Typography } from '@mui/material';
 import { ProjectDetails } from '@types';
 
@@ -38,14 +40,14 @@ const Info = ({ info }: InfoProps) => {
 					}}>
 					<div>
 						<CustomLink to={info.links.repo} target="_blank" shouldUseIcon disableCustomStyles>
-							<CustomIcon icon={['fab', 'github']} />
+							<GitHubIcon />
 							Repository
 						</CustomLink>
 					</div>
 					{info.links.website && (
 						<div>
 							<CustomLink to={info.links.website} target="_blank" shouldUseIcon disableCustomStyles>
-								<CustomIcon icon={['fas', 'globe']} />
+								<Web />
 								Live Website
 							</CustomLink>
 						</div>
@@ -53,7 +55,7 @@ const Info = ({ info }: InfoProps) => {
 				</Box>
 			</div>
 			<Typography variant="h5">Description</Typography>
-			<Typography sx={{ wordBreak: 'break-word' }} variant="body1">
+			<Typography sx={{ wordBreak: 'break-word', textAlign: 'justify' }} variant="body1">
 				{info.description}
 			</Typography>
 			{info?.features && <Features features={info.features} />}

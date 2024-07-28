@@ -1,7 +1,7 @@
 import { AnimatePresence, motion, PanInfo } from 'framer-motion';
 import { ReactNode, useContext, useEffect, useRef, useState } from 'react';
 
-import { CustomIcon } from '@barrel';
+import { ArrowBackIosNewSharp, ArrowForwardIosSharp } from '@mui/icons-material';
 import { Box, IconButton, Pagination, Stack } from '@mui/material';
 import { SettingsContext } from '@settings';
 import { Dimension } from '@types';
@@ -101,7 +101,7 @@ const CustomCarousel = ({
 			}}>
 			{sideArrows && (
 				<IconButton onClick={() => paginate(page - 1)}>
-					<CustomIcon style={{ aspectRatio: 1 }} icon={['fas', 'angle-left']} />
+					<ArrowBackIosNewSharp />
 				</IconButton>
 			)}
 			<Stack
@@ -158,7 +158,7 @@ const CustomCarousel = ({
 			</Stack>
 			{sideArrows && (
 				<IconButton onClick={() => paginate(page + 1)}>
-					<CustomIcon style={{ aspectRatio: 1 }} icon={['fas', 'angle-right']} />
+					<ArrowForwardIosSharp />
 				</IconButton>
 			)}
 		</Box>

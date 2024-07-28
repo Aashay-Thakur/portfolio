@@ -1,6 +1,7 @@
 import { useContext, useEffect, useRef } from 'react';
 
-import { CustomIcon, Milestone } from '@barrel';
+import { Milestone } from '@barrel';
+import { KeyboardArrowDownSharp, KeyboardArrowUpSharp } from '@mui/icons-material';
 import { Box, IconButton, Paper, Stack, styled } from '@mui/material';
 import { ActiveTab } from '@root/components/Portfolio/Portfolio';
 import { EducationDetails } from '@types';
@@ -43,7 +44,7 @@ const TimelineNoAnim = ({ milestones }: { milestones: EducationDetails[] }): JSX
 			useFlexGap>
 			<Box>
 				<IconButton onClick={() => scroll('up')}>
-					<CustomIcon fontSize={22} icon={['fas', 'angle-down']} className="fa-rotate-180" />
+					<KeyboardArrowUpSharp fontSize="medium" />
 				</IconButton>
 			</Box>
 			<StyledPaper ref={ref} elevation={12} className={styles.container}>
@@ -58,7 +59,7 @@ const TimelineNoAnim = ({ milestones }: { milestones: EducationDetails[] }): JSX
 			</StyledPaper>
 			<Box>
 				<IconButton onClick={() => scroll('down')}>
-					<CustomIcon fontSize={22} icon={['fas', 'angle-down']} />
+					<KeyboardArrowDownSharp fontSize="medium" />
 				</IconButton>
 			</Box>
 		</Stack>

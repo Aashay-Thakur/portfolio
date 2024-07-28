@@ -120,17 +120,17 @@
 			"features": {
 				"Remote Shell": [
 					{ "label": "Admin", "message": "Admin sends out a signal" },
-					"<>",
-					{ "label": "Server", "message": "Server broadcasts it to all the Remote Hosts" },
-					"<>",
-					{ "label": "Network", "message": "Remote Hosts receive the signal and respond" }
+					"<->",
+					{ "label": "Terminal", "message": "Server broadcasts it to all the Remote Hosts" },
+					"<->",
+					{ "label": "Client", "message": "Remote Hosts receive the signal and respond" }
 				],
 				"Wake on Lan": [
 					{ "label": "Admin", "message": "Admin Sends Magic Packet" },
 					">",
 					{ "label": "Server", "message": "Server resolves the IP to MAC, and sends" },
 					">",
-					{ "label": "Network", "message": "The Host wakes up" }
+					{ "label": "Client", "message": "The Host wakes up" }
 				],
 				"Remote Shutdown": [
 					{ "label": "Admin", "message": "Admin sends shutdown signal to all or a specific host" },
@@ -206,7 +206,7 @@
 			},
 			"repo": "https://github.com/VJTI-MCA-25/Socket-Messenger",
 			"features": [
-				{ "label": "Network", "message": "Client can send and receive messages in real-time using Websockets" },
+				{ "label": "Client", "message": "Client can send and receive messages in real-time using Websockets" },
 				"<->",
 				{ "label": "Server", "message": "Server forwards the messages to the respective clients" },
 				"<->",

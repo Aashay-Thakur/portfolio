@@ -54,8 +54,7 @@ const Technology = ({ stack }: TechnologyProps) => {
 					variant="scrollable"
 					scrollButtons={false}
 					value={active}
-					onChange={handleOnChange}
-					centered>
+					onChange={handleOnChange}>
 					{stack.map((item, index) => (
 						<Tab
 							key={`tab_${index}`}

@@ -3,7 +3,16 @@ import { useContext, useEffect } from 'react';
 
 import { MotionArrow } from '@assets/MotionArrow/MotionArrow';
 import { ToAndFro } from '@assets/MotionArrow/ToAndFro';
-import { CustomIcon, CustomPopup } from '@barrel';
+import { CustomPopup } from '@barrel';
+import {
+	ComputerSharp,
+	DesktopWindowsSharp,
+	DnsSharp,
+	RouterSharp,
+	StorageSharp,
+	TerminalSharp,
+	WifiSharp,
+} from '@mui/icons-material';
 import { Box, styled, Typography } from '@mui/material';
 import { SettingsContext } from '@settings';
 import { FeatureArrow, FeatureIcon, FeatureList } from '@types';
@@ -49,27 +58,32 @@ const Animation = ({ list }: { list: FeatureList }) => {
 	const getElement = (item: FeatureIcon['label'] | FeatureArrow, index: number) => {
 		switch (item) {
 			case 'Admin':
-				return <CustomIcon key={`anim_${index}`} fontSize="inherit" icon={['fas', 'desktop']} />;
+				return <ComputerSharp key={`admin_icon__{index}`} fontSize="inherit" />;
 			case 'Client':
-				return <CustomIcon key={`anim_${index}`} fontSize="inherit" icon={['fas', 'computer']} />;
+				return <DesktopWindowsSharp key={`client_icon__${index}`} fontSize="inherit" />;
 			case 'Server':
-				return <CustomIcon key={`anim_${index}`} fontSize="inherit" icon={['fas', 'server']} />;
+				return <DnsSharp key={`server_icon__${index}`} fontSize="inherit" />;
+			case 'Terminal':
+				return <TerminalSharp key={`terminal_icon__${index}`} fontSize="inherit" />;
 			case 'Network':
-				return <CustomIcon key={`anim_${index}`} fontSize="inherit" icon={['fas', 'network-wired']} />;
+				return <RouterSharp key={`network_icon__${index}`} fontSize="inherit" />;
 			case 'Database':
-				return <CustomIcon key={`anim_${index}`} fontSize="inherit" icon={['fas', 'database']} />;
+				return <StorageSharp key={`db_icon__${index}`} fontSize="inherit" />;
+			case 'Internet':
+				return <WifiSharp key={`web_icon__${index}`} fontSize="inherit" />;
+
 			case '>':
-				return <MotionArrow key={`anim_${index}`} />;
+				return <MotionArrow key={`right_icon__${index}`} />;
 			case '<':
-				return <MotionArrow key={`anim_${index}`} rotation={180} />;
+				return <MotionArrow key={`left_icon__${index}`} rotation={180} />;
 			case '<>':
-				return <ToAndFro key={`anim_${index}`} arrowTip />;
+				return <ToAndFro key={`to_fro_icon__${index}`} arrowTip />;
 			case '->':
-				return <MotionArrow key={`anim_${index}`} still />;
+				return <MotionArrow key={`still_right_icon__${index}`} still />;
 			case '<-':
-				return <MotionArrow key={`anim_${index}`} rotation={180} still />;
+				return <MotionArrow key={`still_left_icon__${index}`} rotation={180} still />;
 			case '<->':
-				return <ToAndFro key={`anim_${index}`} arrowTip still />;
+				return <ToAndFro key={`still_to_fro_icon__${index}`} arrowTip still />;
 		}
 	};
 	return (

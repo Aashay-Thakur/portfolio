@@ -1,7 +1,8 @@
+import { ArticleSharp, EmailSharp, LinkSharp } from '@mui/icons-material';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import { getIcon, SkillName } from '@techMap';
-import {
-    AboutMe, ContactInfo, EducationDetails, ProjectDetails, SkillCategories, SocialLink
-} from '@types';
+import { AboutMe, ContactInfo, EducationDetails, ProjectDetails, SkillCategories, SocialLink } from '@types';
 
 import { Education } from './Education';
 import { Project } from './Project';
@@ -123,15 +124,15 @@ class Person {
 		return Object.entries(this._socials).map(([key, entry]) => {
 			switch (key) {
 				case 'email':
-					return { text: 'Email', link: Person.attachMailto(entry), icon: ['fas', 'envelope'] };
+					return { text: 'Email', link: Person.attachMailto(entry), icon: EmailSharp };
 				case 'linkedin':
-					return { text: 'LinkedIn', link: entry, icon: ['fab', 'linkedin'] };
+					return { text: 'LinkedIn', link: entry, icon: LinkedInIcon };
 				case 'github':
-					return { text: 'GitHub', link: entry, icon: ['fab', 'github'] };
+					return { text: 'GitHub', link: entry, icon: GitHubIcon };
 				case 'resume':
-					return { text: 'Resume', link: entry, icon: ['fas', 'file-alt'] };
+					return { text: 'Resume', link: entry, icon: ArticleSharp };
 				default:
-					return { text: key, link: entry, icon: ['fas', 'link'] };
+					return { text: key, link: entry, icon: LinkSharp };
 			}
 		});
 	}

@@ -82,7 +82,7 @@ const Technology = ({ stack }: TechnologyProps) => {
 						</Typography>
 					</AppearAnimationWrapper>
 				</Grid>
-				<Grid xs={12} minHeight={200} item>
+				<Grid xs={12} item>
 					<AppearAnimationWrapper key={`description_${active}`} transition={{ duration: 0.3, delay: 0.2 }}>
 						<Typography variant="body2">{stack[active].description}</Typography>
 					</AppearAnimationWrapper>

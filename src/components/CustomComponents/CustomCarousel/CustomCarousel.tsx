@@ -1,10 +1,12 @@
 import { AnimatePresence, motion, PanInfo } from 'framer-motion';
-import { ReactNode, useContext, useEffect, useRef, useState } from 'react';
+import { ReactNode, useContext, useEffect, useState } from 'react';
 
-import { ArrowBackIosNewSharp, ArrowForwardIosSharp } from '@mui/icons-material';
-import { Box, IconButton, Pagination, Stack } from '@mui/material';
+import { Box } from '@mui/material';
 import { SettingsContext } from '@settings';
 import { Dimension } from '@types';
+
+import { PaginationWrapper } from './PaginationWrapper';
+import { SideArrowsWrapper } from './SideArrowsWrapper';
 
 interface CustomCarouselProps {
 	list: {
@@ -51,16 +53,11 @@ const CustomCarousel = ({
 	initialIndex = 0,
 	pagination = false,
 	sideArrows = false,
-	height = 'auto',
-	width = '100%',
-	heightUpdateDependency = null,
 	activeIndex = 0,
 	stopDrag = false,
 	paginationPosition = 'bottom',
 }: CustomCarouselProps): JSX.Element => {
 	const [[page, direction], setPage] = useState([initialIndex, 0]);
-	const childRef = useRef<HTMLDivElement>(null);
-	const [autoHeight, setAutoHeight] = useState<number>(0);
 	const { disableAnimations } = useContext(SettingsContext);
 
 	const paginate = (newPage: number) => {
@@ -84,43 +81,19 @@ const CustomCarousel = ({
 		paginate(activeIndex);
 	}, [activeIndex]);
 
-	useEffect(() => {
-		if (childRef.current && height === 'auto') {
-			setAutoHeight(childRef.current.scrollHeight);
-		}
-	}, [page, childRef.current, heightUpdateDependency]);
-
 	return (
-		<Box
-			sx={{
-				display: 'flex',
-				flexDirection: 'row',
-				justifyContent: 'center',
-				alignItems: 'center',
-				width: '100%',
-			}}>
-			{sideArrows && (
-				<IconButton onClick={() => paginate(page - 1)}>
-					<ArrowBackIosNewSharp />
-				</IconButton>
-			)}
-			<Stack
-				style={{
-					width: '100%',
-					height: '100%',
-					justifyContent: 'center',
-					alignItems: 'center',
-					flexDirection: paginationPosition === 'top' ? 'column-reverse' : 'column',
-				}}
-				useFlexGap>
-				<Box
-					sx={{
-						height: height === 'auto' ? autoHeight : height,
-						width,
-						position: 'relative',
-						overflow: 'hidden',
-					}}>
-					<AnimatePresence initial={false} custom={direction}>
+		<SideArrowsWrapper
+			sideArrows={sideArrows}
+			onGoBack={() => paginate(page - 1)}
+			onGoNext={() => paginate(page + 1)}>
+			<PaginationWrapper
+				pagination={pagination}
+				position={paginationPosition}
+				count={list.length}
+				page={page + 1}
+				onChange={(_, page) => paginate(page - 1)}>
+				<div style={{ overflow: 'hidden' }}>
+					<AnimatePresence initial={false} custom={direction} presenceAffectsLayout mode="popLayout">
 						<MotionBox
 							key={page}
 							custom={direction}
@@ -137,32 +110,15 @@ const CustomCarousel = ({
 							dragElastic={1}
 							onDragEnd={handleDragEnd}
 							sx={{
-								position: 'absolute',
 								height: '100%',
 								width: '100%',
 							}}>
-							<Box ref={childRef} sx={{ width: '100%', display: 'inline-block' }}>
-								{list[page].content}
-							</Box>
+							{list[page].content}
 						</MotionBox>
 					</AnimatePresence>
-				</Box>
-				{pagination && (
-					<Pagination
-						count={list.length}
-						page={page + 1}
-						onChange={(_, value) => paginate(value - 1)}
-						color="primary"
-						sx={{ paddingY: 2 }}
-					/>
-				)}
-			</Stack>
-			{sideArrows && (
-				<IconButton onClick={() => paginate(page + 1)}>
-					<ArrowForwardIosSharp />
-				</IconButton>
-			)}
-		</Box>
+				</div>
+			</PaginationWrapper>
+		</SideArrowsWrapper>
 	);
 };
 

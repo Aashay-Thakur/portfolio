@@ -1,13 +1,12 @@
-/* react */
+import { motion, useScroll, useSpring } from 'framer-motion';
 import { createContext, useContext, useEffect, useState } from 'react';
 
 import Logo from '@assets/Logo/Logo';
-/* components */
 import { Appbar, Footer, TOC } from '@barrel';
-/* data */
 import { me } from '@data';
-/* material-ui */
-import { Box, BoxProps, Container, Drawer, GlobalStyles, Stack, styled, Typography, useTheme } from '@mui/material';
+import {
+    Box, BoxProps, Container, Drawer, GlobalStyles, Stack, styled, Typography, useTheme
+} from '@mui/material';
 import { SettingsContext } from '@settings';
 
 import { AboutMe, Academics, Contact, Projects, Skills } from './portfolioBarrel';
@@ -29,7 +28,6 @@ const StyledTypography = styled(Typography, {
 		paddingTop: theme.spacing(1),
 		paddingBottom: theme.spacing(1),
 		backgroundColor: disableMorphism ? theme.palette.background.default : 'none',
-		borderBottom: `1px solid ${theme.palette.divider}`,
 	};
 });
 
@@ -40,6 +38,15 @@ interface ActiveTabProps {
 
 const ActiveTab = createContext<ActiveTabProps>({ activeAcademicTab: 0, activeProjectTab: 0 });
 
+const StyledMotionBox = styled(motion(Box))(({ theme }) => ({
+	height: 5,
+	width: '100%',
+	bottom: 0,
+	position: 'absolute',
+	background: theme.mixins.linearGradient(theme, { opacity: 0.5 }),
+	transformOrigin: 'left',
+}));
+
 const Portfolio = () => {
 	const { toc, contact, aboutMe, academics, skills, projects } = me;
 	const [open, setOpen] = useState(false); // drawer
@@ -48,6 +55,9 @@ const Portfolio = () => {
 
 	const [activeAcademicTab, setActiveAcademicTab] = useState<number>(0);
 	const [activeProjectTab, setActiveProjectTab] = useState<number>(0);
+
+	const { scrollYProgress } = useScroll();
+	const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
 
 	function toggleDrawer(): void {
 		setOpen(!open);
@@ -85,6 +95,7 @@ const Portfolio = () => {
 				<AboutMe aboutMe={aboutMe} />
 				<StyledTypography disableMorphism={disableMorphism} variant="h3" marginTop={5} gutterBottom>
 					Portfolio
+					<StyledMotionBox style={{ scaleX }} />
 				</StyledTypography>
 				<Stack spacing={{ xs: 2, md: 5 }}>
 					<ActiveTab.Provider value={{ activeAcademicTab, activeProjectTab }}>

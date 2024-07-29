@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import {
     ArrowDownwardSharp, ArrowUpwardSharp, ContrastSharp, SettingsSharp
 } from '@mui/icons-material';
-import { SpeedDial, SpeedDialAction, SpeedDialIcon } from '@mui/material';
+import { Box, SpeedDial, SpeedDialAction, SpeedDialIcon } from '@mui/material';
 import { SettingsContext } from '@settings';
 
 function BasicSpeedDial({ settingsModalOnOpen }: { settingsModalOnOpen: () => void }) {
@@ -53,29 +53,28 @@ function BasicSpeedDial({ settingsModalOnOpen }: { settingsModalOnOpen: () => vo
 	}
 
 	return (
-		<SpeedDial
-			ariaLabel="SpeedDial"
-			sx={{ position: 'fixed', bottom: 16, right: 16 }}
-			icon={<SpeedDialIcon />}
-			FabProps={{
-				sx(theme) {
-					return {
-						'background': theme.mixins.linearGradient(theme, { opacity: 0.7 }),
-						'&:hover': {
-							background: theme.mixins.linearGradient(theme),
-						},
-					};
-				},
-			}}>
-			{actions.map((action) => (
-				<SpeedDialAction
-					key={action.key}
-					icon={action.icon}
-					tooltipTitle={action.name}
-					onClick={() => action.event()}
-				/>
-			))}
-		</SpeedDial>
+		<Box>
+			<SpeedDial
+				ariaLabel="SpeedDial"
+				sx={{ position: 'fixed', bottom: 16, right: 16 }}
+				icon={<SpeedDialIcon />}
+				FabProps={{
+					sx(theme) {
+						return {
+							...theme.mixins.gradientAnimation(theme.mixins.linearGradient(theme)),
+						};
+					},
+				}}>
+				{actions.map((action) => (
+					<SpeedDialAction
+						key={action.key}
+						icon={action.icon}
+						tooltipTitle={action.name}
+						onClick={() => action.event()}
+					/>
+				))}
+			</SpeedDial>
+		</Box>
 	);
 }
 

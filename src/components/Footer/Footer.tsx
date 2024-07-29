@@ -16,7 +16,9 @@ const Footer = () => {
 			}}>
 			<Grid container>
 				<Grid item xs={12}>
-					<Typography variant="h6">Project Was Made In</Typography>
+					<Typography variant="h6" gutterBottom>
+						Project Was Made In
+					</Typography>
 					<Divider />
 					<Stack
 						direction="row"

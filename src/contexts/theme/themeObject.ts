@@ -1,6 +1,8 @@
 import { CSSProperties } from 'react';
 
-import { alpha, CSSObject, Interpolation, PaletteMode, PaletteOptions, ThemeOptions } from '@mui/material';
+import {
+    alpha, CSSObject, Interpolation, PaletteMode, PaletteOptions, ThemeOptions
+} from '@mui/material';
 
 const appBarHeight = 64;
 
@@ -115,6 +117,18 @@ export function getTheme(mode: PaletteMode, disableMorphismSetting: boolean): Th
 				const secondaryWithAlpha = alpha(secondary, opacity);
 
 				return `linear-gradient(${direction}, ${primaryWithAlpha}, ${secondaryWithAlpha})`;
+			},
+			gradientAnimation: (gradient: string) => {
+				return {
+					'background': gradient,
+					'animation': 'gradient 10s infinite',
+					'backgroundSize': '200%',
+					'@keyframes gradient': {
+						'0%': { backgroundPosition: 'left' },
+						'50%': { backgroundPosition: 'right' },
+						'100%': { backgroundPosition: 'left' },
+					},
+				};
 			},
 		},
 		appBarHeight: appBarHeight,

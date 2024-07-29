@@ -17,5 +17,6 @@ declare module '@mui/material/styles' {
 		};
 		glassMorphism: (theme: ThemeType, props?: GlassMorphismProps) => CSSObject;
 		linearGradient: (theme: ThemeType, props?: LinearGradientProps) => string;
+		gradientAnimation: (gradient: string) => CSSProperties;
 	}
 }

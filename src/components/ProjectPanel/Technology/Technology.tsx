@@ -1,7 +1,8 @@
 import { AnimatePresence, motion, MotionProps } from 'framer-motion';
-import { ReactNode, SyntheticEvent, useState } from 'react';
+import { ReactNode, SyntheticEvent, useContext, useState } from 'react';
 
 import { Box, Grid, Tab, Tabs, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { SettingsContext } from '@settings';
 import { SkillDetails } from '@types';
 
 interface TechnologyProps {
@@ -13,13 +14,16 @@ interface MotionIconButtonProps extends MotionProps {
 }
 
 const AppearAnimationWrapper = ({ children, ...motionProps }: MotionIconButtonProps) => {
+	const { disableAnimations } = useContext(SettingsContext);
+
 	return (
 		<AnimatePresence>
 			<motion.div
 				initial={{ y: 10, opacity: 0 }}
 				animate={{ y: 0, opacity: 1 }}
 				exit={{ y: 10, opacity: 0 }}
-				{...motionProps}>
+				{...motionProps}
+				{...(disableAnimations && { ...{ transition: { duration: 0 } } })}>
 				{children}
 			</motion.div>
 		</AnimatePresence>

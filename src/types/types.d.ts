@@ -79,7 +79,7 @@ interface ProjectDetails {
 		website?: string;
 	};
 	techStack: (SkillDetails & { description: string })[];
-	features?: FeaturesType;
+	features: FeaturesType;
 }
 
 /* Education Types */
@@ -140,7 +140,6 @@ interface LinearGradientProps {
 }
 
 /* Project types */
-
 type FeatureArrow = '>' | '<' | '<>' | '->' | '<-' | '<->';
 type FeatureIcon = {
 	label: 'Admin' | 'Client' | 'Server' | 'Network' | 'Database' | 'Terminal' | 'Internet';

@@ -4,13 +4,10 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import { Box, Stack, Typography } from '@mui/material';
 import { ProjectDetails } from '@types';
 
-import { Features } from './Features';
-
 interface InfoProps {
 	info: {
 		description: string;
 		links: ProjectDetails['links'];
-		features?: ProjectDetails['features'];
 	};
 }
 
@@ -58,7 +55,6 @@ const Info = ({ info }: InfoProps) => {
 			<Typography sx={{ wordBreak: 'break-word', textAlign: 'justify' }} variant="body1">
 				{info.description}
 			</Typography>
-			{info?.features && <Features features={info.features} />}
 		</Stack>
 	);
 };

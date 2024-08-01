@@ -1,11 +1,13 @@
-import { Box, Typography } from '@mui/material';
+import { ProjectDetails } from '@types';
 
-const Architecture = () => {
-	return (
-		<Box sx={{ padding: 5 }}>
-			<Typography variant="body1">Architecture</Typography>
-		</Box>
-	);
+import { Features } from './Features';
+
+interface ArchitectureProps {
+	features: ProjectDetails['features'];
+}
+
+const Architecture = ({ features }: ArchitectureProps) => {
+	return <Features features={features} />;
 };
 
 export { Architecture };

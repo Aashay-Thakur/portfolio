@@ -14,18 +14,17 @@ const ProjectPanel = ({ project, onChange }: { project: ProjectDetails; onChange
 	const infoData = {
 		description,
 		links,
-		features,
 	};
 
 	const list = [
 		{ label: 'Info', content: <Info info={infoData} /> },
 		{ label: 'Technology', content: <Technology stack={techStack} /> },
-		{ label: 'Architecture', content: <Architecture /> },
+		{ label: 'Architecture', content: <Architecture features={features} /> },
 	];
 
 	return (
-		<Stack width="100%" height="100%" spacing={1}>
-			<Typography width="100%" variant="h4">
+		<Stack spacing={1}>
+			<Typography align="right" width="100%" variant="h4">
 				{title}
 			</Typography>
 			<CustomTabs onChange={onChange} list={list} />

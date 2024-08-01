@@ -16,13 +16,11 @@ const PaginationWrapper = ({ children, pagination, position, ...paginationProps 
 				style={{
 					width: '100%',
 					height: '100%',
-					justifyContent: 'center',
-					alignItems: 'center',
 					flexDirection: position === 'top' ? 'column-reverse' : 'column',
 				}}
 				useFlexGap>
 				{children}
-				<Pagination {...paginationProps} />
+				<Pagination sx={{ margin: 'auto' }} {...paginationProps} />
 			</Stack>
 		);
 	} else {

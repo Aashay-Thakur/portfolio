@@ -6,8 +6,8 @@ export interface ProjectParams {
 	description: string;
 	repo: string;
 	techStack: Partial<Record<SkillName, string>>;
+	features: FeaturesType;
 	website?: string;
-	features?: FeaturesType;
 }
 
 class Project {
@@ -15,8 +15,8 @@ class Project {
 	private _description: string;
 	private _repo: string;
 	private _techStack: Partial<Record<SkillName, string>>;
+	private _features: FeaturesType;
 	private _website?: string;
-	private _features?: FeaturesType;
 
 	constructor(params: ProjectParams) {
 		const { title, description, repo, techStack, website, features } = params;
@@ -55,7 +55,7 @@ class Project {
 		}));
 	}
 
-	get features(): FeaturesType | undefined {
+	get features(): FeaturesType {
 		return this._features;
 	}
 

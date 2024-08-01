@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { Box, Grid, Hidden, styled, Typography } from '@mui/material';
+import { Box, Grid, styled, Typography } from '@mui/material';
 import { FeatureList, FeaturesType } from '@types';
 import { isObject } from '@utils/helper';
 
@@ -37,16 +37,11 @@ const isFeatureList = (features: FeaturesType): features is FeatureList => !isOb
 const Features = ({ features }: { features: FeaturesType }) => {
 	if (isFeatureList(features)) {
 		return (
-			<Hidden smDown>
-				<Grid container>
-					<Grid item xs={12}>
-						<Typography variant="h5">Features</Typography>
-					</Grid>
-					<Grid item xs={12}>
-						<Animation key="only_feature" list={features} />
-					</Grid>
+			<Grid container>
+				<Grid item xs={12}>
+					<Animation key="only_feature" list={features} />
 				</Grid>
-			</Hidden>
+			</Grid>
 		);
 	}
 
@@ -55,9 +50,6 @@ const Features = ({ features }: { features: FeaturesType }) => {
 
 	return (
 		<Grid container>
-			<Grid item xs={12}>
-				<Typography variant="h5">Features</Typography>
-			</Grid>
 			<Grid item xs={12} md={4} lg={3}>
 				<ul style={{ paddingLeft: 20 }}>
 					{featureKeys.map((feature, index) => {
@@ -94,9 +86,7 @@ const Features = ({ features }: { features: FeaturesType }) => {
 							width: '100%',
 							height: 100,
 						}}>
-						<Hidden smDown>
-							<Animation key={activeFeature} list={features[activeFeature]} />
-						</Hidden>
+						<Animation key={activeFeature} list={features[activeFeature]} />
 					</Box>
 				</Grid>
 			)}

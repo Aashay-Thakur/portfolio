@@ -4,9 +4,7 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import Logo from '@assets/Logo/Logo';
 import { Appbar, Footer, TOC } from '@barrel';
 import { me } from '@data';
-import {
-    Box, BoxProps, Container, Drawer, GlobalStyles, Stack, styled, Typography, useTheme
-} from '@mui/material';
+import { Box, BoxProps, Container, Drawer, GlobalStyles, Stack, styled, Typography, useTheme } from '@mui/material';
 import { SettingsContext } from '@settings';
 
 import { AboutMe, Academics, Contact, Projects, Skills } from './portfolioBarrel';
@@ -51,7 +49,7 @@ const Portfolio = () => {
 	const { toc, contact, aboutMe, academics, skills, projects } = me;
 	const [open, setOpen] = useState(false); // drawer
 	const theme = useTheme();
-	const { disableMorphism } = useContext(SettingsContext);
+	const { disableMorphism, disableAnimations } = useContext(SettingsContext);
 
 	const [activeAcademicTab, setActiveAcademicTab] = useState<number>(0);
 	const [activeProjectTab, setActiveProjectTab] = useState<number>(0);
@@ -95,7 +93,7 @@ const Portfolio = () => {
 				<AboutMe aboutMe={aboutMe} />
 				<StyledTypography disableMorphism={disableMorphism} variant="h3" marginTop={5} gutterBottom>
 					Portfolio
-					<StyledMotionBox style={{ scaleX }} />
+					<StyledMotionBox style={{ scaleX: disableAnimations ? 1 : scaleX }} />
 				</StyledTypography>
 				<Stack spacing={{ xs: 2, md: 5 }}>
 					<ActiveTab.Provider value={{ activeAcademicTab, activeProjectTab }}>

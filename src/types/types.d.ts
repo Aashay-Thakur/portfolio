@@ -79,7 +79,7 @@ interface ProjectDetails {
 		website?: string;
 	};
 	techStack: (SkillDetails & { description: string })[];
-	features?: FeaturesType;
+	features: FeaturesType;
 }
 
 /* Education Types */

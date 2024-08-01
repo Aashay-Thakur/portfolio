@@ -222,7 +222,7 @@
 				"materializecss": "Materialize CSS was used to style the frontend of the project. It provides a simple and clean interface for the user to interact with and is easy to integrate for the developer."
 			},
 			"repo": "https://github.com/Aashay-Thakur/CPU-Scheduling",
-			"website": "https://unique-hamster-14b851.netlify.app/",
+			"website": "https://scheduling-process.netlify.app/",
 			"features": {
 				"Gantt Charts": [],
 				"Line Charts": [],

@@ -1,4 +1,4 @@
-import { motion, MotionValue, useScroll, useTransform } from 'framer-motion';
+import { m, MotionValue, useScroll, useTransform } from 'framer-motion';
 import { useContext, useEffect, useMemo, useRef, useState } from 'react';
 
 import { Avatar, Box, Container, CSSObject, styled, Typography, useTheme } from '@mui/material';
@@ -8,7 +8,7 @@ import { fillGenerator } from '@utils/helper';
 
 import { Waves } from './Waves';
 
-const MotionBox = motion(Box);
+const MotionBox = m(Box);
 
 const StyledMotionBox = styled(MotionBox)(({ theme }) => {
 	const styles: CSSObject = {
@@ -99,7 +99,7 @@ const ProfileCard = ({ aboutMe }: { aboutMe: AboutMe }) => {
 						zIndex: 0,
 					}}>
 					{part}
-					<motion.span
+					<m.span
 						key={index}
 						initial={{ width: disableAnimations ? '100%' : 0 }}
 						animate={done && checkAnimSetting({ width: '100%' })}

@@ -1,10 +1,13 @@
-import { motion, useScroll, useSpring } from 'framer-motion';
+import { LazyMotion, m, useScroll, useSpring } from 'framer-motion';
 import { createContext, useContext, useEffect, useState } from 'react';
 
+import { loadFeatures } from '@assets/loadFeatures';
 import Logo from '@assets/Logo/Logo';
 import { Appbar, Footer, TOC } from '@barrel';
 import { me } from '@data';
-import { Box, BoxProps, Container, Drawer, GlobalStyles, Stack, styled, Typography, useTheme } from '@mui/material';
+import {
+    Box, BoxProps, Container, Drawer, GlobalStyles, Stack, styled, Typography, useTheme
+} from '@mui/material';
 import { SettingsContext } from '@settings';
 
 import { AboutMe, Academics, Contact, Projects, Skills } from './portfolioBarrel';
@@ -36,7 +39,7 @@ interface ActiveTabProps {
 
 const ActiveTab = createContext<ActiveTabProps>({ activeAcademicTab: 0, activeProjectTab: 0 });
 
-const StyledMotionBox = styled(motion(Box))(({ theme }) => ({
+const StyledMotionBox = styled(m(Box))(({ theme }) => ({
 	height: 5,
 	width: '100%',
 	bottom: 0,
@@ -86,7 +89,7 @@ const Portfolio = () => {
 	}, []);
 
 	return (
-		<>
+		<LazyMotion features={loadFeatures}>
 			<GlobalStyles styles={{ body: theme.mixins.customScrollbar }} />
 			<Appbar open={open} onMenuClick={toggleDrawer} />
 			<Container sx={{ paddingTop: `${theme.appBarHeight}px` }}>
@@ -119,7 +122,7 @@ const Portfolio = () => {
 				</Box>
 			</Drawer>
 			<Footer />
-		</>
+		</LazyMotion>
 	);
 };
 

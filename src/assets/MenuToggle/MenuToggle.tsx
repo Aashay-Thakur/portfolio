@@ -1,8 +1,8 @@
-import { motion, SVGMotionProps } from 'framer-motion';
+import { m, SVGMotionProps } from 'framer-motion';
 import { SVGProps } from 'react';
 
 const Path = (props: SVGMotionProps<SVGPathElement>) => (
-	<motion.path fill="transparent" stroke="currentColor" strokeWidth="3" strokeLinecap="round" {...props} />
+	<m.path fill="transparent" stroke="currentColor" strokeWidth="3" strokeLinecap="round" {...props} />
 );
 
 interface MenuIconProps {

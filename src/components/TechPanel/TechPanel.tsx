@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { useContext } from 'react';
 
 import { TechIcon } from '@barrel';
@@ -42,7 +42,7 @@ const TechPanel = (props: TechPanelProps) => {
 				const [label, iconData] = icon;
 				return (
 					<Grid key={index} item xs={4} sm={4} md={3} lg={2}>
-						<motion.div
+						<m.div
 							key={index}
 							initial={!disableAnimations && { y: -20, opacity: 0 }}
 							animate={!disableAnimations && { y: 0, opacity: 1 }}
@@ -53,7 +53,7 @@ const TechPanel = (props: TechPanelProps) => {
 								alignItems: 'center',
 							}}>
 							<TechIcon label={label} icon={iconData} />
-						</motion.div>
+						</m.div>
 					</Grid>
 				);
 			})}

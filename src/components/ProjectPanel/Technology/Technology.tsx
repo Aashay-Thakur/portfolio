@@ -1,4 +1,4 @@
-import { AnimatePresence, motion, MotionProps } from 'framer-motion';
+import { AnimatePresence, m, MotionProps } from 'framer-motion';
 import { ReactNode, SyntheticEvent, useContext, useState } from 'react';
 
 import { Box, Grid, Tab, Tabs, Typography, useMediaQuery, useTheme } from '@mui/material';
@@ -18,14 +18,14 @@ const AppearAnimationWrapper = ({ children, ...motionProps }: MotionIconButtonPr
 
 	return (
 		<AnimatePresence>
-			<motion.div
+			<m.div
 				initial={{ y: 10, opacity: 0 }}
 				animate={{ y: 0, opacity: 1 }}
 				exit={{ y: 10, opacity: 0 }}
 				{...motionProps}
 				{...(disableAnimations && { ...{ transition: { duration: 0 } } })}>
 				{children}
-			</motion.div>
+			</m.div>
 		</AnimatePresence>
 	);
 };

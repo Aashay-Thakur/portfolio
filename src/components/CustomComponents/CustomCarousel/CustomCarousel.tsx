@@ -1,4 +1,4 @@
-import { AnimatePresence, motion, PanInfo } from 'framer-motion';
+import { AnimatePresence, m, PanInfo } from 'framer-motion';
 import { ReactNode, useContext, useEffect, useState } from 'react';
 
 import { Box } from '@mui/material';
@@ -46,7 +46,7 @@ const swipePower = (offset: number, velocity: number) => {
 	return Math.abs(offset) * velocity;
 };
 
-const MotionBox = motion(Box);
+const MotionBox = m(Box);
 
 const CustomCarousel = ({
 	list,

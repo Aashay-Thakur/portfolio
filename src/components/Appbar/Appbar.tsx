@@ -1,4 +1,4 @@
-import { motion, useScroll } from 'framer-motion';
+import { m, useScroll } from 'framer-motion';
 import { useContext, useEffect, useState } from 'react';
 
 import Logo from '@assets/Logo/Logo';
@@ -7,7 +7,7 @@ import { ThemeToggleIcon } from '@assets/ThemeToggleIcon/ThemeToggleIcon';
 import { AppBar, Box, IconButton, Toolbar } from '@mui/material';
 import { SettingsContext } from '@settings';
 
-const MotionAppBar = motion(AppBar);
+const MotionAppBar = m(AppBar);
 
 const Appbar = ({ open, onMenuClick }: { open: boolean; onMenuClick: Function }) => {
 	const { disableDarkMode, themeMode, toggleThemeMode } = useContext(SettingsContext);

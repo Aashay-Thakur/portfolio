@@ -1,4 +1,4 @@
-import { easeInOut, motion } from 'framer-motion';
+import { easeInOut, m } from 'framer-motion';
 import { useContext } from 'react';
 
 import { useTheme } from '@mui/material';
@@ -46,7 +46,7 @@ const MotionArrow = ({
 
 	if (still) {
 		return (
-			<motion.svg
+			<m.svg
 				width="100%"
 				height="100%"
 				viewBox="0 0 100 100"
@@ -58,7 +58,7 @@ const MotionArrow = ({
 					stroke={color || theme.palette.secondary.main}
 					strokeWidth={strokeWidth}
 				/>
-				<motion.path
+				<m.path
 					d={d}
 					fill="transparent"
 					stroke={theme.palette.background.default}
@@ -68,18 +68,18 @@ const MotionArrow = ({
 					animate={{ strokeDashoffset: -10 }} // Adjust the offset value as needed
 					transition={{ duration: 2, ease: 'linear', repeat: Infinity }}
 				/>
-			</motion.svg>
+			</m.svg>
 		);
 	}
 
 	return (
-		<motion.svg
+		<m.svg
 			width="100%"
 			height="100%"
 			viewBox="0 0 100 100"
 			preserveAspectRatio="none"
 			style={{ transform: `rotate(${rotation}deg)` }}>
-			<motion.path
+			<m.path
 				d={d}
 				fill="transparent"
 				stroke={color || theme.palette.secondary.main}
@@ -95,7 +95,7 @@ const MotionArrow = ({
 					repeatDelay,
 				}}
 			/>
-		</motion.svg>
+		</m.svg>
 	);
 };
 

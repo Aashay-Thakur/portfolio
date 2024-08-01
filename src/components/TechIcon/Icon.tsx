@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { forwardRef, useContext, useState } from 'react';
 
 import { Box, Stack, SxProps, Typography } from '@mui/material';
@@ -11,7 +11,7 @@ interface IconProps {
 	sx?: SxProps;
 }
 
-const MotionBox = motion(Box);
+const MotionBox = m(Box);
 
 const Icon = forwardRef((props: IconProps, ref) => {
 	const { icon, label, sx } = props;

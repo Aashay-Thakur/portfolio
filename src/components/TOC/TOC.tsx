@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 
 import { SimpleTreeView, TreeItem2 as TreeItem } from '@mui/x-tree-view/';
 import { TableOfContents } from '@types';
@@ -13,7 +13,7 @@ const TOC = ({ toc, onSelect }: { toc: TableOfContents; onSelect: (id: string) =
 		<SimpleTreeView style={{ paddingTop: 20 }}>
 			{Object.entries(toc).map(([name, { id, list }], index) => {
 				return (
-					<motion.div
+					<m.div
 						key={`motion_parent_${index}`}
 						initial="hidden"
 						animate="visible"
@@ -27,7 +27,7 @@ const TOC = ({ toc, onSelect }: { toc: TableOfContents; onSelect: (id: string) =
 							onClick={() => !list && onSelect(id)}>
 							{list &&
 								list.map(({ name, id }, childIndex) => (
-									<motion.div
+									<m.div
 										key={`motion_child_${childIndex}`}
 										initial="hidden"
 										animate="visible"
@@ -43,10 +43,10 @@ const TOC = ({ toc, onSelect }: { toc: TableOfContents; onSelect: (id: string) =
 												onSelect(id);
 											}}
 										/>
-									</motion.div>
+									</m.div>
 								))}
 						</TreeItem>
-					</motion.div>
+					</m.div>
 				);
 			})}
 		</SimpleTreeView>

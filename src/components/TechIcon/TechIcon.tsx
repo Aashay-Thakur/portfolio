@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, m } from 'framer-motion';
 import { ReactNode, useEffect, useState } from 'react';
 
 import { CustomEdge, CustomPopover, InfoCard } from '@barrel';
@@ -13,7 +13,7 @@ interface TechIconProps {
 	duration?: number; // in milliseconds
 }
 
-const MotionIcon = motion(Icon);
+const MotionIcon = m(Icon);
 
 const TechIcon = (props: TechIconProps) => {
 	const { icon, label, duration = 2000 } = props;

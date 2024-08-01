@@ -1,4 +1,4 @@
-import React, { ReactNode, useContext, useEffect, useState } from 'react';
+import { ReactNode, useContext, useEffect, useState } from 'react';
 
 import { Box, Portal, SwipeableDrawer } from '@mui/material';
 import { PortalContext } from '@root/App';

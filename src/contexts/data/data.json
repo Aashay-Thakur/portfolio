@@ -2,6 +2,7 @@
 	"name": "Aashay Thakur",
 	"dob": "2000-08-26",
 	"phone": "+91 8879741310",
+	"resume": "https://drive.google.com/file/d/1Oj3-dDOqSaVwAUSl3v2c7nSZiUvpHN4y/view?usp=drive_link",
 	"socials": {
 		"email": "thakur.aashay@gmail.com",
 		"github": "https://github.com/Aashay-Thakur",
@@ -231,5 +232,10 @@
 				"Timeline for Preemptive": []
 			}
 		}
+	],
+	"footerLinks": [
+		{ "text": "Project Repository", "link": "https://github.com/Aashay-Thakur/portfolio" },
+		{ "text": "My College", "link": "https://vjti.ac.in/" },
+		{ "text": "Leetcode", "link": "https://leetcode.com/u/Aashay-Thakur/" }
 	]
 }

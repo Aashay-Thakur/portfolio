@@ -1,7 +1,7 @@
 import { ReactNode, useContext, useState } from 'react';
 import { Link as RouterLink, LinkProps as RouterLinkProps } from 'react-router-dom';
 
-import { ExternalLink } from '@assets/ExternalLink/ExternalLink';
+import { ExternalLink } from '@assets/CustomIcons/ExternalLink';
 import { Link as MuiLink, LinkProps as MuiLinkProps, Stack, styled } from '@mui/material';
 import { SettingsContext } from '@settings';
 
@@ -9,6 +9,8 @@ interface MyLinkProps {
 	disableCustomStyles?: boolean;
 	shouldUseIcon?: boolean;
 	children: ReactNode;
+	iconFirst?: boolean;
+	flexPosition?: string;
 }
 
 const StyledMuiLink = styled(MuiLink, {
@@ -53,7 +55,14 @@ const StyledMuiLink = styled(MuiLink, {
 });
 
 const CustomLink = (props: MyLinkProps & RouterLinkProps) => {
-	const { disableCustomStyles, children, shouldUseIcon = false, ...rest } = props;
+	const {
+		disableCustomStyles,
+		children,
+		shouldUseIcon = false,
+		flexPosition = 'center',
+		iconFirst = false,
+		...rest
+	} = props;
 	const { disableAnimations } = useContext(SettingsContext);
 	const [hovering, setHovering] = useState<boolean>(false);
 
@@ -71,10 +80,14 @@ const CustomLink = (props: MyLinkProps & RouterLinkProps) => {
 				component="div"
 				direction="row"
 				spacing={1}
-				sx={{ justifyContent: 'center', alignItems: 'center' }}
+				sx={{
+					justifyContent: flexPosition,
+					alignItems: 'center',
+					flexDirection: iconFirst ? 'row-reverse' : 'row',
+				}}
 				useFlexGap>
 				{children}
-				{shouldUseIcon && <ExternalLink size={0.8} active={!disableAnimations && hovering} />}
+				{shouldUseIcon && <ExternalLink active={!disableAnimations && hovering} />}
 			</Stack>
 		</StyledMuiLink>
 	);

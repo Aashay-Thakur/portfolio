@@ -69,6 +69,7 @@ interface ContactInfo {
 	socials: SocialLink[];
 	id: string;
 	age: number;
+	resume?: string | { file: string; download: string };
 }
 
 interface ProjectDetails {

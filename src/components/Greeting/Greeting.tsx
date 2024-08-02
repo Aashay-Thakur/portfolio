@@ -1,11 +1,14 @@
+import { useContext } from 'react';
 import { useNavigate } from 'react-router';
 
 import Logo from '@assets/Logo/Logo';
 import { CustomPopup } from '@barrel';
 import { Box, Button, Divider, Grid, Typography } from '@mui/material';
+import { SettingsContext } from '@settings';
 
 const Greeting = () => {
 	const navigate = useNavigate();
+	const { toggleDyslexicFont } = useContext(SettingsContext);
 
 	function handleOnClick() {
 		localStorage.setItem('greeting', 'viewed');
@@ -36,9 +39,17 @@ const Greeting = () => {
 				</Box>
 			</Grid>
 			<Grid item xs={12} sm={6}>
-				<Typography color="text.primary" variant="h4">
-					Disclaimer
-				</Typography>
+				<Box
+					sx={{
+						display: 'flex',
+						justifyContent: 'space-between',
+						alignItems: 'center',
+					}}>
+					<Typography color="text.primary" variant="h4">
+						Disclaimer
+					</Typography>
+					<Button onClick={toggleDyslexicFont}>Dyslexic</Button>
+				</Box>
 				<Divider />
 				<Typography color="text.primary" variant="h5" marginTop={2}>
 					Hello,

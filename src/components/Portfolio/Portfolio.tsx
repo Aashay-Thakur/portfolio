@@ -5,9 +5,7 @@ import { loadFeatures } from '@assets/loadFeatures';
 import Logo from '@assets/Logo/Logo';
 import { Appbar, Footer, TOC } from '@barrel';
 import { me } from '@data';
-import {
-    Box, BoxProps, Container, Drawer, GlobalStyles, Stack, styled, Typography, useTheme
-} from '@mui/material';
+import { Box, BoxProps, Container, Drawer, GlobalStyles, Stack, styled, Typography, useTheme } from '@mui/material';
 import { SettingsContext } from '@settings';
 
 import { AboutMe, Academics, Contact, Projects, Skills } from './portfolioBarrel';
@@ -49,7 +47,7 @@ const StyledMotionBox = styled(m(Box))(({ theme }) => ({
 }));
 
 const Portfolio = () => {
-	const { toc, contact, aboutMe, academics, skills, projects } = me;
+	const { toc, contact, aboutMe, academics, skills, projects, footerLinks } = me;
 	const [open, setOpen] = useState(false); // drawer
 	const theme = useTheme();
 	const { disableMorphism, disableAnimations } = useContext(SettingsContext);
@@ -121,7 +119,7 @@ const Portfolio = () => {
 					<TOCWrapper />
 				</Box>
 			</Drawer>
-			<Footer />
+			<Footer footerLinks={footerLinks} />
 		</LazyMotion>
 	);
 };

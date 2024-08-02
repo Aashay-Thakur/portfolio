@@ -1,9 +1,9 @@
 import { m, useScroll } from 'framer-motion';
 import { useContext, useEffect, useState } from 'react';
 
-import { MenuIcon } from '@assets/CustomIcons/MenuToggle';
-import { ThemeToggleIcon } from '@assets/CustomIcons/ThemeToggleIcon';
 import Logo from '@assets/Logo/Logo';
+import { MenuIcon } from '@assets/MenuToggle/MenuToggle';
+import { ThemeToggleIcon } from '@assets/ThemeToggleIcon/ThemeToggleIcon';
 import { AppBar, Box, IconButton, Toolbar } from '@mui/material';
 import { SettingsContext } from '@settings';
 

@@ -1,8 +1,8 @@
 import { stagger, useAnimate } from 'framer-motion';
 import { useContext, useEffect } from 'react';
 
-import { MotionArrow } from '@assets/CustomIcons/MotionArrow';
-import { ToAndFro } from '@assets/CustomIcons/ToAndFro';
+import { MotionArrow } from '@assets/MotionArrow/MotionArrow';
+import { ToAndFro } from '@assets/MotionArrow/ToAndFro';
 import { CustomPopup } from '@barrel';
 import {
 	ComputerSharp,

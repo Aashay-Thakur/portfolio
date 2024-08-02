@@ -2,11 +2,7 @@ import { CustomLink } from '@barrel';
 import { Box, Divider, Grid, Stack, Typography } from '@mui/material';
 import { getIcon, SkillName } from '@techMap';
 
-interface FooterProps {
-	footerLinks?: { text: string; link: string }[];
-}
-
-const Footer = ({ footerLinks }: FooterProps) => {
+const Footer = () => {
 	const iconList: SkillName[] = ['react', 'typescript', 'materialui', 'framermotion'];
 	const icons = iconList.map((icon) => getIcon(icon));
 
@@ -19,33 +15,6 @@ const Footer = ({ footerLinks }: FooterProps) => {
 				backgroundColor: 'background.paper',
 			}}>
 			<Grid container>
-				<Grid
-					item
-					xs={12}
-					sx={{
-						display: 'flex',
-						justifyContent: 'flex-end',
-						alignItems: 'center',
-					}}>
-					<ul
-						style={{
-							listStyleType: 'none',
-						}}>
-						{footerLinks &&
-							footerLinks.map((item) => (
-								<CustomLink
-									key={item.text}
-									to={item.link}
-									disableCustomStyles
-									shouldUseIcon
-									iconFirst
-									flexPosition="start"
-									target="_blank">
-									<li>{item.text}</li>
-								</CustomLink>
-							))}
-					</ul>
-				</Grid>
 				<Grid item xs={12}>
 					<Typography variant="h6" gutterBottom>
 						Project Was Made In

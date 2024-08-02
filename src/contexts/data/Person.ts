@@ -1,4 +1,4 @@
-import { EmailSharp, LinkSharp } from '@mui/icons-material';
+import { ArticleSharp, EmailSharp, LinkSharp } from '@mui/icons-material';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import { getIcon, SkillName } from '@techMap';
@@ -11,11 +11,11 @@ interface PersonParams {
 	name: string;
 	dob: string | Date;
 	phone: string;
-	resume?: string;
 	socials: {
 		email: string;
 		linkedin: string;
 		github: string;
+		resume?: string;
 	};
 	education: Education[];
 	bio: {
@@ -25,7 +25,6 @@ interface PersonParams {
 	skills: SkillsParam;
 	projects: Project[];
 	picture?: string;
-	footerLinks?: { text: string; link: string }[];
 }
 
 type SkillsParam = {
@@ -38,11 +37,11 @@ class Person {
 	private _name: string;
 	private _dob: Date;
 	private _phone: string;
-	private _resume?: string;
 	private _socials: {
 		email: string;
 		linkedin: string;
 		github: string;
+		resume?: string;
 	};
 	private _education: Education[];
 	private _bio: {
@@ -52,10 +51,9 @@ class Person {
 	private _skills: SkillsParam;
 	private _projects: Project[];
 	private _picture?: string;
-	private _footerLinks?: { text: string; link: string }[];
 
 	constructor(params: PersonParams) {
-		const { name, dob, phone, socials, education, bio, skills, projects, picture, resume, footerLinks } = params;
+		const { name, dob, phone, socials, education, bio, skills, projects, picture } = params;
 
 		if (!name || !dob || !phone || !socials || !education || !bio || !skills || !projects) {
 			throw new Error('Invalid data provided to Person constructor');
@@ -69,8 +67,6 @@ class Person {
 		this._skills = skills;
 		this._projects = projects;
 		this._picture = picture;
-		this._resume = resume;
-		this._footerLinks = footerLinks;
 
 		if (typeof dob === 'string') {
 			this._dob = new Date(dob);
@@ -93,7 +89,7 @@ class Person {
 	}
 
 	public static fromJson(data: any): Person {
-		const { name, dob, phone, socials, education, bio, skills, projects, picture, resume, footerLinks } = data;
+		const { name, dob, phone, socials, education, bio, skills, projects, picture } = data;
 
 		return new Person({
 			name,
@@ -105,8 +101,6 @@ class Person {
 			skills,
 			projects: projects.map((proj: any) => new Project(proj)),
 			picture,
-			resume,
-			footerLinks,
 		});
 	}
 
@@ -135,23 +129,12 @@ class Person {
 					return { text: 'LinkedIn', link: entry, icon: LinkedInIcon };
 				case 'github':
 					return { text: 'GitHub', link: entry, icon: GitHubIcon };
+				case 'resume':
+					return { text: 'Resume', link: entry, icon: ArticleSharp };
 				default:
 					return { text: key, link: entry, icon: LinkSharp };
 			}
 		});
-	}
-
-	get resume() {
-		if (this._resume?.includes('drive.google.com') && this._resume?.includes('file/d/')) {
-			let idMatch = this._resume.match(/file\/d\/([a-zA-Z0-9_-]+)/);
-			if (idMatch && idMatch[1]) {
-				return {
-					file: this._resume,
-					download: `https://drive.google.com/uc?export=download&id=${idMatch[1]}`,
-				};
-			}
-		}
-		return this._resume;
 	}
 
 	get picture() {
@@ -168,21 +151,20 @@ class Person {
 
 	get contact(): ContactInfo {
 		return {
-			name: this.name,
+			name: this._name,
 			age: this.age,
-			phone: this.phone,
+			phone: this._phone,
 			socials: this.socials,
-			resume: this.resume,
 			id: 'contact-information',
 		};
 	}
 
 	get aboutMe(): AboutMe {
 		return {
-			name: this.name,
+			name: this._name,
 			age: this.age,
 			bio: this.bio,
-			picture: this.picture,
+			picture: this._picture,
 			initials: Person.initialsFromName(this._name),
 			id: 'about-me',
 		};
@@ -219,10 +201,6 @@ class Person {
 			id: 'projects',
 			projects,
 		};
-	}
-
-	get footerLinks() {
-		return this._footerLinks;
 	}
 
 	get toc() {

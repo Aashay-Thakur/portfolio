@@ -4,7 +4,7 @@ const Logo = (props: SvgIconProps) => (
 	<SvgIcon
 		fill="currentColor"
 		stroke="currentColor"
-		viewBox="0 0 346 346"
+		viewBox="0 0 350 350"
 		{...props}
 		style={{ width: '100%', height: '100%' }}
 		xmlns="http://www.w3.org/2000/svg">

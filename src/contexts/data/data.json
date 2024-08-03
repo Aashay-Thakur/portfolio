@@ -234,7 +234,7 @@
 		}
 	],
 	"footerLinks": [
-		{ "text": "Project Repository", "link": "https://github.com/Aashay-Thakur/portfolio" },
+		{ "text": "Portfolio Repository", "link": "https://github.com/Aashay-Thakur/portfolio" },
 		{ "text": "My College", "link": "https://vjti.ac.in/" },
 		{ "text": "Leetcode", "link": "https://leetcode.com/u/Aashay-Thakur/" }
 	]

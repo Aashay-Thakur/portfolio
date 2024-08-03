@@ -11,24 +11,26 @@ import { SettingsContext } from '@settings';
 import { AboutMe, Academics, Contact, Projects, Skills } from './portfolioBarrel';
 
 const StyledTypography = styled(Typography, {
-	shouldForwardProp: (prop) => prop !== 'disableMorphism',
-})<BoxProps & { disableMorphism: boolean }>(({ theme, disableMorphism }) => {
-	return {
-		...theme.mixins.glassMorphism(theme, {
-			noBorder: true,
-			noBoxShadow: true,
-			gradientBackground: false,
-			disableMorphism,
-		}),
-		position: 'sticky',
-		height: '100%',
-		zIndex: 1000,
-		top: 0,
-		paddingTop: theme.spacing(1),
-		paddingBottom: theme.spacing(1),
-		backgroundColor: disableMorphism ? theme.palette.background.default : 'none',
-	};
-});
+	shouldForwardProp: (prop) => prop !== 'disableMorphism' && prop !== 'disableAnimations',
+})<BoxProps & { disableMorphism: boolean; disableAnimations: boolean }>(
+	({ theme, disableMorphism, disableAnimations }) => {
+		return {
+			...theme.mixins.glassMorphism(theme, {
+				noBorder: true,
+				noBoxShadow: true,
+				gradientBackground: false,
+				disableMorphism,
+			}),
+			position: disableAnimations ? 'relative' : 'sticky',
+			height: '100%',
+			zIndex: 1000,
+			top: 0,
+			paddingTop: theme.spacing(1),
+			paddingBottom: theme.spacing(1),
+			backgroundColor: disableMorphism ? theme.palette.background.default : 'none',
+		};
+	},
+);
 
 interface ActiveTabProps {
 	activeAcademicTab: number;
@@ -92,7 +94,12 @@ const Portfolio = () => {
 			<Appbar open={open} onMenuClick={toggleDrawer} />
 			<Container sx={{ paddingTop: `${theme.appBarHeight}px` }}>
 				<AboutMe aboutMe={aboutMe} />
-				<StyledTypography disableMorphism={disableMorphism} variant="h3" marginTop={5} gutterBottom>
+				<StyledTypography
+					disableAnimations={disableAnimations}
+					disableMorphism={disableMorphism}
+					variant="h3"
+					marginTop={5}
+					gutterBottom>
 					Portfolio
 					<StyledMotionBox style={{ scaleX: disableAnimations ? 1 : scaleX }} />
 				</StyledTypography>

@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { useNavigate } from 'react-router';
 
-import AnimatedLogo from '@assets/Logo/AnimatedLogo';
+import Logo from '@assets/Logo/Logo';
 import { CustomPopup } from '@barrel';
 import { Box, Button, Divider, Grid, Typography } from '@mui/material';
 import { SettingsContext } from '@settings';
@@ -35,7 +35,7 @@ const Greeting = () => {
 						color: 'text.primary',
 						height: 100,
 					}}>
-					<AnimatedLogo />
+					<Logo shouldAnimate />
 				</Box>
 			</Grid>
 			<Grid item xs={12} sm={6}>

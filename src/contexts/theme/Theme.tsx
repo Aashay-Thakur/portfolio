@@ -1,18 +1,28 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { ReactNode, useContext, useEffect, useState } from 'react';
 
+import SvgFilters from '@assets/SvgFilter';
 import { Box, createTheme, GlobalStyles, ThemeProvider } from '@mui/material';
 import { Interpolation, Theme as ThemeType } from '@mui/material/styles';
 import { SettingsContext } from '@settings';
+import { ColorBlindMode } from '@types';
 import { getCssVarsFromObject } from '@utils/helper';
 
 import { getTheme } from './themeObject';
 
 const MotionBox = motion(Box);
 
+const colorBlindFilterMap: Record<ColorBlindMode, string> = {
+	achromatopsia: 'grayscale(100%)',
+	none: 'none',
+	protanopia: 'url(#protanopia-filter)',
+	deuteranopia: 'url(#deuteranopia-filter)',
+	tritanopia: 'url(#tritanopia-filter)',
+};
+
 function Theme({ children }: { children: ReactNode }) {
 	const [isToggling, setIsToggling] = useState(false);
-	const { disableAnimations, enableDyslexicFont, enableBoldText, themeMode, disableMorphism } =
+	const { disableAnimations, enableDyslexicFont, enableBoldText, themeMode, disableMorphism, colorBlindMode } =
 		useContext(SettingsContext);
 
 	const themeObject = getTheme(themeMode, disableMorphism);
@@ -50,11 +60,15 @@ function Theme({ children }: { children: ReactNode }) {
 						backgroundColor: 'var(--mui-palette-background-default)',
 				  }
 				: {},
+			'html': {
+				filter: colorBlindFilterMap[colorBlindMode],
+			},
 		};
 	}
 
 	return (
 		<ThemeProvider theme={theme}>
+			<SvgFilters />
 			<GlobalStyles styles={() => getGlobalStyles()} />
 			<AnimatePresence>
 				{isToggling && (

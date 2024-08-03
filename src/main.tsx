@@ -4,9 +4,16 @@ import '@fontsource/opendyslexic/400.css';
 import '@fontsource/opendyslexic/700.css';
 import './index.css';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
-import { createBrowserRouter, redirect, RouterProvider } from 'react-router-dom';
+import {
+	createBrowserRouter,
+	ErrorResponse,
+	redirect,
+	RouterProvider,
+	useNavigate,
+	useRouteError,
+} from 'react-router-dom';
 
 import { ErrorPage, Greeting } from '@barrel';
 import { Settings } from '@settings';
@@ -14,11 +21,22 @@ import { Theme } from '@theme';
 
 import App from './App.tsx';
 
+const Redirect = () => {
+	const navigate = useNavigate();
+	const routerError = useRouteError();
+	const error = routerError as ErrorResponse;
+
+	useEffect(() => {
+		navigate('/Error', { replace: true, state: { error } });
+	}, []);
+	return null;
+};
+
 const router = createBrowserRouter([
 	{
 		path: '/',
 		element: <App />,
-		errorElement: <ErrorPage />,
+		errorElement: <Redirect />,
 		loader: async () => {
 			const data = localStorage.getItem('greeting');
 			return data == 'viewed' ? null : redirect('/greeting');
@@ -27,11 +45,15 @@ const router = createBrowserRouter([
 	{
 		path: '/greeting',
 		element: <Greeting />,
-		errorElement: <ErrorPage />,
+		errorElement: <Redirect />,
 		loader: async () => {
 			const data = localStorage.getItem('greeting');
 			return data == 'viewed' ? redirect('/') : null;
 		},
+	},
+	{
+		path: '/error',
+		element: <ErrorPage />,
 	},
 ]);
 

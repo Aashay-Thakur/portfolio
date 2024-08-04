@@ -7,6 +7,7 @@ interface SettingsModalProps {
 	open: boolean;
 	onClose: () => void;
 	children: ReactNode;
+	width?: any;
 }
 
 const StyledBox = styled(Box)(({ theme }) => ({
@@ -31,7 +32,7 @@ const Puller = styled('div')(({ theme }) => ({
 	left: 'calc(50% - 15px)',
 }));
 
-const CustomModal = ({ open, onClose, children }: SettingsModalProps) => {
+const CustomModal = ({ open, onClose, children, width }: SettingsModalProps) => {
 	const iOS = typeof navigator !== 'undefined' && /iPad|iPhone|iPod/.test(navigator.userAgent);
 	const isSm = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
 
@@ -65,7 +66,7 @@ const CustomModal = ({ open, onClose, children }: SettingsModalProps) => {
 				aria-labelledby="modal-title"
 				aria-describedby="modal-description"
 				keepMounted>
-				<StyledBox sx={{ width: { xs: '70vw', md: '50vw' } }}>{children}</StyledBox>
+				<StyledBox sx={{ width: width || { xs: '70vw', md: '50vw' } }}>{children}</StyledBox>
 			</Modal>
 		);
 	}

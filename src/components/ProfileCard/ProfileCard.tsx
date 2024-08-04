@@ -25,17 +25,16 @@ const ProfileCard = ({ aboutMe }: { aboutMe: AboutMe }) => {
 	const [waveState, setWaveState] = useState<'fluid' | 'line'>('fluid');
 	const [textBoxHeight, setTextBoxHeight] = useState<number | 'auto'>('auto');
 
-	const { scrollYProgress }: { scrollYProgress: MotionValue<number> } = useScroll();
-
-	const card1Y = useTransform(scrollYProgress, [0, 1], [0, 1200]);
-	const card2Y = useTransform(scrollYProgress, [0, 1], [0, -500]);
-
 	const theme = useTheme();
 	const { disableAnimations } = useContext(SettingsContext);
 
 	const textBoxRef = useRef<HTMLDivElement | null>(null);
 
 	const checkAnimSetting = useMemo(() => (props: any) => disableAnimations ? {} : props, [disableAnimations]);
+
+	const { scrollYProgress }: { scrollYProgress: MotionValue<number> } = useScroll();
+	const card1Y = useTransform(scrollYProgress, [0, 1], [0, 1200]);
+	const card2Y = useTransform(scrollYProgress, [0, 1], [0, -500]);
 
 	useEffect(() => {
 		const calculateHeight = () => {
@@ -131,7 +130,7 @@ const ProfileCard = ({ aboutMe }: { aboutMe: AboutMe }) => {
 			}}>
 			<MotionBox
 				initial={{ y: 0 }}
-				style={checkAnimSetting({ y: card1Y })}
+				style={disableAnimations ? { transform: 'translateY(0) !important' } : { y: card1Y }}
 				onClick={() => setWaveState((prev) => (prev === 'fluid' ? 'line' : 'fluid'))}
 				sx={{
 					position: 'relative',
@@ -152,7 +151,9 @@ const ProfileCard = ({ aboutMe }: { aboutMe: AboutMe }) => {
 					{aboutMe.initials}
 				</Avatar>
 			</MotionBox>
-			<StyledMotionBox style={checkAnimSetting({ y: card2Y })} sx={{ padding: { xs: 2, md: 6 } }}>
+			<StyledMotionBox
+				style={disableAnimations ? { transform: 'translateY(0) !important' } : { y: card2Y }}
+				sx={{ padding: { xs: 2, md: 6 } }}>
 				<Typography variant="h3" align="center" gutterBottom>
 					{aboutMe.name}
 				</Typography>

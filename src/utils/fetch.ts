@@ -20,10 +20,6 @@ interface WikipediaQueryResponse {
 	};
 }
 
-interface GeminiAIResponse {
-	answer: string;
-}
-
 export interface Extract {
 	title: string;
 	extract: string;
@@ -67,11 +63,10 @@ export async function fetchWiki(topic: string | string[]): Promise<Extract> {
 	throw new Error(`No data available for ${topic}`);
 }
 
-export const askGeminiAI = async (question: string): Promise<GeminiAIResponse> => {
-	const response = await fetch('https://api.gemini-ai.com/ask', {
+export const askGeminiAI = async (question: string): Promise<string> => {
+	const response = await fetch('/.netlify/functions/askGemini', {
 		method: 'POST',
 		headers: {
-			'Authorization': 'Bearer YOUR_API_KEY',
 			'Content-Type': 'application/json',
 		},
 		body: JSON.stringify({ question }),
@@ -81,6 +76,6 @@ export const askGeminiAI = async (question: string): Promise<GeminiAIResponse> =
 		throw new Error('Network response was not ok');
 	}
 
-	const data: GeminiAIResponse = await response.json();
-	return data;
+	const data: { answer: string } = await response.json();
+	return data.answer;
 };

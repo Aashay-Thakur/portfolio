@@ -14,6 +14,7 @@ export { InfoCard } from './InfoCard/InfoCard';
 export { ProfileCard } from './ProfileCard/ProfileCard';
 export { ProjectPanel } from './ProjectPanel/ProjectPanel';
 export { ChatModal } from './ChatModal/ChatModal';
+export { MarkdownRenderer } from './MarkdownRenderer/MarkdownRenderer';
 export { Footer } from './Footer/Footer';
 /* Custom Components */ // Uses MUI components
 export { CustomLink } from './CustomComponents/CustomLink/CustomLink';

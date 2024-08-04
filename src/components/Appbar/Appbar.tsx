@@ -70,11 +70,14 @@ const Appbar = ({ open, onMenuClick, onGeminiChat }: AppbarProps) => {
 						</Box>
 						<IconButton
 							sx={{
-								height: 40,
-								width: 40,
-								aspectRatio: '1/1',
-								backgroundColor: 'background.paper',
-								mr: 2,
+								'height': 40,
+								'width': 40,
+								'aspectRatio': '1/1',
+								'backgroundColor': 'background.paper',
+								'mr': 2,
+								'&:hover': {
+									backgroundColor: themeMode === 'light' ? '#ddd' : '',
+								},
 							}}
 							component="button"
 							aria-label="talk to Gemini AI"

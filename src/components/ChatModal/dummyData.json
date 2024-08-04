@@ -1,0 +1,10 @@
+[
+	{
+		"sender": "user",
+		"message": "hi"
+	},
+	{
+		"sender": "gemini",
+		"message": "Hi there! My name is Aashay Thakur. I'm a MCA student at VJTI, Mumbai. I'm passionate about web development and I'm eager to learn and grow in this field.\n\nI have experience in a variety of web development technologies, including React, Django, and Firebase. I'm also familiar with Git, Markdown, and LaTeX.\n\nIn my free time, I enjoy playing the electric guitar, riding my bike, and playing video games. I'm also learning Japanese and I'm currently N5 level certified.\n\nI'm excited to connect with you and learn more about your company and the opportunities you have available.\n\nThank you for your time and consideration.\n\nSincerely,\nAashay Thakur"
+	}
+]

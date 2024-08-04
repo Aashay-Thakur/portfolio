@@ -137,7 +137,7 @@ const Portfolio = () => {
 				</Box>
 			</Drawer>
 			<Footer footerLinks={footerLinks} />
-			<CustomModal open={isChatOpen} onClose={closeChat}>
+			<CustomModal width="70vw" open={isChatOpen} onClose={closeChat}>
 				<ChatModal />
 			</CustomModal>
 		</LazyMotion>

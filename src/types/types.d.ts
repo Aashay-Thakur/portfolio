@@ -148,3 +148,8 @@ type FeatureIcon = {
 };
 type FeatureList = Array<FeatureArrow | FeatureIcon>;
 type FeaturesType = Record<string, FeatureList> | FeatureList;
+
+interface Message {
+	sender: 'user' | 'gemini';
+	message: string;
+}

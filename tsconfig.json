@@ -7,7 +7,6 @@
 		"module": "ESNext",
 		"skipLibCheck": true,
 		"forceConsistentCasingInFileNames": true,
-		/* Custom */
 		"baseUrl": "./",
 		"paths": {
 			"@barrel": ["./src/components/barrel.ts"],
@@ -20,21 +19,18 @@
 			"@techMap": ["./src/contexts/data/techMap.tsx"],
 			"@root/*": ["./src/*"]
 		},
-
-		/* Bundler mode */
 		"moduleResolution": "bundler",
 		"allowImportingTsExtensions": true,
 		"resolveJsonModule": true,
 		"isolatedModules": true,
 		"noEmit": true,
 		"jsx": "react-jsx",
-
-		/* Linting */
 		"strict": true,
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
 		"noFallthroughCasesInSwitch": true
 	},
 	"include": ["src", "types", "data"],
+	"exclude": ["functions"],
 	"references": [{ "path": "./tsconfig.node.json" }]
 }

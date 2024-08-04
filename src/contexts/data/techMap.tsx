@@ -219,6 +219,12 @@ const map = {
 		link: 'https://d3js.org/',
 		wikiTopic: 'D3.js',
 	},
+	gemini: {
+		name: 'Gemini',
+		icon: 'gemini.svg',
+		link: 'https://gemini.google.com/',
+		wikiTopic: 'Gemini_(language_model)',
+	},
 } as const;
 
 export type SkillName = keyof typeof map;

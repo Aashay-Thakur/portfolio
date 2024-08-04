@@ -1,7 +1,7 @@
 import { AnimatePresence, m, MotionProps } from 'framer-motion';
 import { ReactNode, SyntheticEvent, useContext, useState } from 'react';
 
-import { Box, Grid, Tab, Tabs, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { Box, Grid, Tab, Tabs, Theme, Typography, useMediaQuery } from '@mui/material';
 import { SettingsContext } from '@settings';
 import { SkillDetails } from '@types';
 
@@ -32,8 +32,7 @@ const AppearAnimationWrapper = ({ children, ...motionProps }: MotionIconButtonPr
 
 const Technology = ({ stack }: TechnologyProps) => {
 	const [active, setActive] = useState<number>(0);
-	const theme = useTheme();
-	const isXs = useMediaQuery(theme.breakpoints.down('sm'));
+	const isXs = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'));
 
 	const handleOnChange = (_: SyntheticEvent, newValue: number) => {
 		setActive(newValue);

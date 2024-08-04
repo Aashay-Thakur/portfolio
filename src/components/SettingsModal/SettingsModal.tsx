@@ -1,81 +1,139 @@
-import { Box, Divider, Hidden, Modal, styled, SwipeableDrawer, Theme, Typography, useMediaQuery } from '@mui/material';
-import { grey } from '@mui/material/colors';
+import { ReactNode, useContext } from 'react';
 
-import { ModalContent } from './ModalContent';
+import {
+	Box,
+	Divider,
+	FormControl,
+	Grid,
+	GridProps,
+	InputLabel,
+	MenuItem,
+	Select,
+	Switch,
+	Typography,
+} from '@mui/material';
+import { SettingsContext } from '@settings';
+import { ColorBlindMode } from '@types';
 
-interface SettingsModalProps {
-	open: boolean;
-	onClose: () => void;
+interface RowProps extends GridProps {
+	title: string;
+	description: string;
+	action: ReactNode;
 }
 
-const StyledBox = styled(Box)(({ theme }) => ({
-	position: 'absolute',
-	top: '50%',
-	left: '50%',
-	transform: `translate(-50%, calc(-54% + ${theme.appBarHeight}px))`,
-	backgroundColor: theme.palette.background.paper,
-	padding: theme.spacing(5),
-	overflow: 'auto',
-	maxHeight: '80vh',
-	...theme.mixins.customScrollbar,
-}));
-
-const Puller = styled('div')(({ theme }) => ({
-	width: 30,
-	height: 6,
-	backgroundColor: theme.palette.mode === 'light' ? grey[300] : grey[900],
-	borderRadius: 3,
-	position: 'absolute',
-	top: 8,
-	left: 'calc(50% - 15px)',
-}));
-
-const SettingsModal = (props: SettingsModalProps) => {
-	const { open, onClose } = props;
-	const iOS = typeof navigator !== 'undefined' && /iPad|iPhone|iPod/.test(navigator.userAgent);
-	const isSm = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
-
-	if (isSm) {
-		return (
-			<SwipeableDrawer
-				disableBackdropTransition={!iOS}
-				disableDiscovery={iOS}
-				anchor="bottom"
-				open={open}
-				onClose={onClose}
-				onOpen={() => {}}>
-				<Puller onClick={onClose} />
-				<Box
-					sx={{
-						width: '100vw',
-						padding: 2,
-						backgroundColor: 'background.paper',
-						overflow: 'auto',
-						maxHeight: '80vh',
-					}}>
-					<Typography variant="h5">Settings</Typography>
-					<Divider />
-					<ModalContent />
-				</Box>
-			</SwipeableDrawer>
-		);
-	}
+const Row = (props: RowProps) => {
+	const { title, description, action, ...rest } = props;
 
 	return (
-		<Modal
-			open={open}
-			onClose={onClose}
-			aria-labelledby="modal-title"
-			aria-describedby="modal-description"
-			keepMounted>
-			<StyledBox sx={{ width: { xs: '70vw', md: '50vw' } }}>
-				<Typography variant="h5" id="modal-title">
-					Settings
+		<Grid item {...rest}>
+			<Box
+				sx={{
+					display: 'flex',
+					flexDirection: 'column',
+					justifyContent: 'center',
+					alignItems: 'space-between',
+					padding: 2,
+				}}>
+				<Box
+					sx={{
+						display: 'flex',
+						justifyContent: 'space-between',
+						gap: 1,
+					}}>
+					<Typography variant="body1">{title}</Typography>
+					{action}
+				</Box>
+				<Typography color="text.secondary" variant="body2">
+					{description}
 				</Typography>
-				<Divider />
-				<ModalContent />
-			</StyledBox>
-		</Modal>
+			</Box>
+		</Grid>
+	);
+};
+
+const SettingsModal = () => {
+	const {
+		disableAnimations,
+		toggleDisableAnimations,
+		disableDarkMode,
+		toggleDisableDarkMode,
+		colorBlindMode,
+		setColorBlindMode,
+		enableDyslexicFont,
+		toggleDyslexicFont,
+		enableBoldText,
+		toggleBoldText,
+		disableMorphism,
+		toggleMorphism,
+	} = useContext(SettingsContext);
+
+	return (
+		<>
+			<Typography variant="h4" gutterBottom>
+				Settings
+			</Typography>
+			<Divider />
+			<Grid container spacing={2}>
+				<Row
+					xs={12}
+					md={6}
+					title="Disable Animations"
+					description="Disable all animation and transitions. This can help reduce motion sickness."
+					action={<Switch checked={disableAnimations} onChange={toggleDisableAnimations} />}
+				/>
+				<Row
+					xs={12}
+					md={6}
+					title="Disable Dark Mode"
+					description="Disable all dark mode features. This can help reduce eye strain."
+					action={<Switch checked={disableDarkMode} onChange={toggleDisableDarkMode} />}
+				/>
+				<Row
+					xs={12}
+					md={6}
+					title="Enable Dyslexic Mode"
+					description="Switches to a font that is easier to read for people with dyslexia."
+					action={<Switch checked={enableDyslexicFont} onChange={toggleDyslexicFont} />}
+				/>
+				<Row
+					xs={12}
+					md={6}
+					title="Bold Text"
+					description="Turns all text bold."
+					action={<Switch checked={enableBoldText} onChange={toggleBoldText} />}
+				/>
+				<Row
+					md={12}
+					title="Set Color Blind Mode"
+					description=""
+					action={
+						<FormControl fullWidth>
+							<InputLabel id="color-blind-mode-label">Mode</InputLabel>
+							<Select
+								labelId="color-blind-mode-label"
+								id="color-blind-mode-select"
+								value={colorBlindMode}
+								label="Mode"
+								onChange={(e) => {
+									setColorBlindMode(e.target.value as ColorBlindMode);
+								}}>
+								<MenuItem value="none">None</MenuItem>
+								<MenuItem value="protanopia">Red</MenuItem>
+								<MenuItem value="deuteranopia">Green</MenuItem>
+								<MenuItem value="tritanopia">Blue</MenuItem>
+								<MenuItem value="achromatopsia">Grayscale</MenuItem>
+							</Select>
+						</FormControl>
+					}
+				/>
+				<Row
+					md={12}
+					title="Disable Glassmorphism Effect"
+					description="Disable all the blur effects on cards. Helps with motion sickness."
+					action={<Switch checked={disableMorphism} onChange={toggleMorphism} />}
+				/>
+			</Grid>
+		</>
 	);
 };
 

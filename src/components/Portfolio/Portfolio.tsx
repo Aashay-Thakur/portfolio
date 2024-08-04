@@ -3,7 +3,7 @@ import { createContext, useContext, useEffect, useState } from 'react';
 
 import { loadFeatures } from '@assets/loadFeatures';
 import Logo from '@assets/Logo/Logo';
-import { Appbar, Footer, TOC } from '@barrel';
+import { Appbar, ChatModal, CustomModal, Footer, TOC } from '@barrel';
 import { me } from '@data';
 import { Box, BoxProps, Container, Drawer, GlobalStyles, Stack, styled, Typography, useTheme } from '@mui/material';
 import { SettingsContext } from '@settings';
@@ -51,6 +51,8 @@ const StyledMotionBox = styled(m(Box))(({ theme }) => ({
 const Portfolio = () => {
 	const { toc, contact, aboutMe, academics, skills, projects, footerLinks } = me;
 	const [open, setOpen] = useState(false); // drawer
+	const [isChatOpen, setIsOpenChat] = useState(false); // gemini chat
+
 	const theme = useTheme();
 	const { disableMorphism, disableAnimations } = useContext(SettingsContext);
 
@@ -62,6 +64,14 @@ const Portfolio = () => {
 
 	function toggleDrawer(): void {
 		setOpen(!open);
+	}
+
+	function openChat(): void {
+		setIsOpenChat(true);
+	}
+
+	function closeChat(): void {
+		setIsOpenChat(false);
 	}
 
 	function onTocSelect(id: string): void {
@@ -91,7 +101,7 @@ const Portfolio = () => {
 	return (
 		<LazyMotion features={loadFeatures}>
 			<GlobalStyles styles={{ body: theme.mixins.customScrollbar }} />
-			<Appbar open={open} onMenuClick={toggleDrawer} />
+			<Appbar onGeminiChat={openChat} open={open} onMenuClick={toggleDrawer} />
 			<Container sx={{ paddingTop: `${theme.appBarHeight}px` }}>
 				<AboutMe aboutMe={aboutMe} />
 				<StyledTypography
@@ -127,6 +137,9 @@ const Portfolio = () => {
 				</Box>
 			</Drawer>
 			<Footer footerLinks={footerLinks} />
+			<CustomModal open={isChatOpen} onClose={closeChat}>
+				<ChatModal />
+			</CustomModal>
 		</LazyMotion>
 	);
 };

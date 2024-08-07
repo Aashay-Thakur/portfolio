@@ -1,11 +1,19 @@
 import { ReactNode, useCallback, useRef, useState } from 'react';
 
-import { Box, Fade, Popper, PopperProps } from '@mui/material';
+import { Box, Fade, Popper, PopperProps, styled } from '@mui/material';
 
 interface CustomPopperProps extends Omit<PopperProps, 'open' | 'anchorEl' | 'id' | 'transition'> {
 	children: ReactNode;
 	message: string;
 }
+
+const StyledBox = styled(Box)(({ theme }) => ({
+	padding: theme.spacing(1),
+	background: theme.mixins.linearGradient(theme, { opacity: 1 }),
+	color: theme.palette.getContrastText(theme.palette.primary.main),
+	maxWidth: 200,
+}));
+
 function CustomPopup({ children, message, ...popperProps }: CustomPopperProps) {
 	const [open, setOpen] = useState(false);
 	const anchorRef = useRef<HTMLDivElement>(null);
@@ -28,7 +36,7 @@ function CustomPopup({ children, message, ...popperProps }: CustomPopperProps) {
 					{...popperProps}>
 					{({ TransitionProps }) => (
 						<Fade {...TransitionProps} timeout={350}>
-							<Box sx={{ p: 1, bgcolor: 'background.paper', maxWidth: 200, outline: 1 }}>{message}</Box>
+							<StyledBox>{message}</StyledBox>
 						</Fade>
 					)}
 				</Popper>

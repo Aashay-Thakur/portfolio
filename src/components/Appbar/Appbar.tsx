@@ -4,7 +4,7 @@ import { ReactEventHandler, useContext, useEffect, useState } from 'react';
 import { MenuIcon } from '@assets/CustomIcons/MenuToggle';
 import { ThemeToggleIcon } from '@assets/CustomIcons/ThemeToggleIcon';
 import Logo from '@assets/Logo/Logo';
-import { AppBar, Box, IconButton, Toolbar } from '@mui/material';
+import { AppBar, Box, IconButton, styled, Toolbar } from '@mui/material';
 import { SettingsContext } from '@settings';
 import { getIcon } from '@techMap';
 
@@ -13,6 +13,43 @@ interface AppbarProps {
 	onMenuClick: ReactEventHandler;
 	onGeminiChat: ReactEventHandler;
 }
+
+const rippleVariants = {
+	initial: {
+		opacity: 0,
+		transform: 'scale(0)',
+	},
+	animate: {
+		opacity: [0.4, 0],
+		transform: ['scale(0)', 'scale(4)'],
+		transition: {
+			delay: 1.5,
+			duration: 2,
+			ease: 'easeInOut',
+			repeat: Infinity,
+		},
+	},
+};
+
+const RippleContainer = styled('div')({
+	position: 'absolute',
+	top: 0,
+	left: 0,
+	width: '100%',
+	height: '100%',
+	overflow: 'hidden',
+	pointerEvents: 'none',
+});
+
+const RippleEffect = styled(m.div)(({ theme }) => ({
+	position: 'absolute',
+	borderRadius: '50%',
+	backgroundColor: theme.palette.action.active,
+	width: 100,
+	height: 100,
+	opacity: 0,
+	transform: 'scale(0)',
+}));
 
 const MotionAppBar = m(AppBar);
 
@@ -78,12 +115,16 @@ const Appbar = ({ open, onMenuClick, onGeminiChat }: AppbarProps) => {
 								'&:hover': {
 									backgroundColor: themeMode === 'light' ? '#ddd' : '',
 								},
+								'overflow': 'hidden',
 							}}
 							component="button"
 							aria-label="talk to Gemini AI"
 							onClick={onGeminiChat}
 							color="inherit">
 							<img height="100%" width="100%" src={geminiSvg.src} alt={geminiSvg.name} />
+							<RippleContainer>
+								<RippleEffect variants={rippleVariants} initial="initial" animate="animate" />
+							</RippleContainer>
 						</IconButton>
 						{!disableDarkMode && (
 							<IconButton

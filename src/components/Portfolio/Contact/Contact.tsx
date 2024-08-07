@@ -1,3 +1,6 @@
+import { stagger, useAnimate, useInView } from 'framer-motion';
+import { useEffect } from 'react';
+
 import { CustomLink } from '@barrel';
 import { Box, Stack, Typography } from '@mui/material';
 import { ContactInfo, SocialLink } from '@types';
@@ -6,6 +9,24 @@ import { DownloadResume } from './DownloadResume';
 import { PhoneAnimation } from './PhoneAnimation';
 
 function Contact({ contact }: { contact: ContactInfo }) {
+	const [scope, animate] = useAnimate();
+	const inView = useInView(scope, { once: true });
+
+	useEffect(() => {
+		if (inView) {
+			animate(
+				scope.current.children,
+				{ opacity: [0, 1], y: [-10, 0] },
+				{ delay: stagger(0.1, { startDelay: 0.2 }) },
+			);
+		}
+
+		// Cleanup function to reset animations if needed
+		return () => {
+			animate(scope.current.children, { opacity: 0, y: 10 });
+		};
+	}, [inView]);
+
 	return (
 		<section id={contact.id} className="contact" aria-label="Contact section">
 			<Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 5 }}>
@@ -25,6 +46,7 @@ function Contact({ contact }: { contact: ContactInfo }) {
 			</Box>
 			<Stack
 				direction="row"
+				ref={scope}
 				sx={{
 					flexWrap: 'wrap',
 					justifyContent: 'center',

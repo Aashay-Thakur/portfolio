@@ -147,7 +147,7 @@ const ProfileCard = ({ aboutMe }: { aboutMe: AboutMe }) => {
 						transform: 'translateY(-5%)',
 						bottom: 10,
 					}}
-					src={aboutMe.picture}>
+					src={aboutMe.picture + 'no'}>
 					{aboutMe.initials}
 				</Avatar>
 			</MotionBox>

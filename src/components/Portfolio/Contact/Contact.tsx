@@ -34,14 +34,16 @@ function Contact({ contact }: { contact: ContactInfo }) {
 					Contact
 				</Typography>
 				<Stack
-					direction={{ xs: 'column', md: 'row' }}
+					direction={{ xs: 'column', sm: 'row' }}
 					sx={{
 						justifyContent: 'center',
 						alignItems: 'center',
-						gap: { xs: 1, md: 5 },
+						gap: { xs: 1, md: 0 },
 					}}>
 					<PhoneAnimation phoneNumber={contact.phone} />
-					{contact.resume && <DownloadResume name={contact.name} resumeLink={contact.resume} />}
+					{contact.resume && (
+						<DownloadResume email={contact.email} name={contact.name} resumeLink={contact.resume} />
+					)}
 				</Stack>
 			</Box>
 			<Stack

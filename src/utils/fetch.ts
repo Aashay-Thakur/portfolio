@@ -1,3 +1,5 @@
+import { SendResumeParams, SendResumeResponse } from '@types';
+
 interface WikipediaQueryResponse {
 	batchcomplete: string;
 	query: {
@@ -78,4 +80,22 @@ export const askGeminiAI = async (question: string): Promise<string> => {
 
 	const data: { answer: string } = await response.json();
 	return data.answer;
+};
+
+export const sendResumeOverEmail = async (data: SendResumeParams): Promise<SendResumeResponse> => {
+	const response = await fetch('/.netlify/functions/sendResume', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify({ data }),
+	});
+
+	const res: SendResumeResponse = await response.json();
+
+	if (!response.ok) {
+		throw new Error(res.message);
+	}
+
+	return res;
 };

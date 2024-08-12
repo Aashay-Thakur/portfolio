@@ -1,11 +1,13 @@
 import { LazyMotion, m, useScroll, useSpring } from 'framer-motion';
 import { createContext, useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { loadFeatures } from '@assets/loadFeatures';
 import Logo from '@assets/Logo/Logo';
-import { Appbar, ChatModal, CustomModal, Footer, TOC } from '@barrel';
-import { me } from '@data';
+import { Appbar, ChatModal, CustomModal, Footer, LoadingPage, TOC } from '@barrel';
+import { useFetchData } from '@hooks/useFetchData';
 import { Box, BoxProps, Container, Drawer, GlobalStyles, Stack, styled, Typography, useTheme } from '@mui/material';
+import { Person } from '@root/contexts/data/Person';
 import { SettingsContext } from '@settings';
 
 import { AboutMe, Academics, Contact, Projects, Skills } from './portfolioBarrel';
@@ -49,32 +51,44 @@ const StyledMotionBox = styled(m(Box))(({ theme }) => ({
 }));
 
 const Portfolio = () => {
-	const { toc, contact, aboutMe, academics, skills, projects, footerLinks } = me;
-	const [open, setOpen] = useState(false); // drawer
-	const [isChatOpen, setIsOpenChat] = useState(false); // gemini chat
-
+	const { data, loading, error } = useFetchData();
 	const theme = useTheme();
 	const { disableMorphism, disableAnimations } = useContext(SettingsContext);
 
+	const [open, setOpen] = useState(false); // drawer
+	const [isChatOpen, setIsOpenChat] = useState(false); // gemini chat
 	const [activeAcademicTab, setActiveAcademicTab] = useState<number>(0);
 	const [activeProjectTab, setActiveProjectTab] = useState<number>(0);
+	const [okToLoad, setOkToLoad] = useState(false);
 
 	const { scrollYProgress } = useScroll();
 	const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
+	const navigate = useNavigate();
 
-	function toggleDrawer(): void {
-		setOpen(!open);
+	useEffect(() => {
+		if (data?.aboutMe?.name) {
+			document.title = `${data.aboutMe.name} | Portfolio`;
+		}
+	}, [data?.aboutMe?.name]);
+
+	if (loading) return <LoadingPage onComplete={() => setOkToLoad(true)} />;
+	if (!data && !okToLoad) {
+		return (
+			<Box>
+				<Typography>No data found</Typography>;
+			</Box>
+		);
 	}
 
-	function openChat(): void {
-		setIsOpenChat(true);
-	}
+	if (error) navigate('/error', { state: { error: { statusText: 'Error fetching data', status: 500 } } });
 
-	function closeChat(): void {
-		setIsOpenChat(false);
-	}
+	const { toc, contact, aboutMe, academics, skills, projects, footerLinks } = data as Person;
 
-	function onTocSelect(id: string): void {
+	const toggleDrawer = () => setOpen(!open);
+	const openChat = () => setIsOpenChat(true);
+	const closeChat = () => setIsOpenChat(false);
+
+	const onTocSelect = (id: string) => {
 		setOpen(false);
 		const [section, index] = id.split('_');
 		const element = document.getElementById(section);
@@ -88,15 +102,9 @@ const Portfolio = () => {
 
 			element.scrollIntoView({ behavior: 'smooth', block: 'end' });
 		}
-	}
+	};
 
-	function TOCWrapper(): JSX.Element {
-		return <TOC toc={toc} onSelect={onTocSelect} />;
-	}
-
-	useEffect(() => {
-		document.title = `${aboutMe.name} | Portfolio`;
-	}, []);
+	const TOCWrapper = () => <TOC toc={toc} onSelect={onTocSelect} />;
 
 	return (
 		<LazyMotion features={loadFeatures}>
@@ -138,7 +146,7 @@ const Portfolio = () => {
 			</Drawer>
 			<Footer footerLinks={footerLinks} />
 			<CustomModal width="70vw" open={isChatOpen} onClose={closeChat}>
-				<ChatModal />
+				<ChatModal name={aboutMe.name} />
 			</CustomModal>
 		</LazyMotion>
 	);

@@ -10,14 +10,14 @@
 		"baseUrl": "./",
 		"paths": {
 			"@barrel": ["./src/components/barrel.ts"],
-			"@data": ["./src/contexts/data/data.ts"],
 			"@theme": ["./src/contexts/theme/Theme.tsx"],
 			"@types": ["./src/types/types.d.ts"],
 			"@assets/*": ["./src/assets/*"],
 			"@settings": ["./src/contexts/settings/Settings.tsx"],
 			"@utils/*": ["./src/utils/*"],
 			"@techMap": ["./src/contexts/data/techMap.tsx"],
-			"@root/*": ["./src/*"]
+			"@root/*": ["./src/*"],
+			"@hooks/*": ["./src/hooks/*"]
 		},
 		"moduleResolution": "bundler",
 		"allowImportingTsExtensions": true,

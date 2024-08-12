@@ -5,14 +5,21 @@ import SvgIcon, { SvgIconProps } from '@mui/material/SvgIcon';
 
 interface LogoProps extends SvgIconProps {
 	shouldAnimate?: boolean;
+	onAnimationComplete?: Function;
 }
 
-const Logo = ({ shouldAnimate, ...svgProps }: LogoProps) => {
+const Logo = ({ shouldAnimate, onAnimationComplete, ...svgProps }: LogoProps) => {
 	const [scope, animate] = useAnimate();
 
 	useEffect(() => {
 		if (shouldAnimate) {
-			animate('path', { pathLength: 1 }, { duration: 0.5, delay: stagger(0.2, { startDelay: 0.2 }) });
+			const animation = animate(
+				'path',
+				{ pathLength: 1 },
+				{ duration: 0.5, delay: stagger(0.2, { startDelay: 0.5 }) },
+			);
+
+			animation.then(() => onAnimationComplete && onAnimationComplete());
 		}
 	}, [animate]);
 

@@ -21,7 +21,6 @@ export default defineConfig({
 	resolve: {
 		alias: {
 			'@barrel': '/src/components/barrel.ts',
-			'@data': '/src/contexts/data/data.ts',
 			'@theme': '/src/contexts/theme/Theme.tsx',
 			'@types': '/src/types/types.d.ts',
 			'@assets': '/src/assets',
@@ -29,6 +28,7 @@ export default defineConfig({
 			'@utils': '/src/utils',
 			'@techMap': '/src/contexts/data/techMap.tsx',
 			'@root': '/src/',
+			'@hooks': '/src/hooks',
 		},
 	},
 	mode: 'production',

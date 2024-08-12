@@ -66,6 +66,7 @@ interface AboutMe {
 interface ContactInfo {
 	name: string;
 	phone: string;
+	email: string;
 	socials: SocialLink[];
 	id: string;
 	age: number;
@@ -152,4 +153,17 @@ type FeaturesType = Record<string, FeatureList> | FeatureList;
 interface Message {
 	sender: 'user' | 'gemini';
 	message: string;
+}
+
+/* Netlify Functions Types */
+export interface SendResumeResponse {
+	statusCode: number;
+	message: string;
+}
+
+export interface SendResumeParams {
+	to: string;
+	from: string;
+	name: string;
+	link: string;
 }

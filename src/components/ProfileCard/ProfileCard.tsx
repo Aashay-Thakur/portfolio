@@ -1,5 +1,5 @@
 import { m, MotionValue, useScroll, useTransform } from 'framer-motion';
-import { useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 
 import { Avatar, Box, Container, CSSObject, styled, Typography, useTheme } from '@mui/material';
 import { SettingsContext } from '@settings';
@@ -23,38 +23,17 @@ const ProfileCard = ({ aboutMe }: { aboutMe: AboutMe }) => {
 	const [text, setText] = useState<string>('');
 	const [done, setDone] = useState<boolean>(false);
 	const [waveState, setWaveState] = useState<'fluid' | 'line'>('fluid');
-	const [textBoxHeight, setTextBoxHeight] = useState<number | 'auto'>('auto');
 
 	const theme = useTheme();
 	const { disableAnimations } = useContext(SettingsContext);
 
 	const textBoxRef = useRef<HTMLDivElement | null>(null);
 
-	const checkAnimSetting = useMemo(() => (props: any) => disableAnimations ? {} : props, [disableAnimations]);
+	const checkAnimSetting = (props: any) => (disableAnimations ? {} : props);
 
 	const { scrollYProgress }: { scrollYProgress: MotionValue<number> } = useScroll();
 	const card1Y = useTransform(scrollYProgress, [0, 1], [0, 1200]);
 	const card2Y = useTransform(scrollYProgress, [0, 1], [0, -500]);
-
-	useEffect(() => {
-		const calculateHeight = () => {
-			const tempDiv = document.createElement('div');
-			tempDiv.style.position = 'absolute';
-			tempDiv.style.visibility = 'hidden';
-			tempDiv.style.height = 'auto';
-			tempDiv.style.width = textBoxRef.current?.offsetWidth + 'px';
-			tempDiv.style.whiteSpace = 'pre-wrap';
-			tempDiv.innerText = aboutMe.bio.text;
-
-			document.body.appendChild(tempDiv);
-			const height = tempDiv.clientHeight;
-			document.body.removeChild(tempDiv);
-
-			setTextBoxHeight(height);
-		};
-
-		calculateHeight();
-	}, [aboutMe.bio.text]);
 
 	useEffect(() => {
 		const fillText = async () => {
@@ -130,7 +109,7 @@ const ProfileCard = ({ aboutMe }: { aboutMe: AboutMe }) => {
 			}}>
 			<MotionBox
 				initial={{ y: 0 }}
-				style={disableAnimations ? { transform: 'translateY(0) !important' } : { y: card1Y }}
+				style={{ y: card1Y }}
 				onClick={() => setWaveState((prev) => (prev === 'fluid' ? 'line' : 'fluid'))}
 				sx={{
 					position: 'relative',
@@ -147,17 +126,15 @@ const ProfileCard = ({ aboutMe }: { aboutMe: AboutMe }) => {
 						transform: 'translateY(-5%)',
 						bottom: 10,
 					}}
-					src={aboutMe.picture + 'no'}>
+					src={aboutMe.picture}>
 					{aboutMe.initials}
 				</Avatar>
 			</MotionBox>
-			<StyledMotionBox
-				style={disableAnimations ? { transform: 'translateY(0) !important' } : { y: card2Y }}
-				sx={{ padding: { xs: 2, md: 6 } }}>
+			<StyledMotionBox style={{ y: card2Y }} sx={{ padding: { xs: 2, md: 6 } }}>
 				<Typography variant="h3" align="center" gutterBottom>
 					{aboutMe.name}
 				</Typography>
-				<Typography ref={textBoxRef} className="text-box" variant="body1" align="center" height={textBoxHeight}>
+				<Typography ref={textBoxRef} className="text-box" variant="body1" align="center">
 					{highlightText(text)}
 				</Typography>
 			</StyledMotionBox>

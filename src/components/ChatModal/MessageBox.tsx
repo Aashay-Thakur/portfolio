@@ -1,14 +1,16 @@
+import { useEffect, useRef } from 'react';
+
 import { MarkdownRenderer } from '@barrel';
-import { Paper, Stack, styled, Typography, TypographyProps } from '@mui/material';
+import { Box, BoxProps, Paper, Stack, styled, Typography } from '@mui/material';
 import { Message } from '@types';
 
 interface MessageBoxProps {
 	messages: Message[];
 }
 
-const MessageItem = styled(Typography, { shouldForwardProp: (prop) => prop !== 'sentByUser' })<
-	TypographyProps & { sentByUser: boolean }
->(({ theme, sentByUser }) => ({
+const MessageItem = styled(Box, {
+	shouldForwardProp: (prop) => prop !== 'sentByUser',
+})<BoxProps & { sentByUser: boolean }>(({ theme, sentByUser }) => ({
 	'position': 'relative',
 	'padding': theme.spacing(1),
 	'borderRadius': '5px',
@@ -50,8 +52,16 @@ const StartMessage = styled(Typography)(({ theme }) => ({
 
 // Add Animations
 const MessageBox = ({ messages }: MessageBoxProps) => {
+	const containerRef = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		if (containerRef.current) {
+			containerRef.current.scrollTop = containerRef.current.scrollHeight;
+		}
+	}, [messages]);
+
 	return (
-		<StyledPaper>
+		<StyledPaper ref={containerRef}>
 			<Stack direction="column">
 				<StartMessage variant="caption">Start a conversation with Gemini</StartMessage>
 				{messages.map((message, index) => (

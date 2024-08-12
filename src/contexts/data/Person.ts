@@ -12,8 +12,8 @@ interface PersonParams {
 	dob: string | Date;
 	phone: string;
 	resume?: string;
+	email: string;
 	socials: {
-		email: string;
 		linkedin: string;
 		github: string;
 	};
@@ -39,8 +39,8 @@ class Person {
 	private _dob: Date;
 	private _phone: string;
 	private _resume?: string;
+	private _email: string;
 	private _socials: {
-		email: string;
 		linkedin: string;
 		github: string;
 	};
@@ -55,9 +55,10 @@ class Person {
 	private _footerLinks?: { text: string; link: string }[];
 
 	constructor(params: PersonParams) {
-		const { name, dob, phone, socials, education, bio, skills, projects, picture, resume, footerLinks } = params;
+		const { name, dob, phone, socials, education, bio, skills, projects, picture, resume, footerLinks, email } =
+			params;
 
-		if (!name || !dob || !phone || !socials || !education || !bio || !skills || !projects) {
+		if (!name || !dob || !phone || !socials || !education || !bio || !skills || !projects || !email) {
 			throw new Error('Invalid data provided to Person constructor');
 		}
 
@@ -71,6 +72,7 @@ class Person {
 		this._picture = picture;
 		this._resume = resume;
 		this._footerLinks = footerLinks;
+		this._email = email;
 
 		if (typeof dob === 'string') {
 			this._dob = new Date(dob);
@@ -93,7 +95,8 @@ class Person {
 	}
 
 	public static fromJson(data: any): Person {
-		const { name, dob, phone, socials, education, bio, skills, projects, picture, resume, footerLinks } = data;
+		const { name, dob, phone, socials, education, bio, skills, projects, picture, resume, footerLinks, email } =
+			data;
 
 		return new Person({
 			name,
@@ -107,6 +110,7 @@ class Person {
 			picture,
 			resume,
 			footerLinks,
+			email,
 		});
 	}
 
@@ -127,7 +131,7 @@ class Person {
 	}
 
 	get socials(): SocialLink[] {
-		return Object.entries(this._socials).map(([key, entry]) => {
+		return Object.entries({ email: this.email, ...this._socials }).map(([key, entry]) => {
 			switch (key) {
 				case 'email':
 					return { text: 'Email', link: Person.attachMailto(entry), icon: EmailSharp };
@@ -166,9 +170,14 @@ class Person {
 		return this._bio;
 	}
 
+	get email() {
+		return this._email;
+	}
+
 	get contact(): ContactInfo {
 		return {
 			name: this.name,
+			email: this.email,
 			age: this.age,
 			phone: this.phone,
 			socials: this.socials,
@@ -199,7 +208,18 @@ class Person {
 	get skills(): { categories: SkillCategories; id: string } {
 		const categories: SkillCategories = {};
 
-		for (const category in this._skills) {
+		const sortedSkills: SkillsParam = {};
+		Object.keys(this._skills)
+			.sort((a, b) => {
+				if (a === 'frameworks') return -1;
+				if (b === 'frameworks') return 1;
+				return a.localeCompare(b);
+			})
+			.forEach((key) => {
+				sortedSkills[key] = this._skills[key];
+			});
+
+		for (const category in sortedSkills) {
 			categories[category] = {};
 
 			for (const skill in this._skills[category]) {

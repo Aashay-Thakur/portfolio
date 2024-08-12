@@ -1,4 +1,4 @@
-import { SyntheticEvent, useState } from 'react';
+import { SyntheticEvent, useRef, useState } from 'react';
 
 import { Send } from '@mui/icons-material';
 import {
@@ -17,13 +17,20 @@ import { askGeminiAI } from '@utils/fetch';
 
 import { MessageBox } from './MessageBox';
 
-const ChatModal = () => {
+interface ChatModalProps {
+	name: string;
+}
+
+const ChatModal = ({ name }: ChatModalProps) => {
 	const geminiIcon = getIcon('gemini');
+	name = name.split(' ')[0]; // get first name
 
 	const [input, setInput] = useState<string>('');
 	const [loading, setLoading] = useState<boolean>(false);
 	const [messages, setMessages] = useState<Message[]>([]);
 	const [isError, setIsError] = useState<boolean>(false);
+
+	const inputRef = useRef<HTMLTextAreaElement>(null);
 
 	function addMessage(sender: 'user' | 'gemini', message: string) {
 		setMessages((prev) => [...prev, { sender, message }]);
@@ -51,6 +58,19 @@ const ChatModal = () => {
 		}
 	}
 
+	function handleInputKeyDown(e: React.KeyboardEvent<HTMLDivElement>) {
+		if (e.key === 'Enter' && !e.shiftKey) {
+			e.preventDefault();
+			onSend(e);
+		}
+
+		if (e.key === 'Tab') {
+			e.preventDefault();
+			if (['Aashay', 'aashay', 'Aashay ', 'aashay '].some((item) => input.endsWith(item))) return;
+			setInput(input[input.length - 1] === ' ' ? input + name : `${input} ${name}`);
+		}
+	}
+
 	return (
 		<>
 			<Typography variant="h4" gutterBottom>
@@ -62,11 +82,23 @@ const ChatModal = () => {
 			<Divider />
 			<Stack spacing={2} direction="column">
 				<MessageBox messages={messages} />
-				<Typography variant="caption" color={isError ? 'error' : 'text.secondary'}>
-					{isError
-						? 'An error occurred. Please try again.'
-						: 'Gemini can give wrong information. Please verify.'}
-				</Typography>
+				<Stack
+					direction="row"
+					sx={{
+						alignItems: 'center',
+						justifyContent: 'space-between',
+						marginTop: 2,
+					}}
+					useFlexGap>
+					<Typography variant="caption" color={isError ? 'error' : 'text.secondary'}>
+						{isError
+							? 'An error occurred. Please try again.'
+							: 'Gemini can give wrong information. Please verify.'}
+					</Typography>
+					<Typography display={{ xs: 'none', md: 'initial' }} variant="caption" color="text.secondary">
+						Press Tab to enter my name
+					</Typography>
+				</Stack>
 				<TextField
 					value={input}
 					onChange={(e) => setInput(e.target.value)}
@@ -74,8 +106,10 @@ const ChatModal = () => {
 					id="question-input"
 					variant="outlined"
 					label="Ask Gemini About Me"
-					onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && onSend(e)}
+					onKeyDown={handleInputKeyDown}
+					autoComplete="Aashay"
 					InputProps={{
+						inputRef,
 						endAdornment: (
 							<InputAdornment position="end">
 								{loading ? (

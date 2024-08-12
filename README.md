@@ -1,5 +1,14 @@
-### TODO
+```cmd
+REM set cors origin for firebase storage bucket
+gsutil cors set cors.json gs://<your-bucket-name>
+```
 
--   [ ] Animate Toggle Theme Button
--   [ ] Animate Each Section at InView (initial only)
--   [ ] Add a Animated Download Resume Button
+```json
+[
+	{
+		"origin": ["*"],
+		"method": ["GET"],
+		"maxAgeSeconds": 3600
+	}
+]
+```

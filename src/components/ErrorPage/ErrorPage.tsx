@@ -9,13 +9,18 @@ import { Box, Button, Stack, Typography } from '@mui/material';
 const ErrorPage = () => {
 	const { state } = useLocation();
 	const navigate = useNavigate();
+
 	const error = state?.error;
 
 	useEffect(() => {
 		if (!error) {
-			navigate('/');
+			navigate('/', { replace: true });
 		}
 	}, [error, navigate]);
+
+	if (!error) {
+		return null;
+	}
 
 	return (
 		<Box
@@ -31,8 +36,8 @@ const ErrorPage = () => {
 				color: 'text.primary',
 			}}>
 			<Stack alignItems="center" spacing={2}>
-				{error?.status === 404 ? <Error404 /> : <ErrorSvg />}
-				<Typography variant="h5">{error?.statusText}</Typography>
+				{error.status === 404 ? <Error404 /> : <ErrorSvg />}
+				<Typography variant="h5">{error.statusText}</Typography>
 				<CustomLink to="/" disableCustomStyles>
 					<Button>Go Home</Button>
 				</CustomLink>

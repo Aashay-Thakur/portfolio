@@ -27,7 +27,7 @@ const Redirect = () => {
 	const error = routerError as ErrorResponse;
 
 	useEffect(() => {
-		navigate('/Error', { replace: true, state: { error } });
+		navigate('/error', { replace: true, state: { error } });
 	}, []);
 	return null;
 };

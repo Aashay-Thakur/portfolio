@@ -1,6 +1,7 @@
 /* Resume Components */
 export { Portfolio } from './Portfolio/Portfolio';
 export { ErrorPage } from './ErrorPage/ErrorPage';
+export { LoadingPage } from './LoadingPage/LoadingPage';
 /* Material-UI Components */
 export { Appbar } from './Appbar/Appbar';
 export { TOC } from './TOC/TOC';

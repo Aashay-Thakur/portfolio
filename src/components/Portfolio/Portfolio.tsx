@@ -71,16 +71,8 @@ const Portfolio = () => {
 		}
 	}, [data?.aboutMe?.name]);
 
-	if (loading) return <LoadingPage onComplete={() => setOkToLoad(true)} />;
-	if (!data && !okToLoad) {
-		return (
-			<Box>
-				<Typography>No data found</Typography>;
-			</Box>
-		);
-	}
-
-	if (error) navigate('/error', { state: { error: { statusText: 'Error fetching data', status: 500 } } });
+	if (loading || !okToLoad) return <LoadingPage onComplete={() => setOkToLoad(true)} />;
+	if (error && okToLoad) navigate('/error', { state: { error: { statusText: 'Error fetching data', status: 500 } } });
 
 	const { toc, contact, aboutMe, academics, skills, projects, footerLinks } = data as Person;
 

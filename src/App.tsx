@@ -23,7 +23,7 @@ function App(): JSX.Element {
 			<Box
 				sx={{
 					position: 'fixed',
-					bottom: 0,
+					top: 0,
 					left: 0,
 				}}
 				ref={portalRef}

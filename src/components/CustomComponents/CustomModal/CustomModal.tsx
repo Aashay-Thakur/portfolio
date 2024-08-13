@@ -60,12 +60,7 @@ const CustomModal = ({ open, onClose, children, width }: SettingsModalProps) => 
 		);
 	} else {
 		return (
-			<Modal
-				open={open}
-				onClose={onClose}
-				aria-labelledby="modal-title"
-				aria-describedby="modal-description"
-				keepMounted>
+			<Modal open={open} onClose={onClose} aria-labelledby="modal-title" aria-describedby="modal-description">
 				<StyledBox sx={{ width: width || { xs: '70vw', md: '50vw' } }}>{children}</StyledBox>
 			</Modal>
 		);

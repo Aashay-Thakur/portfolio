@@ -1,6 +1,7 @@
 import { useContext, useRef } from 'react';
 import { createRoot, Root } from 'react-dom/client';
 
+import { ThemeProvider, useTheme } from '@mui/material';
 import { PortalContext } from '@root/App';
 
 import Prompt from './Modals/Prompt';
@@ -8,6 +9,7 @@ import Prompt from './Modals/Prompt';
 export const usePrompt = () => {
 	const portalRef = useContext(PortalContext);
 	const rootRef = useRef<Root | null>(null);
+	const theme = useTheme();
 
 	const modalPrompt = (message: string): Promise<string> => {
 		if (!portalRef?.current) {
@@ -22,13 +24,15 @@ export const usePrompt = () => {
 
 			if (rootRef.current) {
 				rootRef.current.render(
-					<Prompt
-						message={message}
-						onClose={(response: string) => {
-							closePrompt();
-							resolve(response);
-						}}
-					/>,
+					<ThemeProvider theme={theme}>
+						<Prompt
+							message={message}
+							onClose={(response: string) => {
+								closePrompt();
+								resolve(response);
+							}}
+						/>
+					</ThemeProvider>,
 				);
 			} else {
 				// Fallback to window.alert if rootRef is null or not initialized

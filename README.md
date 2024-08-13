@@ -12,3 +12,7 @@ gsutil cors set cors.json gs://<your-bucket-name>
 	}
 ]
 ```
+
+### TODO
+
+-   [ ] Limit request to firebase storage bucket, sendgrid and gemini api

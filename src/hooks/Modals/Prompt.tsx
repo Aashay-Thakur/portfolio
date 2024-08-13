@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { Box, Button, Divider, Input, Modal, Stack, Typography } from '@mui/material';
+import { Button, Divider, Modal, Paper, Stack, TextField, Typography } from '@mui/material';
 
 interface PromptProps {
 	message: string;
@@ -12,14 +12,13 @@ const Prompt = ({ message, onClose }: PromptProps) => {
 
 	return (
 		<Modal open={true} onClose={() => onClose('')}>
-			<Box
+			<Paper
 				sx={{
 					position: 'absolute',
 					top: '50%',
 					left: '50%',
 					transform: 'translate(-50%, -50%)',
 					width: 400,
-					bgcolor: 'background.paper',
 					border: 'none',
 					outline: 'none',
 					boxShadow: 24,
@@ -34,7 +33,7 @@ const Prompt = ({ message, onClose }: PromptProps) => {
 				</Typography>
 				<Divider />
 				<Typography variant="body1">{message}</Typography>
-				<Input value={input} onChange={(e) => setInput(e.target.value)} />
+				<TextField variant="standard" label="Email" value={input} onChange={(e) => setInput(e.target.value)} />
 				<Stack direction="row" spacing={2} sx={{ justifyContent: 'flex-end' }}>
 					<Button variant="contained" onClick={() => onClose(input)}>
 						OK
@@ -43,7 +42,7 @@ const Prompt = ({ message, onClose }: PromptProps) => {
 						Cancel
 					</Button>
 				</Stack>
-			</Box>
+			</Paper>
 		</Modal>
 	);
 };

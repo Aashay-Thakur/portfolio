@@ -13,6 +13,7 @@ interface PersonParams {
 	phone: string;
 	resume?: string;
 	email: string;
+	emailMessage?: string;
 	socials: {
 		linkedin: string;
 		github: string;
@@ -53,10 +54,24 @@ class Person {
 	private _projects: Project[];
 	private _picture?: string;
 	private _footerLinks?: { text: string; link: string }[];
+	private _emailMessage?: string;
 
 	constructor(params: PersonParams) {
-		const { name, dob, phone, socials, education, bio, skills, projects, picture, resume, footerLinks, email } =
-			params;
+		const {
+			name,
+			dob,
+			phone,
+			socials,
+			education,
+			bio,
+			skills,
+			projects,
+			picture,
+			resume,
+			footerLinks,
+			email,
+			emailMessage,
+		} = params;
 
 		if (!name || !dob || !phone || !socials || !education || !bio || !skills || !projects || !email) {
 			throw new Error('Invalid data provided to Person constructor');
@@ -73,6 +88,7 @@ class Person {
 		this._resume = resume;
 		this._footerLinks = footerLinks;
 		this._email = email;
+		this._emailMessage = emailMessage;
 
 		if (typeof dob === 'string') {
 			this._dob = new Date(dob);
@@ -95,8 +111,21 @@ class Person {
 	}
 
 	public static fromJson(data: any): Person {
-		const { name, dob, phone, socials, education, bio, skills, projects, picture, resume, footerLinks, email } =
-			data;
+		const {
+			name,
+			dob,
+			phone,
+			socials,
+			education,
+			bio,
+			skills,
+			projects,
+			picture,
+			resume,
+			footerLinks,
+			email,
+			emailMessage,
+		} = data;
 
 		return new Person({
 			name,
@@ -111,6 +140,7 @@ class Person {
 			resume,
 			footerLinks,
 			email,
+			emailMessage,
 		});
 	}
 
@@ -174,6 +204,10 @@ class Person {
 		return this._email;
 	}
 
+	get emailMessage() {
+		return this._emailMessage;
+	}
+
 	get contact(): ContactInfo {
 		return {
 			name: this.name,
@@ -183,6 +217,7 @@ class Person {
 			socials: this.socials,
 			resume: this.resume,
 			id: 'contact-information',
+			emailMessage: this._emailMessage,
 		};
 	}
 

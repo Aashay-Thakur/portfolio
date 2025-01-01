@@ -15,11 +15,13 @@ interface DownloadResumeProps {
 	resumeLink: string | { download: string; file: string };
 	name: string;
 	email: string;
+	phone?: string;
+	message?: string;
 }
 
 const MotionTypography = m(Typography);
 
-const DownloadResume = ({ resumeLink, name, email }: DownloadResumeProps) => {
+const DownloadResume = ({ resumeLink, name, email, phone, message }: DownloadResumeProps) => {
 	const [hovering, setHovering] = useState(false);
 	const [openMenu, setOpenMenu] = useState<boolean>(false);
 	const [openSnackbar, setOpenSnackbar] = useState<boolean>(false);
@@ -87,6 +89,8 @@ const DownloadResume = ({ resumeLink, name, email }: DownloadResumeProps) => {
 			from: email,
 			name,
 			link,
+			phone,
+			message,
 		};
 
 		try {

@@ -42,7 +42,13 @@ function Contact({ contact }: { contact: ContactInfo }) {
 					}}>
 					<PhoneAnimation phoneNumber={contact.phone} />
 					{contact.resume && (
-						<DownloadResume email={contact.email} name={contact.name} resumeLink={contact.resume} />
+						<DownloadResume
+							email={contact.email}
+							name={contact.name}
+							resumeLink={contact.resume}
+							phone={contact.phone}
+							message={contact.emailMessage}
+						/>
 					)}
 				</Stack>
 			</Box>

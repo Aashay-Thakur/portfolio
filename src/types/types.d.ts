@@ -71,6 +71,7 @@ interface ContactInfo {
 	id: string;
 	age: number;
 	resume?: string | { file: string; download: string };
+	emailMessage?: string;
 }
 
 interface ProjectDetails {

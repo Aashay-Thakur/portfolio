@@ -1,8 +1,9 @@
 import { getBlob, getDownloadURL } from 'firebase/storage';
 import { m } from 'framer-motion';
-import { useContext, useRef, useState } from 'react';
+import { SyntheticEvent, useContext, useRef, useState } from 'react';
 
 import { DownloadIcon } from '@assets/CustomIcons/DownloadIcon';
+import { CustomSnackbar } from '@barrel';
 import { useAlert } from '@hooks/useAlert';
 import { usePrompt } from '@hooks/usePrompt';
 import { Menu, MenuItem, Stack, Theme, Typography, useMediaQuery } from '@mui/material';
@@ -21,6 +22,7 @@ const MotionTypography = m(Typography);
 const DownloadResume = ({ resumeLink, name, email }: DownloadResumeProps) => {
 	const [hovering, setHovering] = useState(false);
 	const [openMenu, setOpenMenu] = useState<boolean>(false);
+	const [openSnackbar, setOpenSnackbar] = useState<boolean>(false);
 
 	const isXs = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'));
 	const { disableAnimations } = useContext(SettingsContext);
@@ -37,6 +39,12 @@ const DownloadResume = ({ resumeLink, name, email }: DownloadResumeProps) => {
 			window.open(resumeLink, '_blank');
 		} else {
 			setOpenMenu(true);
+		}
+	};
+
+	const handleCloseSnackbar = (_: SyntheticEvent | Event, reason?: string) => {
+		if (reason !== 'clickaway') {
+			setOpenSnackbar(false);
 		}
 	};
 
@@ -82,13 +90,12 @@ const DownloadResume = ({ resumeLink, name, email }: DownloadResumeProps) => {
 		};
 
 		try {
+			setOpenSnackbar(true);
 			await sendResumeOverEmail(data);
-			modalAlert(
-				'Email sent successfully. Please check your inbox. if you do not see the email, check your spam folder.',
-			);
 		} catch (error) {
 			console.error('Error sending email:', error);
 			modalAlert('Error sending email. Please try again later.');
+			setOpenSnackbar(false);
 		}
 	};
 
@@ -122,6 +129,7 @@ const DownloadResume = ({ resumeLink, name, email }: DownloadResumeProps) => {
 					<MenuItem onClick={handleSendOverMail}>Send it over email</MenuItem>
 				</Menu>
 			)}
+			<CustomSnackbar open={openSnackbar} onClose={handleCloseSnackbar} message="Sending Email..." />
 		</>
 	);
 };

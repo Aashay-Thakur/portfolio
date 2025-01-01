@@ -1,5 +1,6 @@
 import { SyntheticEvent, useRef, useState } from 'react';
 
+import { useAlert } from '@hooks/useAlert';
 import { Send } from '@mui/icons-material';
 import {
 	CircularProgress,
@@ -32,6 +33,8 @@ const ChatModal = ({ name }: ChatModalProps) => {
 
 	const inputRef = useRef<HTMLTextAreaElement>(null);
 
+	const modalAlert = useAlert();
+
 	function addMessage(sender: 'user' | 'gemini', message: string) {
 		setMessages((prev) => [...prev, { sender, message }]);
 	}
@@ -49,12 +52,15 @@ const ChatModal = ({ name }: ChatModalProps) => {
 			setInput('');
 			setLoading(true);
 			const response = await askGeminiAI(input);
-			setLoading(false);
 			addMessage('gemini', response);
 		} catch (error) {
 			console.error(error);
+			modalAlert('An error occurred. Please try again.');
 			setIsError(true);
 			removeLastMessage();
+		} finally {
+			inputRef.current?.focus();
+			setLoading(false);
 		}
 	}
 
@@ -66,7 +72,7 @@ const ChatModal = ({ name }: ChatModalProps) => {
 
 		if (e.key === 'Tab') {
 			e.preventDefault();
-			if (['Aashay', 'aashay', 'Aashay ', 'aashay '].some((item) => input.endsWith(item))) return;
+			if (!input.endsWith(' ') && input !== '') return;
 			setInput(input[input.length - 1] === ' ' ? input + name : `${input} ${name}`);
 		}
 	}

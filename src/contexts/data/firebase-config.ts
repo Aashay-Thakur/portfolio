@@ -19,4 +19,4 @@ export const db = getFirestore(app);
 export const storage = getStorage(app);
 
 export const docRef = doc(db, 'users', 'Aashay-Thakur');
-export const resumeRef = ref(storage, 'resume.pdf');
+export const resumeRef = ref(storage, 'documents/resume.pdf');

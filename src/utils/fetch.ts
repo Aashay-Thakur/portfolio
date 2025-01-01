@@ -91,11 +91,14 @@ export const sendResumeOverEmail = async (data: SendResumeParams): Promise<SendR
 		body: JSON.stringify({ data }),
 	});
 
-	const res: SendResumeResponse = await response.json();
-
-	if (!response.ok) {
-		throw new Error(res.message);
+	try {
+		const res: SendResumeResponse = await response.json();
+		if (!response.ok) {
+			throw new Error(res.message);
+		}
+		return res;
+	} catch (error) {
+		console.error('Error sending email:', error);
+		throw new Error('Failed likely due to empty response');
 	}
-
-	return res;
 };

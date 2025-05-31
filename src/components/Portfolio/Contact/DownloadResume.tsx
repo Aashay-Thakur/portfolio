@@ -19,7 +19,7 @@ interface DownloadResumeProps {
 	message?: string;
 }
 
-const MotionTypography = m(Typography);
+const MotionTypography = m.create(Typography);
 
 const DownloadResume = ({ resumeLink, name, email, phone, message }: DownloadResumeProps) => {
 	const [hovering, setHovering] = useState(false);

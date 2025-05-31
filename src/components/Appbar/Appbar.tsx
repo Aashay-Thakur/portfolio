@@ -51,7 +51,7 @@ const RippleEffect = styled(m.div)(({ theme }) => ({
 	transform: 'scale(0)',
 }));
 
-const MotionAppBar = m(AppBar);
+const MotionAppBar = m.create(AppBar);
 
 const Appbar = ({ open, onMenuClick, onGeminiChat }: AppbarProps) => {
 	const { disableDarkMode, themeMode, toggleThemeMode } = useContext(SettingsContext);

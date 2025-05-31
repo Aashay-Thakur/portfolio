@@ -13,7 +13,7 @@ interface TechIconProps {
 	duration?: number; // in milliseconds
 }
 
-const MotionIcon = m(Icon);
+const MotionIcon = m.create(Icon);
 
 const TechIcon = (props: TechIconProps) => {
 	const { icon, label, duration = 2000 } = props;

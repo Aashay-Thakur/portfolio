@@ -8,7 +8,7 @@ import { fillGenerator } from '@utils/helper';
 
 import { Waves } from './Waves';
 
-const MotionBox = m(Box);
+const MotionBox = m.create(Box);
 
 const StyledMotionBox = styled(MotionBox)(({ theme }) => {
 	const styles: CSSObject = {

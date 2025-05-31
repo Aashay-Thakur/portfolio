@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, m } from 'framer-motion';
 import { ReactNode, useContext, useEffect, useState } from 'react';
 
 import SvgFilters from '@assets/SvgFilter';
@@ -10,7 +10,7 @@ import { getCssVarsFromObject } from '@utils/helper';
 
 import { getTheme } from './themeObject';
 
-const MotionBox = motion(Box);
+const MotionBox = m.create(Box);
 
 const colorBlindFilterMap: Record<ColorBlindMode, string> = {
 	achromatopsia: 'grayscale(100%)',

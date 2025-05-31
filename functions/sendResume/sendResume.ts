@@ -69,7 +69,7 @@ export const handler: Handler = async (event: HandlerEvent): Promise<ResponseInt
 			body: JSON.stringify({ message: 'Email sent successfully' }),
 		};
 	} catch (error) {
-		console.error('Error:', error.stack || error);
+		console.error(error);
 		return {
 			statusCode: 500,
 			body: JSON.stringify({ message: `Error: ${error.message}` }),

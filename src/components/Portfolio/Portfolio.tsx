@@ -41,7 +41,7 @@ interface ActiveTabProps {
 
 const ActiveTab = createContext<ActiveTabProps>({ activeAcademicTab: 0, activeProjectTab: 0 });
 
-const StyledMotionBox = styled(m.create(Box))(({ theme }) => ({
+const StyledMotionBox = styled(m(Box))(({ theme }) => ({
 	height: 5,
 	width: '100%',
 	bottom: 0,

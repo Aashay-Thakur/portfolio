@@ -10,7 +10,7 @@ import { getCssVarsFromObject } from '@utils/helper';
 
 import { getTheme } from './themeObject';
 
-const MotionBox = m.create(Box);
+const MotionBox = m(Box);
 
 const colorBlindFilterMap: Record<ColorBlindMode, string> = {
 	achromatopsia: 'grayscale(100%)',

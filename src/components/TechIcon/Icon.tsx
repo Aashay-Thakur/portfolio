@@ -11,7 +11,7 @@ interface IconProps {
 	sx?: SxProps;
 }
 
-const MotionBox = m.create(Box);
+const MotionBox = m(Box);
 
 const Icon = forwardRef((props: IconProps, ref) => {
 	const { icon, label, sx } = props;

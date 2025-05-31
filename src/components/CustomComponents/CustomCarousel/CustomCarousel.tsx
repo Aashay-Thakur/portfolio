@@ -46,7 +46,7 @@ const swipePower = (offset: number, velocity: number) => {
 	return Math.abs(offset) * velocity;
 };
 
-const MotionBox = m.create(Box);
+const MotionBox = m(Box);
 
 const CustomCarousel = ({
 	list,
